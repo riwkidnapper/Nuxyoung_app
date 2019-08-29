@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:nutsyong_app/Account/register_page.dart';
-import 'package:nutsyong_app/Pages/homepage.dart';
-import 'package:nutsyong_app/Pages/Pages2.dart';
-import 'package:nutsyong_app/Pages/medicalBudhosp_page.dart';
-import 'package:nutsyong_app/Tebbar/Teb_iteam.dart';
+// import 'package:nuxyong_app/Account/register_page.dart';
+import 'package:nuxyong_app/Pages/homepage.dart';
+import 'package:nuxyong_app/Pages/Pages2.dart';
+import 'package:nuxyong_app/Pages/medicalBudhosp_page.dart';
+import 'package:nuxyong_app/Tebbar/Teb_iteam.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 

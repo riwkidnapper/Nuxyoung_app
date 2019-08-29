@@ -1,9 +1,9 @@
 import 'package:flutter/animation.dart';
-import 'package:nutsyong_app/pull_to_refresh.dart';
+import 'package:nuxyong_app/pull_to_refresh.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart'
     hide RefreshIndicator, RefreshIndicatorState;
-import 'package:nutsyong_app/src/internals/indicator_wrap.dart';
+import 'package:nuxyong_app/src/internals/indicator_wrap.dart';
 import 'dart:math' as math;
 import 'package:flutter/physics.dart';
 

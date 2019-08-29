@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:nutsyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/bottombar.dart';
 
 class medicalBudhosp extends StatefulWidget {
   @override

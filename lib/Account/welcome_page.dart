@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import 'package:nutsyong_app/Account/login_page.dart';
+import 'package:nuxyong_app/Account/login_page.dart';
 import 'package:flutter/services.dart';
 
 void main() {

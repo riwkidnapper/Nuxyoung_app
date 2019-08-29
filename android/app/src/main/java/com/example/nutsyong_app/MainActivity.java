@@ -1,4 +1,4 @@
-package com.example.nutsyong_app;
+package com.example.nuxyong_app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

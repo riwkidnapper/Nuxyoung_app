@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutsyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/bottombar.dart';
 
 class TabItem extends StatefulWidget {
   TabItem({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutsyong_app/Account/welcome_page.dart';
+import 'package:nuxyong_app/Account/welcome_page.dart';
 
 void main() => runApp(MyApp());
 

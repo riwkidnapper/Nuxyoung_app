@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nutsyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nutsyong_app/Account/register_page.dart';
-import 'package:nutsyong_app/Account/pack_acc/form.dart';
+import 'package:nuxyong_app/Account/register_page.dart';
+import 'package:nuxyong_app/Account/pack_acc/form.dart';
 
 class loginPage extends StatefulWidget {
   @override

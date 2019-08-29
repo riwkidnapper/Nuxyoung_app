@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
-import 'package:nutsyong_app/Pages/pop_up_item/Profliedoctorl.dart';
-import 'package:nutsyong_app/Pages/pop_up_item/food_details.dart';
-import 'package:nutsyong_app/pull_to_refresh.dart';
+import 'package:nuxyong_app/Pages/pop_up_item/Profliedoctorl.dart';
+import 'package:nuxyong_app/Pages/pop_up_item/food_details.dart';
+import 'package:nuxyong_app/pull_to_refresh.dart';
 // import 'dart:math';
 // import 'pop_up_item/color_loader.dart';
 
