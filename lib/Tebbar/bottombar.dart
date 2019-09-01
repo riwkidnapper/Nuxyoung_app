@@ -21,17 +21,19 @@ class _HomePageState extends State<HomePage> {
       title: 'Nux young',
       home: Scaffold(
         endDrawer: new Drawer(
-          child: new ListView(
-            children: <Widget>[
-              new ListTile(
-                title: new Text("WELCOME"),
-              ),
-              new Divider(),
-              new ListTile(
-                  title: new Text("Settings"),
-                  trailing: new Icon(Icons.settings),
-                  onTap: () {}),
-            ],
+          child: SafeArea(
+            child: new ListView(
+              children: <Widget>[
+                new ListTile(
+                  title: new Text("WELCOME"),
+                ),
+                new Divider(),
+                new ListTile(
+                    title: new Text("Settings"),
+                    trailing: new Icon(Icons.settings),
+                    onTap: () {}),
+              ],
+            ),
           ),
         ),
         appBar: new GradientAppBar(
@@ -92,7 +94,7 @@ class _HomePageState extends State<HomePage> {
         //     150.0,
         //   ),
         // ),
-        body: FancyTabBar(),
+        body: SafeArea(child: FancyTabBar()),
       ),
     );
   }
