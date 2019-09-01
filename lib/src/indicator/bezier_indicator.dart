@@ -72,7 +72,6 @@ class _BezierHeaderState extends RefreshIndicatorState<BezierHeader>
 
   @override
   void onModeChange(RefreshStatus mode) {
-    // TODO: implement onModeChange
     if (widget.onModeChange != null) {
       widget.onModeChange(mode);
     }
@@ -191,7 +190,6 @@ class _BezierDismissPainter extends CustomClipper<Path> {
 
   @override
   getClip(Size size) {
-    // TODO: implement getClip
     Path path = Path();
     if (dismissType == BezierDismissType.None || value == 0) {
       path.moveTo(0, 0);
@@ -229,7 +227,6 @@ class _BezierDismissPainter extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(_BezierDismissPainter oldClipper) {
-    // TODO: implement shouldReclip
     return dismissType != oldClipper.dismissType || value != oldClipper.value;
   }
 }
@@ -243,7 +240,6 @@ class _BezierPainter extends CustomClipper<Path> {
 
   @override
   getClip(Size size) {
-    // TODO: implement getClip
     Path path = Path();
     path.lineTo(0, startOffsetY);
     path.quadraticBezierTo(
@@ -257,7 +253,6 @@ class _BezierPainter extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(_BezierPainter oldClipper) {
-    // TODO: implement shouldReclip
     return value != oldClipper.value;
   }
 }
@@ -335,7 +330,6 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BezierHeader(
       bezierColor: widget.bezierColor,
       rectHeight: widget.rectHeight,

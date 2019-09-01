@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nuxyong_app/Account/login_page.dart';
 import 'package:nuxyong_app/Account/pack_acc/form.dart';
 
-class resgister_page extends StatefulWidget {
+class Resgister_page extends StatefulWidget {
   @override
-  _resgister_pageState createState() => _resgister_pageState();
+  _Resgister_pageState createState() => _Resgister_pageState();
 }
 
-class _resgister_pageState extends State<resgister_page> {
+class _Resgister_pageState extends State<Resgister_page> {
   String _email;
   String _password;
   final _formKey = new GlobalKey<FormState>();
@@ -263,7 +263,7 @@ class _resgister_pageState extends State<resgister_page> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => loginPage()));
+                                  builder: (context) => Loginpage()));
                         },
                         child: Text("ลงทะเบียน",
                             style: TextStyle(

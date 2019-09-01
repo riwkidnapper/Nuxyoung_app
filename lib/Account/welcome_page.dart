@@ -17,11 +17,11 @@ class Welcome extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/homepage': (BuildContext context) => loginPage(),
+        '/homepage': (BuildContext context) => Loginpage(),
       },
       //logo before welcome
       //home: SplashScreen(),
-      home: loginPage(),
+      home: Loginpage(),
     );
   }
 }

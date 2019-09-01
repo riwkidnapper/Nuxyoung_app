@@ -85,7 +85,6 @@ class RefreshPhysics extends ScrollPhysics {
 
   @override
   bool shouldAcceptUserOffset(ScrollMetrics position) {
-    // TODO: implement shouldAcceptUserOffset
     viewportRender ??=
         findViewport(controller.position?.context?.storageContext);
     if (controller.headerMode.value == RefreshStatus.twoLeveling &&
@@ -113,7 +112,6 @@ class RefreshPhysics extends ScrollPhysics {
   // will lead to whether the newPhysics should replace oldPhysics,If flutter can provide a method such as "shouldUpdate",
   // It can work perfectly.
   @override
-  // TODO: implement runtimeType
   Type get runtimeType {
     if (updateFlag == 0) {
       return RefreshPhysics;
@@ -124,7 +122,6 @@ class RefreshPhysics extends ScrollPhysics {
 
   @override
   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    // TODO: implement applyPhysicsToUserOffset
     viewportRender ??=
         findViewport(controller.position?.context?.storageContext);
     if (controller.headerMode.value == RefreshStatus.twoLeveling) {
@@ -246,7 +243,6 @@ class RefreshPhysics extends ScrollPhysics {
   @override
   Simulation createBallisticSimulation(
       ScrollMetrics position, double velocity) {
-    // TODO: implement createBallisticSimulation
     viewportRender ??=
         findViewport(controller.position?.context?.storageContext);
     final bool enablePullDown = viewportRender == null

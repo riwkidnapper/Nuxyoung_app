@@ -44,7 +44,6 @@ class _LinkHeaderState extends RefreshIndicatorState<LinkHeader> {
 
   @override
   void onModeChange(RefreshStatus mode) {
-    // TODO: implement onModeChange
     ((widget.linkKey as GlobalKey).currentState as RefreshProcessor)
         .onModeChange(mode);
   }
@@ -88,7 +87,6 @@ class LinkFooter extends LoadIndicator {
 class _LinkFooterState extends LoadIndicatorState<LinkFooter> {
   @override
   void onModeChange(LoadStatus mode) {
-    // TODO: implement onModeChange
     ((widget.linkKey as GlobalKey).currentState as LoadingProcessor)
         .onModeChange(mode);
   }

@@ -120,12 +120,10 @@ class RenderSliverRefresh extends RenderSliverSingleBoxAdapter {
 
   @override
   void performResize() {
-    // TODO: implement performResize
     super.performResize();
   }
 
   @override
-  // TODO: implement centerOffsetAdjustment
   double get centerOffsetAdjustment {
     if (refreshStyle == RefreshStyle.Front) {
       final RenderViewportBase renderViewport = parent;
@@ -136,7 +134,6 @@ class RenderSliverRefresh extends RenderSliverSingleBoxAdapter {
 
   @override
   void layout(Constraints constraints, {bool parentUsesSize = false}) {
-    // TODO: implement layout
     if (refreshStyle == RefreshStyle.Front) {
       final RenderViewportBase renderViewport = parent;
       super.layout(

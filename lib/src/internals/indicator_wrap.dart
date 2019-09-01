@@ -83,7 +83,7 @@ abstract class LoadIndicator extends StatefulWidget {
 ///
 ///  @override
 ///  void resetValue() {
-///    // TODO: implement handleModeChange
+///
 ///    _scaleAnimation.value = 0.0;
 ///    _offsetController.value = 0.0;
 ///  }
@@ -137,7 +137,6 @@ abstract class RefreshIndicatorState<T extends RefreshIndicator>
 
   @override
   void _handleOffsetChange() {
-    // TODO: implement _handleOffsetChange
     super._handleOffsetChange();
     final double overscrollPast = _calculateScrollOffset();
     onOffsetChange(overscrollPast);
@@ -405,7 +404,6 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T>
 
   @override
   void didUpdateWidget(T oldWidget) {
-    // TODO: implement didUpdateWidget
     floating = widget.loadStyle == LoadStyle.ShowAlways;
     super.didUpdateWidget(oldWidget);
   }
@@ -418,7 +416,6 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SliverLoading(
         hideWhenNotFull: configuration.hideFooterWhenNotFull,
         floating: widget.loadStyle == LoadStyle.ShowAlways
@@ -547,7 +544,6 @@ mixin IndicatorStateMixin<T extends StatefulWidget, V> on State<T> {
 
   @override
   void didUpdateWidget(T oldWidget) {
-    // TODO: implement didUpdateWidget
     // needn't to update _headerMode,because it's state will never change
     // 1.3.7: here need to careful after add asSliver builder
     _updateListener();

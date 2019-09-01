@@ -253,7 +253,6 @@ class _ClassicFooterState extends LoadIndicatorState<ClassicFooter> {
 
   @override
   Widget buildContent(BuildContext context, LoadStatus mode) {
-    // TODO: implement buildChild
     Widget textWidget = _buildText(mode);
     Widget iconWidget = _buildIcon(mode);
     List<Widget> children = <Widget>[iconWidget, textWidget];

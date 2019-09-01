@@ -90,7 +90,6 @@ class _CustomHeaderState extends RefreshIndicatorState<CustomHeader> {
 
   @override
   void onModeChange(RefreshStatus mode) {
-    // TODO: implement onModeChange
     if (widget.onModeChange != null) {
       widget.onModeChange(mode);
     }
@@ -157,7 +156,6 @@ class _CustomFooterState extends LoadIndicatorState<CustomFooter> {
 
   @override
   void onModeChange(LoadStatus mode) {
-    // TODO: implement onModeChange
     if (widget.onModeChange != null) {
       widget.onModeChange(mode);
     }
