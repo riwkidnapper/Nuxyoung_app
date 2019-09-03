@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class FormCard extends StatelessWidget {
   String validation;
- final saveemail;
- final savepwd;
-  FormCard({this.saveemail,this.savepwd,this.validation});
+  final saveemail;
+  final savepwd;
+  FormCard({this.saveemail, this.savepwd, this.validation});
 
-
-   //save;
+  //save;
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -46,33 +46,31 @@ class FormCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: ScreenUtil.getInstance().setSp(26))),
             TextFormField(
-              decoration: InputDecoration(
-                  hintText: "อีเมล",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                decoration: InputDecoration(
+                    hintText: "อีเมล",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
                 obscureText: false,
-                validator: (value)=>
-                value.isEmpty ? validation: null,
-                onSaved:saveemail
-            ),
+                validator: (value) =>
+                    value.isEmpty ? 'Email can\'t be empty' : null,
+                onSaved: saveemail),
             SizedBox(
               height: ScreenUtil.getInstance().setHeight(30),
             ),
-            Text("รหัสผ่าน",
-                style: TextStyle(
-                    fontFamily: "Poppins-Medium",
-                    fontWeight: FontWeight.w600,
-                    fontSize: ScreenUtil.getInstance().setSp(26)),),
-            TextFormField(
-
-              decoration: InputDecoration(
-                  hintText: "รหัสผ่าน",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-              obscureText: true,
-              validator: (value)=>
-              value.isEmpty ? validation: null,
-              onSaved: savepwd
-
+            Text(
+              "รหัสผ่าน",
+              style: TextStyle(
+                  fontFamily: "Poppins-Medium",
+                  fontWeight: FontWeight.w600,
+                  fontSize: ScreenUtil.getInstance().setSp(26)),
             ),
+            TextFormField(
+                decoration: InputDecoration(
+                    hintText: "รหัสผ่าน",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                obscureText: true,
+                validator: (value) =>
+                    value.isEmpty ? 'Password can\'t be empty' : null,
+                onSaved: savepwd),
             SizedBox(
               height: ScreenUtil.getInstance().setHeight(35),
             ),
