@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
+// import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyong_app/Pages/pop_up_item/customdialog.dart';
 
 enum DialogState {
@@ -100,24 +100,25 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
             //   );
 
             onTap: () {
-              (_dialogState == DialogState.DISMISSED)
-                  ? _exportData()
-                  : (_dialogState == DialogState.LOADING)
-                      ? ColorLoader(
-                          colors: colors,
-                          ImageName: 'assets/images/dvm.jpg',
-                        )
-                      : showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialog(
-                            title: "Success",
-                            description:
-                                "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n"
-                                "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
-                            buttonText: "Okay",
-                            image: Image.asset('assets/images/dvm.jpg'),
-                          ),
-                        );
+              // (_dialogState == DialogState.DISMISSED)
+              //     ? _exportData()
+              //     : (_dialogState == DialogState.LOADING)
+              //         ? ColorLoader(
+              //             colors: colors,
+              //             ImageName: 'assets/images/dvm.jpg',
+              //           )
+              //         :
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => CustomDialog(
+                  title: "Success",
+                  description:
+                      "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n"
+                      "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
+                  buttonText: "Okay",
+                  image: Image.asset('assets/images/dvm.jpg'),
+                ),
+              );
             },
           ),
           SizedBox(
