@@ -10,17 +10,18 @@ class Loginpage extends StatefulWidget {
 }
 
 class _LoginpageState extends State<Loginpage> {
+  final _formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
-  final _formKey = new GlobalKey<FormState>();
 
-  checkFields() {
+  void validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      return true;
+      print('Form is valid. Email: $_email ,password: $_password');
+    } else {
+      print('Form is invalid. Email: $_email ,password: $_password');
     }
-    return false;
   }
 
 /*  LoginUser(){
@@ -178,7 +179,7 @@ class _LoginpageState extends State<Loginpage> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: doLogin,
+                              onTap: validateAndSave,
                               child: Center(
                                 child: Text("เข้าสู่ระบบ",
                                     style: TextStyle(
