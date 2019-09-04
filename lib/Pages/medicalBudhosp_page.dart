@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:nuxyong_app/Pages/doctor_page/calendar.dart';
+import 'package:nuxyong_app/Pages/doctor_page/history.dart';
+import 'package:nuxyong_app/Pages/doctor_page/video.dart';
 import 'package:nuxyong_app/Tebbar/bottombar.dart';
 
 class medicalBudhosp extends StatefulWidget {
@@ -63,9 +66,93 @@ class _medicalBudhospState extends State<medicalBudhosp> {
           backgroundColorStart: Colors.white,
           backgroundColorEnd: Colors.blueGrey[50],
         ),
-        drawer: new Drawer(),
+        /************************************************************************ */
+        drawer: new Drawer(
+          elevation: 20.0,
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text("Doctor Marnoj"),
+                accountEmail: Text("marnoj@doctor.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.blue.shade800,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 40.0),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[400],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.history),
+                title: Text('History'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHisToRy()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.accessible_forward),
+                title: Text('Initial symptoms'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.videocam),
+                title: Text('Video'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChewieDemo()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.chat),
+                title: Text('Chat'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text('Calendar'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CaLenDar(
+                                title: 'Calendar',
+                              )));
+                },
+              )
+            ],
+          ),
+        ),
+        /****************************************************************************** */
         body: Center(
-          child: Text('Hello Worldddddddd'),
+          child: Text(
+            'Za warudo',
+            style: TextStyle(fontSize: 40.0),
+          ),
         ),
       ),
     );

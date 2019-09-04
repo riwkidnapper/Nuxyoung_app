@@ -3,6 +3,7 @@ import 'package:nuxyong_app/Tebbar/bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nuxyong_app/Account/register_page.dart';
 import 'package:nuxyong_app/Account/pack_acc/form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -14,13 +15,25 @@ class _LoginpageState extends State<Loginpage> {
   String _email;
   String _password;
 
-  void validateAndSave() {
+  bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      print('Form is valid. Email: $_email ,password: $_password');
-    } else {
-      print('Form is invalid. Email: $_email ,password: $_password');
+      return true;
+    }
+    return false;
+  }
+
+  void validateAndSubmit() async {
+    if (validateAndSave()) {
+      try {
+        FirebaseUser user = (await FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: _email, password: _password))
+            as FirebaseUser;
+        print('Signed in: ${user.uid}');
+      } catch (e) {
+        print('Error : $e');
+      }
     }
   }
 
@@ -150,9 +163,11 @@ class _LoginpageState extends State<Loginpage> {
                           SizedBox(
                             width: 8.0,
                           ),
-                          Text("Remember me",
-                              style: TextStyle(
-                                  fontSize: 12, fontFamily: "Poppins-Medium"))
+                          Text(
+                            "Remember me",
+                            style: TextStyle(
+                                fontSize: 12, fontFamily: "Poppins-Medium"),
+                          )
                         ],
                       ),
                       InkWell(
@@ -179,7 +194,7 @@ class _LoginpageState extends State<Loginpage> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: validateAndSave,
+                              onTap: validateAndSubmit,
                               child: Center(
                                 child: Text("เข้าสู่ระบบ",
                                     style: TextStyle(
