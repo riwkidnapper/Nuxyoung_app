@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuxyong_app/Account/login_page.dart';
 // import 'package:nuxyong_app/Account/register_page.dart';
 import 'package:nuxyong_app/Pages/homepage.dart';
 import 'package:nuxyong_app/Pages/Pages2.dart';
@@ -16,6 +17,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void logOut() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Loginpage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,9 +36,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 new Divider(),
                 new ListTile(
-                    title: new Text("Settings"),
-                    trailing: new Icon(Icons.settings),
-                    onTap: () {}),
+                  title: new Text("Settings"),
+                  trailing: new Icon(Icons.settings),
+                  onTap: logOut,
+                ),
               ],
             ),
           ),

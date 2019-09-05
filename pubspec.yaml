@@ -22,8 +22,7 @@ dependencies:
   flutter_form_builder: ^3.5.2
   table_calendar: ^2.0.1
   firebase_auth: ^0.14.0+5
-  # firebase_core: ^0.4.0+9
-
+  firebase_core: ^0.4.0+9
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -52,6 +51,8 @@ flutter:
     - assets/images/hospital.gif
     - assets/images/regislogo.png
     - assets/images/homewall.png
+    - assets/images/a.jpg
+    - assets/images/login.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
