@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:nuxyong_app/Account/pack_acc/form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,13 +26,28 @@ class _LoginpageState extends State<Loginpage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
-        FirebaseUser user = (await FirebaseAuth.instance
-                .signInWithEmailAndPassword(email: _email, password: _password))
-            as FirebaseUser;
-        print('Signed in: ${user.uid}');
+        final AuthResult authResult = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
+        final FirebaseUser user = authResult.user;
+        print('Signed in: ${user.uid},${user.email}');
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomePage(user: user)));
       } catch (e) {
         print('Error : $e');
       }
+    }
+  }
+
+  void signInAnonymously() async {
+    try {
+      final AuthResult authanoResult =
+          await FirebaseAuth.instance.signInAnonymously();
+      final FirebaseUser anouser = authanoResult.user;
+      print('Signed in: ${anouser.uid}');
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomePage(user: anouser)));
+    } catch (e) {
+      print('Error : $e');
     }
   }
 
@@ -175,7 +189,6 @@ class _LoginpageState extends State<Loginpage> {
                     ],
                   ),
                   InkWell(
-                    onTap: doLogin,
                     child: Container(
                       width: ScreenUtil.getInstance().setWidth(330),
                       height: ScreenUtil.getInstance().setHeight(100),
@@ -282,9 +295,7 @@ class _LoginpageState extends State<Loginpage> {
                         color: Colors.blueGrey[900]),
                   ),
                   InkWell(
-                    onTap: () {
-                      doLogin();
-                    },
+                    onTap: signInAnonymously,
                     child: Text("เช้าชม",
                         style: TextStyle(
                           color: Colors.blueGrey,
@@ -416,19 +427,4 @@ class _LoginpageState extends State<Loginpage> {
     );
   }*/
 
-  doLogin() {
-//    if (_formKey.currentState.validate()) {
-//      String username = ctrlUsername.text;
-//      String password = ctrlPassword.text;
-//
-//      if (username == 'admin' && password == 'admin') {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomePage(),
-      ),
-    );
-    //}
-    //}
-  }
 }

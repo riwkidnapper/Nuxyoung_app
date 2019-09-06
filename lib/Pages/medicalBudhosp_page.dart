@@ -3,14 +3,14 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:nuxyong_app/Pages/doctor_page/calendar.dart';
 import 'package:nuxyong_app/Pages/doctor_page/history.dart';
 import 'package:nuxyong_app/Pages/doctor_page/video.dart';
-import 'package:nuxyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 
-class medicalBudhosp extends StatefulWidget {
+class MedicalBudhosp extends StatefulWidget {
   @override
-  _medicalBudhospState createState() => _medicalBudhospState();
+  _MedicalBudhospState createState() => _MedicalBudhospState();
 }
 
-class _medicalBudhospState extends State<medicalBudhosp> {
+class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,9 @@ class _medicalBudhospState extends State<medicalBudhosp> {
                 Navigator.pushReplacement(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => new HomePage(),
+                    builder: (context) => new HomePage(
+                      user: null,
+                    ),
                   ),
                 );
               },
