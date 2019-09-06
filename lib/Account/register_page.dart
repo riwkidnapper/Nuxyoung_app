@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nuxyong_app/Account/login_page.dart';
 import 'package:nuxyong_app/Account/pack_acc/form.dart';
@@ -418,7 +418,9 @@ class _Resgister_pageState extends State<Resgister_page> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) => HomePage(
+          user: null,
+        ),
       ),
     );
     //}
