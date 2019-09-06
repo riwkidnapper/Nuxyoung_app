@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import 'package:nuxyong_app/Account/login_page.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
 import 'package:flutter/services.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class Welcome extends StatelessWidget {
         '/homepage': (BuildContext context) => Loginpage(),
       },
       //logo before welcome
-      //home: SplashScreen(),
+      // home: SplashScreen(),
       home: Loginpage(),
     );
   }
@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          'assets/images/welcome.png',
+          'assets/images/welcomehome.png',
           fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,

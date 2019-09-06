@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Account/login_page.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
 // import 'package:nuxyong_app/Account/register_page.dart';
 import 'package:nuxyong_app/Pages/homepage.dart';
 import 'package:nuxyong_app/Pages/Pages2.dart';
@@ -13,9 +13,9 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 int currentSelected = 2;
 
 class HomePage extends StatefulWidget {
-  final FirebaseUser user;
+  // final FirebaseUser user;
 
-  HomePage({this.user});
+  // HomePage({this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             child: new ListView(
               children: <Widget>[
                 new ListTile(
-                  title: new Text(widget.user.email),
+                  title: new Text("widget.user.email"),
                 ),
                 new Divider(),
                 new ListTile(

@@ -5,6 +5,8 @@ import 'package:nuxyong_app/Pages/doctor_page/history.dart';
 import 'package:nuxyong_app/Pages/doctor_page/video.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 
+import 'chat/Tools/screenloadingchat.dart';
+
 class MedicalBudhosp extends StatefulWidget {
   @override
   _MedicalBudhospState createState() => _MedicalBudhospState();
@@ -36,23 +38,41 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.home,
+                const IconData(0xe800, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => new HomePage(
-                      user: null,
-                    ),
+                    builder: (context) => new HomePage(),
                   ),
                 );
               },
             ),
+            SizedBox(
+              width: 5.0,
+            ),
             IconButton(
               icon: Icon(
-                Icons.notifications_none,
+                const IconData(0xe811, fontFamily: 'chat'),
+                color: Colors.blueGrey,
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (context) => new LoadingChat(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              width: 5.0,
+            ),
+            IconButton(
+              icon: Icon(
+                const IconData(0xe801, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {

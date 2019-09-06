@@ -1,54 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nuxyong_app/Account/pack_acc/form.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
+import 'package:nuxyong_app/Auth/pack_acc/form.dart';
 
-class Loginpage extends StatefulWidget {
+class Resgister_page extends StatefulWidget {
   @override
-  _LoginpageState createState() => _LoginpageState();
+  _Resgister_pageState createState() => _Resgister_pageState();
 }
 
-class _LoginpageState extends State<Loginpage> {
-  final _formKey = new GlobalKey<FormState>();
+class _Resgister_pageState extends State<Resgister_page> {
   String _email;
   String _password;
+  final _formKey = new GlobalKey<FormState>();
 
-  bool validateAndSave() {
+  checkFields() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
       return true;
     }
     return false;
-  }
-
-  void validateAndSubmit() async {
-    if (validateAndSave()) {
-      try {
-        final AuthResult authResult = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
-        final FirebaseUser user = authResult.user;
-        print('Signed in: ${user.uid},${user.email}');
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HomePage(user: user)));
-      } catch (e) {
-        print('Error : $e');
-      }
-    }
-  }
-
-  void signInAnonymously() async {
-    try {
-      final AuthResult authanoResult =
-          await FirebaseAuth.instance.signInAnonymously();
-      final FirebaseUser anouser = authanoResult.user;
-      print('Signed in: ${anouser.uid}');
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomePage(user: anouser)));
-    } catch (e) {
-      print('Error : $e');
-    }
   }
 
 /*  LoginUser(){
@@ -107,129 +79,125 @@ class _LoginpageState extends State<Loginpage> {
       resizeToAvoidBottomPadding: true,
       body: Stack(
         fit: StackFit.expand,
-        children: buildLogin(),
-      ),
-    );
-  }
-
-  List<Widget> buildLogin() {
-    return [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(left: 120.0, top: 50.0),
-              width: 1500.0,
-              child: Image.asset("assets/images/login.png")),
-          Expanded(
-            child: Container(),
-          ),
-          Container(
-            height: 180,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/dvmcity.gif"),
-                    fit: BoxFit.fitWidth)),
-          )
-        ],
-      ),
-      SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
-          child: Column(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text("Welcome to Login",
-                      style: TextStyle(
-                          fontFamily: "",
-                          fontSize: ScreenUtil.getInstance().setSp(40),
-                          letterSpacing: .6,
-                          fontWeight: FontWeight.bold)),
-                  Text("****************",
-                      style: TextStyle(
-                          fontFamily: "",
-                          fontSize: ScreenUtil.getInstance().setSp(35),
-                          letterSpacing: .6,
-                          fontWeight: FontWeight.bold))
-                ],
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, left: 200),
+                child: Container(
+                    height: 250,
+                    child: Image.asset("assets/images/regislogo.png")),
               ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(220),
+              Expanded(
+                child: Container(),
               ),
-              Form(
-                  key: _formKey,
-                  child: FormCard(
-                    validation: 'required',
-                    saveemail: (value) => _email = value,
-                    savepwd: (value) => _password = value,
-                  )),
-              SizedBox(height: ScreenUtil.getInstance().setHeight(70)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Container(
+                height: 180,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/hospital.gif"),
+                        fit: BoxFit.fitWidth)),
+              )
+            ],
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
+              child: Column(
                 children: <Widget>[
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(
-                        width: 12.0,
+                      Text("Welcome to Login",
+                          style: TextStyle(
+                              fontFamily: "Poppins-Bold",
+                              fontSize: ScreenUtil.getInstance().setSp(28),
+                              letterSpacing: .6,
+                              fontWeight: FontWeight.bold)),
+                      Text("******************",
+                          style: TextStyle(
+                              fontFamily: "Poppins-Bold",
+                              fontSize: ScreenUtil.getInstance().setSp(28),
+                              letterSpacing: .6,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(275),
+                  ),
+                  Form(
+                      key: _formKey,
+                      child: FormCard(
+                        validation: 'required',
+                        saveemail: (value) => _email = value,
+                        savepwd: (value) => _password = value,
+                      )),
+                  SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 12.0,
+                          ),
+                          GestureDetector(
+                            onTap: _radio,
+                            child: radioButton(_isSelected),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text("Remember me",
+                              style: TextStyle(
+                                  fontSize: 12, fontFamily: "Poppins-Medium"))
+                        ],
                       ),
-                      GestureDetector(
-                        onTap: _radio,
-                        child: radioButton(_isSelected),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      Text(
-                        "Remember me",
-                        style: TextStyle(fontSize: 16, fontFamily: ""),
+                      InkWell(
+                        onTap: doLogin,
+                        child: Container(
+                          width: ScreenUtil.getInstance().setWidth(330),
+                          height: ScreenUtil.getInstance().setHeight(100),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: const FractionalOffset(0.1, 2.0),
+                                end: const FractionalOffset(-0.2, 0.2),
+                                colors: [
+                                  Colors.blueGrey[800],
+                                  Colors.blueGrey,
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(6.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF6078ea).withOpacity(.3),
+                                    offset: Offset(0.0, 8.0),
+                                    blurRadius: 8.0)
+                              ]),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: doLogin,
+                              child: Center(
+                                child: Text("เข้าสู่ระบบ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Poppins-Bold",
+                                        fontSize: 18,
+                                        letterSpacing: 1.0)),
+                              ),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  InkWell(
-                    child: Container(
-                      width: ScreenUtil.getInstance().setWidth(330),
-                      height: ScreenUtil.getInstance().setHeight(100),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: const FractionalOffset(0.1, 2.0),
-                            end: const FractionalOffset(-0.2, 0.2),
-                            colors: [
-                              Colors.blueGrey[800],
-                              Colors.blueGrey,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(6.0),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xFF6078ea).withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                          ]),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: validateAndSubmit,
-                          child: Center(
-                            child: Text("เข้าสู่ระบบ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "",
-                                    fontSize: 18,
-                                    letterSpacing: 1.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(30),
-              ),
-              /*Row(
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(30),
+                  ),
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       horizontalLine(),
@@ -280,38 +248,52 @@ class _LoginpageState extends State<Loginpage> {
                       )
                     ],
                   ),*/
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(60),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "เข้าสู่ระบบแบบไม่ระบุตัวตน ? ",
-                    style: TextStyle(
-                        fontFamily: "",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.blueGrey[900]),
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(30),
                   ),
-                  InkWell(
-                    onTap: signInAnonymously,
-                    child: Text("เช้าชม",
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontFamily: "",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        )),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "ยังไม่มีบัญชีใช้งาน? ",
+                        style: TextStyle(fontFamily: "Poppins-Medium"),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Loginpage()));
+                        },
+                        child: Text("ลงทะเบียน",
+                            style: TextStyle(
+                                color: Color(0xFF5d74e3),
+                                fontFamily: "Poppins-Bold")),
+                      ),
+                      Text(
+                        " หรือ ",
+                        style: TextStyle(fontFamily: "Poppins-Medium"),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          doLogin();
+                        },
+                        child: Text("เช้าชม",
+                            style: TextStyle(
+                                color: Color(0xFF5d74e3),
+                                fontFamily: "Poppins-Bold")),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
-      )
-    ];
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
+
   /*Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -427,4 +409,19 @@ class _LoginpageState extends State<Loginpage> {
     );
   }*/
 
+  doLogin() {
+//    if (_formKey.currentState.validate()) {
+//      String username = ctrlUsername.text;
+//      String password = ctrlPassword.text;
+//
+//      if (username == 'admin' && password == 'admin') {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(),
+      ),
+    );
+    //}
+    //}
+  }
 }
