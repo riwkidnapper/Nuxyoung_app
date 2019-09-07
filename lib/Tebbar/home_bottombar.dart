@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
 // import 'package:nuxyong_app/Account/register_page.dart';
 import 'package:nuxyong_app/Pages/homepage.dart';
 import 'package:nuxyong_app/Pages/Pages2.dart';
@@ -11,11 +13,22 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 int currentSelected = 2;
 
 class HomePage extends StatefulWidget {
+  // final FirebaseUser user;
+
+  // HomePage({this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  void logOut() {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Loginpage()),
+        ModalRoute.withName('/login'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,13 +39,18 @@ class _HomePageState extends State<HomePage> {
             child: new ListView(
               children: <Widget>[
                 new ListTile(
-                  title: new Text("WELCOME"),
+                  title: new Text("widget.user.email"),
                 ),
                 new Divider(),
                 new ListTile(
-                    title: new Text("Settings"),
-                    trailing: new Icon(Icons.settings),
-                    onTap: () {}),
+                  title: new Text("Settings"),
+                  trailing: new Icon(Icons.settings),
+                  onTap: logOut,
+                ),
+                new ListTile(
+                  title: new Text("Login"),
+                  trailing: new Icon(Icons.settings),
+                ),
               ],
             ),
           ),
@@ -175,7 +193,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                       Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => new medicalBudhosp(),
+                          builder: (context) => new MedicalBudhosp(),
                         ),
                       );
                     });

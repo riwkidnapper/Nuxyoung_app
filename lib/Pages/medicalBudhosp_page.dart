@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:nuxyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Pages/doctor_page/calendar.dart';
+import 'package:nuxyong_app/Pages/doctor_page/history.dart';
+import 'package:nuxyong_app/Pages/doctor_page/video.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 
-class medicalBudhosp extends StatefulWidget {
+import 'chat/Tools/screenloadingchat.dart';
+
+class MedicalBudhosp extends StatefulWidget {
   @override
-  _medicalBudhospState createState() => _medicalBudhospState();
+  _MedicalBudhospState createState() => _MedicalBudhospState();
 }
 
-class _medicalBudhospState extends State<medicalBudhosp> {
+class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _medicalBudhospState extends State<medicalBudhosp> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.home,
+                const IconData(0xe800, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {
@@ -45,9 +50,29 @@ class _medicalBudhospState extends State<medicalBudhosp> {
                 );
               },
             ),
+            SizedBox(
+              width: 5.0,
+            ),
             IconButton(
               icon: Icon(
-                Icons.notifications_none,
+                const IconData(0xe811, fontFamily: 'chat'),
+                color: Colors.blueGrey,
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (context) => new LoadingChat(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              width: 5.0,
+            ),
+            IconButton(
+              icon: Icon(
+                const IconData(0xe801, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {
@@ -63,9 +88,93 @@ class _medicalBudhospState extends State<medicalBudhosp> {
           backgroundColorStart: Colors.white,
           backgroundColorEnd: Colors.blueGrey[50],
         ),
-        drawer: new Drawer(),
+        /************************************************************************ */
+        drawer: new Drawer(
+          elevation: 20.0,
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text("Doctor Marnoj"),
+                accountEmail: Text("marnoj@doctor.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.blue.shade800,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 40.0),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[400],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.history),
+                title: Text('History'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHisToRy()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.accessible_forward),
+                title: Text('Initial symptoms'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.videocam),
+                title: Text('Video'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChewieDemo()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.chat),
+                title: Text('Chat'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text('Calendar'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CaLenDar(
+                                title: 'Calendar',
+                              )));
+                },
+              )
+            ],
+          ),
+        ),
+        /****************************************************************************** */
         body: Center(
-          child: Text('Hello Worldddddddd'),
+          child: Text(
+            'Za warudo',
+            style: TextStyle(fontSize: 40.0),
+          ),
         ),
       ),
     );

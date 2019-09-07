@@ -67,19 +67,13 @@ class _ArticleState extends State<Article> {
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
                             _disabilityCard(
-                                context,
-                                "dvm.jpg",
-                                "Family Vegan\nSalad tips",
-                                "5 family salad recipes"),
+                                context, "a.jpg", "บทความ เรื่อง", "Marnoj"),
                             SizedBox(width: 15.0),
                             _disabilityCard(
-                                context,
-                                "dvm.jpg",
-                                "Weekend Night\nDinner tips",
-                                "4 family lunch recipes"),
+                                context, "a.jpg", "บทความ เรื่อง", "Riw riw"),
                             SizedBox(width: 15.0),
-                            _disabilityCard(context, "dvm.jpg",
-                                "Night\nDessert", "4 family dessert recipes"),
+                            _disabilityCard(
+                                context, "a.jpg", "บทความ เรื่อง", "SKWCRD"),
                             SizedBox(width: 15.0),
                           ],
                         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Tebbar/bottombar.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nuxyong_app/Account/login_page.dart';
-import 'package:nuxyong_app/Account/pack_acc/form.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
+import 'package:nuxyong_app/Auth/pack_acc/form.dart';
 
 class Resgister_page extends StatefulWidget {
   @override
