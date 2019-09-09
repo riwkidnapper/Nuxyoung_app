@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nuxyong_app/package/screenutil/screenutil.dart';
 import 'package:nuxyong_app/Auth/login_page.dart';
 import 'package:nuxyong_app/Auth/pack_acc/form.dart';
 
