@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
-import 'package:nuxyong_app/package/screenutil/screenutil.dart';
+
+import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
+
 import 'package:nuxyong_app/Auth/pack_acc/form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -30,7 +32,7 @@ class _LoginpageState extends State<Loginpage> {
             .signInWithEmailAndPassword(email: _email, password: _password);
         final FirebaseUser user = authResult.user;
         print('Signed in: ${user.uid},${user.email}');
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
         print('Error : $e');
@@ -44,24 +46,12 @@ class _LoginpageState extends State<Loginpage> {
       //     await FirebaseAuth.instance.signInAnonymously();
       // final FirebaseUser anouser = authanoResult.user;
       // print('Signed in: ${anouser.uid}');
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
     } catch (e) {
       print('Error : $e');
     }
   }
-
-/*  LoginUser(){
-//    if (checkFields()){
-////      FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)
-////          .then((user){
-////        print("signed in as ${user.uid}");
-////        Navigator.push(context, MaterialPageRoute(builder: (context)=>home()));
-////      }).catchError((e){
-////        print(e);
-////      });
-////    }
-  }*/
 
   bool _isSelected = false;
 

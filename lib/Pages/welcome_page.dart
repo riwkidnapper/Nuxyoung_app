@@ -1,27 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
-import 'package:nuxyong_app/Auth/login_page.dart';
 import 'package:flutter/services.dart';
-
-void main() {
-  runApp(Welcome());
-}
+import 'package:nuxyong_app/Auth/login_page.dart';
 
 class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.teal,
-      ),
-      debugShowCheckedModeBanner: false,
-      routes: <String, WidgetBuilder>{
-        '/homepage': (BuildContext context) => Loginpage(),
-      },
+    return Scaffold(
       //logo before welcome
-      // home: SplashScreen(),
-      home: Loginpage(),
+      //body: SplashScreen(),
+
+      body: Loginpage(),
     );
   }
 }
@@ -39,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed("/homepage");
+    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   @override

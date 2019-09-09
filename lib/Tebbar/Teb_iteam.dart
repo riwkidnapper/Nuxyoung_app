@@ -8,10 +8,10 @@ class TabItem extends StatefulWidget {
     @required this.title,
     @required this.callbackFunction,
   });
-  String title;
-  IconData iconData;
-  bool selected;
-  Function callbackFunction;
+  final String title;
+  final IconData iconData;
+  final bool selected;
+  final Function callbackFunction;
   @override
   _TabItemState createState() => _TabItemState();
 }

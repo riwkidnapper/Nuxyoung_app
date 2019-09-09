@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/screenutil/screenutil.dart';
+
+import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
 
 class FormCard extends StatelessWidget {
-  String validation;
+  final String validation;
   final saveemail;
   final savepwd;
   FormCard({this.saveemail, this.savepwd, this.validation});

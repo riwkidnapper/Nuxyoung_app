@@ -192,7 +192,7 @@ class ChewieController extends ChangeNotifier {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ],
-    this.routePageBuilder = null,
+    this.routePageBuilder,
   }) : assert(videoPlayerController != null,
             'You must provide a controller to play a video') {
     _initialize();

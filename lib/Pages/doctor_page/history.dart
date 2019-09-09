@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -8,12 +7,8 @@ import './data.dart';
 class History extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter FormBuilder Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHisToRy(),
+    return Scaffold(
+      body: MyHisToRy(),
     );
   }
 }
@@ -62,7 +57,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     Row(
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width*0.95,
+                          width: MediaQuery.of(context).size.width * 0.95,
                           child: FormBuilderChipsInput(
                             decoration: InputDecoration(labelText: "Names"),
                             attribute: 'chips_test',
@@ -100,7 +95,8 @@ class MyHomePageState extends State<MyHisToRy> {
                                 key: ObjectKey(profile),
                                 label: Text(profile.name),
                                 avatar: CircleAvatar(
-                                  backgroundImage: NetworkImage(profile.imageUrl),
+                                  backgroundImage:
+                                      NetworkImage(profile.imageUrl),
                                 ),
                                 onDeleted: () => state.deleteChip(profile),
                                 materialTapTargetSize:
@@ -111,7 +107,8 @@ class MyHomePageState extends State<MyHisToRy> {
                               return ListTile(
                                 key: ObjectKey(profile),
                                 leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(profile.imageUrl),
+                                  backgroundImage:
+                                      NetworkImage(profile.imageUrl),
                                 ),
                                 title: Text(profile.name),
                                 subtitle: Text(profile.email),
@@ -184,7 +181,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     // Name input *****************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     // Identification Number ******************************************************************************************
-                     FormBuilderTextField(
+                    FormBuilderTextField(
                       attribute: "Identification Number",
                       decoration: InputDecoration(
                         labelText: "Identification Number",
@@ -313,8 +310,13 @@ class MyHomePageState extends State<MyHisToRy> {
                       attribute: "movie_rating",
                       textStyle: TextStyle(fontWeight: FontWeight.bold),
                       options: List.generate(5, (i) => i + 1)
-                          .map(
-                              (number) => FormBuilderFieldOption(value: number, child: Text("$number", style: TextStyle(fontWeight: FontWeight.bold),),))
+                          .map((number) => FormBuilderFieldOption(
+                                value: number,
+                                child: Text(
+                                  "$number",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ))
                           .toList(),
                       onChanged: _onChanged,
                     ),
