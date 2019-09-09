@@ -9,6 +9,7 @@
 .history
 .svn/
 *.lock
+*.yaml
 
 # IntelliJ related
 *.iml

@@ -77,14 +77,6 @@ class Dialoglogdoc extends StatefulWidget {
 
 class _DialoglogdocState extends State<Dialoglogdoc> {
   @override
-  DialogState _dialogState = DialogState.DISMISSED;
-  void _exportData() {
-    setState(() => _dialogState = DialogState.LOADING);
-    Future.delayed(Duration(seconds: 3)).then((_) {
-      setState(() => _dialogState = DialogState.COMPLETED);
-    });
-  }
-
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 20.0, top: 35.0, bottom: 0.0, right: 35.0),
@@ -161,7 +153,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
   }
 }
 
-avatar(ImageName, String name) {
+avatar(imagename, String name) {
   return InkWell(
     child: Column(
       children: <Widget>[
@@ -170,8 +162,8 @@ avatar(ImageName, String name) {
           height: 140.0,
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: AssetImage(ImageName),
-              fit: BoxFit.cover,
+              image: AssetImage(imagename),
+              fit: BoxFit.scaleDown,
             ),
             borderRadius: new BorderRadius.all(
               new Radius.circular(100.0),

@@ -3,28 +3,28 @@ import 'dart:async';
 
 class ColorLoader extends StatefulWidget {
   final List<Color> colors;
-  final ImageName;
+  final imagename;
   ColorLoader({
     @required this.colors,
-    @required this.ImageName,
+    @required this.imagename,
   });
 
   @override
   _ColorLoaderState createState() => _ColorLoaderState(
         this.colors,
-        this.ImageName,
+        this.imagename,
       );
 }
 
 class _ColorLoaderState extends State<ColorLoader>
     with SingleTickerProviderStateMixin {
   final List<Color> colors;
-  final ImageName;
+  final imagename;
   Timer timer;
 
   _ColorLoaderState(
     this.colors,
-    this.ImageName,
+    this.imagename,
   );
 
   List<ColorTween> tweenAnimations = [];
@@ -83,7 +83,7 @@ class _ColorLoaderState extends State<ColorLoader>
             height: 140.0,
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: AssetImage(ImageName),
+                image: AssetImage(imagename),
                 fit: BoxFit.cover,
               ),
               borderRadius: new BorderRadius.all(

@@ -309,8 +309,6 @@ class _SmartRefresherState extends State<SmartRefresher> {
       Widget childView, List<Widget> slivers, RefreshConfiguration conf) {
     Widget body;
     if (childView is ScrollView) {
-      widget.controller.scrollController = childView.controller ??
-          (childView.primary ? PrimaryScrollController.of(context) : null);
       body = CustomScrollView(
         physics: _getScrollPhysics(conf)
             .applyTo(childView.physics ?? AlwaysScrollableScrollPhysics()),
@@ -354,7 +352,6 @@ class _SmartRefresherState extends State<SmartRefresher> {
         },
       );
     } else {
-      widget.controller.scrollController = PrimaryScrollController.of(context);
       body = CustomScrollView(
         physics:
             _getScrollPhysics(conf).applyTo(AlwaysScrollableScrollPhysics()),
