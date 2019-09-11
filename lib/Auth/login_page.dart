@@ -94,9 +94,8 @@ class _LoginpageState extends State<Loginpage> {
         ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
     return new Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomPadding: false,
       body: Stack(
-        fit: StackFit.expand,
         children: buildLogin(),
       ),
     );
@@ -290,7 +289,7 @@ class _LoginpageState extends State<Loginpage> {
                         style: TextStyle(
                           color: Colors.blueGrey,
                           fontFamily: "",
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                           fontSize: 16,
                         )),
                   ),
@@ -302,119 +301,4 @@ class _LoginpageState extends State<Loginpage> {
       )
     ];
   }
-  /*Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            color: Colors.blueGrey,
-            //decoration: BoxDecoration(
-            //image: DecorationImage(
-            //fit: BoxFit.cover,
-            //  image: AssetImage('assets/images/welcome.png')
-            //),
-            //),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Welcome to Login',
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25.0,
-                  ),
-                  TextFormField(
-                    validator: (String value) {
-                      if (value.isEmpty) return 'กรุณาระบุชื่อผู้ใช้งาน';
-                    },
-                    controller: ctrlUsername,
-                    decoration: InputDecoration(
-                        errorStyle: TextStyle(fontSize: 18.0),
-                        prefixIcon: Icon(Icons.person_add),
-                        labelText: 'Username',
-                        labelStyle: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white70,
-                        border: InputBorder.none),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextFormField(
-                    validator: (String value) {
-                      if (value.isEmpty) return 'กรุณาระบุรหัสผ่าน';
-                    },
-                    controller: ctrlPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        errorStyle: TextStyle(fontSize: 18.0),
-                        prefixIcon: Icon(Icons.vpn_key),
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white70,
-                        border: InputBorder.none),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () => doLogin(),
-                        color: Colors.lightGreen,
-                        child: Text(
-                          'Login to app',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                      RaisedButton(
-                        onPressed: () {},
-                        color: Colors.teal,
-                        child: Text(
-                          '   Register   ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Help Me Please?',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white30,
-                        ),
-                      ))
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }*/
-
 }

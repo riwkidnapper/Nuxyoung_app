@@ -47,6 +47,7 @@ class FormCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: ScreenUtil.getInstance().setSp(26))),
             TextFormField(
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     hintText: "อีเมล",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
@@ -65,6 +66,7 @@ class FormCard extends StatelessWidget {
                   fontSize: ScreenUtil.getInstance().setSp(26)),
             ),
             TextFormField(
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     hintText: "รหัสผ่าน",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),

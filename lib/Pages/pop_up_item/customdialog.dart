@@ -59,7 +59,7 @@ class CustomDialog extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -75,10 +75,18 @@ class CustomDialog extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: FlatButton(
+                    color: Colors.blueGrey[100],
                     onPressed: () {
                       Navigator.of(context).pop(); // To close the dialog
                     },
-                    child: Text(buttonText),
+                    child: Text(
+                      buttonText,
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -98,7 +106,7 @@ class CustomDialog extends StatelessWidget {
             ),
             decoration: new BoxDecoration(
                 shape: BoxShape.circle,
-                border: new Border.all(color: Colors.lime[700], width: 3.0)),
+                border: new Border.all(color: Colors.grey[400], width: 3.0)),
           ),
         ), //...top circlular image part,
       ],

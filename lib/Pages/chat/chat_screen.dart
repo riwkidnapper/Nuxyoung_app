@@ -36,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.blueGrey[800],
               ),
               onPressed: () {
-                Navigator.pushReplacement(context,
+                Navigator.pop(context,
                     MaterialPageRoute(builder: (context) => MedicalBudhosp()));
               }),
         ],

@@ -11,7 +11,7 @@ class _ArticleState extends State<Article> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-          left: 20.0, bottom: 10.0, right: 10.0, top: 10.0),
+          left: 20.0, bottom: 10.0, right: 10.0, top: 20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +19,7 @@ class _ArticleState extends State<Article> {
           Text(
             'บทความน่าสนใจที่เกี่ยวข้อง',
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 24,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -51,9 +51,9 @@ class _ArticleState extends State<Article> {
                     BoxShadow(
                         color: Colors.black38,
                         offset: Offset(0, 1),
-                        blurRadius: 2)
+                        blurRadius: 1)
                   ],
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
@@ -79,7 +79,7 @@ class _ArticleState extends State<Article> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 270, top: 10.0),
+                        padding: const EdgeInsets.only(left: 230, top: 10.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[

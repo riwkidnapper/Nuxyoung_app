@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
+import 'package:nuxyong_app/Pages/pop_up_item/adddoc.dart';
+import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyong_app/Pages/pop_up_item/customdialog.dart';
 
 enum DialogState {
@@ -10,10 +11,7 @@ enum DialogState {
 
 List<Color> colors = [
   Colors.blueGrey,
-  Colors.cyan[900],
-  Colors.lightBlue[900],
-  Colors.indigoAccent,
-  Colors.indigo
+  Colors.blueGrey[400],
 ];
 
 class Doctorproflie extends StatefulWidget {
@@ -28,17 +26,17 @@ class _DoctorproflieState extends State<Doctorproflie> {
       padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
       child: Container(
         constraints: new BoxConstraints(
-          maxHeight: 300,
-          minWidth: double.maxFinite,
+          maxHeight: 350,
+          minWidth: MediaQuery.of(context).size.width,
         ),
         child: new DecoratedBox(
           decoration: BoxDecoration(
             color: Color(0xF1FFFFFF),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black38, offset: Offset(0, 1), blurRadius: 3)
+                  color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
             ],
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
           child: Column(
             children: <Widget>[
@@ -53,12 +51,13 @@ class _DoctorproflieState extends State<Doctorproflie> {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  left: 280,
+                  left: 230,
+                  top: 50.0,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    _edit,
+                    AddproflieDoc(),
                   ],
                 ),
               ),
@@ -76,6 +75,7 @@ class Dialoglogdoc extends StatefulWidget {
 }
 
 class _DialoglogdocState extends State<Dialoglogdoc> {
+  String title = '', description = '', proflieimg = '';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,70 +84,74 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           InkWell(
-            child: avatar("assets/images/dvm.jpg", 'Profile DocTor l'),
-            // onTap: () {
-            //   ColorLoader(
-            //     colors: colors,
-            //     ImageName: 'assets/images/dvm.jpg',
-            //   );
+              child: avatar(proflieimg = 'assets/images/profiledoc.png',
+                  'นพ.ธนาธรณ์ พุฒิกานนท์'),
+              // onTap: () {
+              //   ColorLoader(
+              //     colors: colors,
+              //     ImageName: 'assets/images/dvm.jpg',
+              //   );
 
-            onTap: () {
-              // (_dialogState == DialogState.DISMISSED)
-              //     ? _exportData()
-              //     : (_dialogState == DialogState.LOADING)
-              //         ? ColorLoader(
-              //             colors: colors,
-              //             ImageName: 'assets/images/dvm.jpg',
-              //           )
-              //         :
-              showDialog(
-                context: context,
-                builder: (BuildContext context) => CustomDialog(
-                  title: "Success",
-                  description:
+              onTap: () async {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: ColorLoader(
+                          colors: colors,
+                        ),
+                      );
+                    });
+                await loginAction(
+                  title = 'นพ.ธนาธรณ์ พุฒิกานนท์',
+                  description =
                       "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n"
-                      "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
-                  buttonText: "Okay",
-                  image: Image.asset('assets/images/dvm.jpg'),
-                ),
-              );
-            },
-          ),
+                          "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
+                  proflieimg = "assets/images/profiledoc.png",
+                );
+                Navigator.pop(context);
+              }),
           SizedBox(
-            width: 15.0,
+            width: 30.0,
           ),
-          // InkWell(
-          //   child: avatar(
-          //     "assets/images/dvm.jpg",
-          //     'Profile DocTor ll',
-          //   ),
-          //   onTap: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (BuildContext context) => AboutPopup(),
-          //     );
-          //   },
-          // ),
-          // SizedBox(
-          //   width: 15.0,
-          // ),
-          // InkWell(
-          //   child: avatar(
-          //     "assets/images/dvm.jpg",
-          //     'Test',
-          //   ),
-          //   onTap: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (BuildContext context) => AboutPopup(),
-          //     );
-          //   },
-          // ),
+          InkWell(
+              child: avatar(proflieimg = "assets/images/dvm.jpg",
+                  'นพ.นิธิพัฒน์ บุษบารติ'),
+              onTap: () async {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: ColorLoader(
+                          colors: colors,
+                        ),
+                      );
+                    });
+                await loginAction(
+                  title = "นพ.นิธิพัฒน์ บุษบารติ",
+                  description = "test",
+                  proflieimg = "assets/images/dvm.jpg",
+                );
+                Navigator.pop(context);
+              }),
           SizedBox(
-            width: 15.0,
+            width: 30.0,
           ),
-          //avatar(Icons.book, 'Editorials')
         ],
+      ),
+    );
+  }
+
+  Future<bool> loginAction(String savetitle, savedescription, saveimage) async {
+    await new Future.delayed(const Duration(milliseconds: 1500));
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CustomDialog(
+        title: savetitle,
+        description: savedescription,
+        buttonText: 'OKAY',
+        image: Image.asset(saveimage),
       ),
     );
   }
@@ -170,7 +174,7 @@ avatar(imagename, String name) {
             ),
             border: new Border.all(
               color: Colors.grey,
-              width: 5.0,
+              width: 2.0,
             ),
             boxShadow: [
               BoxShadow(
@@ -182,22 +186,10 @@ avatar(imagename, String name) {
           name,
           style: TextStyle(
             fontSize: 18,
-            height: 2,
+            height: 1.5,
           ),
         ),
       ],
     ),
   );
 }
-
-Widget _edit = new FloatingActionButton(
-  onPressed: () {},
-  child: Icon(
-    Icons.add,
-    size: 30,
-  ),
-  heroTag: null,
-  mini: true,
-  foregroundColor: Colors.blueGrey[900],
-  backgroundColor: Colors.blueGrey[200],
-);
