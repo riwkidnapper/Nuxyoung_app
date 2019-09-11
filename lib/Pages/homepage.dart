@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nuxyong_app/Pages/layout/article.dart';
 import 'package:nuxyong_app/Pages/layout/proflieDoc.dart';
 import 'package:nuxyong_app/pull_to_refresh.dart';
-import './pop_up_item/color_loader.dart';
+// import './pop_up_item/color_loader.dart';
 import 'layout/header.dart';
 
 // import 'dart:math';
@@ -37,14 +37,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFEEEEEE),
-            image: DecorationImage(
-              alignment: Alignment.topCenter,
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/homewall.png'),
-              colorFilter: new ColorFilter.mode(
-                  Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
-            ),
+            color: const Color(0xFFF5F5F5),
           ),
         ),
         SmartRefresher(

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Account/login_page.dart';
+import 'package:nuxyong_app/Auth/login_page.dart';
 // import 'package:nuxyong_app/Account/register_page.dart';
 import 'package:nuxyong_app/Pages/homepage.dart';
 import 'package:nuxyong_app/Pages/Pages2.dart';
@@ -31,90 +31,88 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Nux young',
-      home: Scaffold(
-        endDrawer: new Drawer(
-          child: SafeArea(
-            child: new ListView(
-              children: <Widget>[
-                new ListTile(
-                  title: new Text("widget.user.email"),
-                ),
-                new Divider(),
-                new ListTile(
-                  title: new Text("Settings"),
-                  trailing: new Icon(Icons.settings),
-                  onTap: logOut,
-                ),
-                new ListTile(
-                  title: new Text("Login"),
-                  trailing: new Icon(Icons.settings),
-                ),
-              ],
-            ),
+
+
+    return Scaffold(
+      endDrawer: new Drawer(
+        child: SafeArea(
+          child: new ListView(
+            children: <Widget>[
+              new ListTile(
+                title: new Text("widget.user.email"),
+              ),
+              new Divider(),
+              new ListTile(
+                title: new Text("Settings"),
+                trailing: new Icon(Icons.settings),
+                onTap: logOut,
+              ),
+              new ListTile(
+                title: new Text("Login"),
+                trailing: new Icon(Icons.settings),
+              ),
+            ],
+
           ),
         ),
-        appBar: new GradientAppBar(
-          centerTitle: true,
-          title: new Text(
-            'นัดยัง',
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
-          ),
-          backgroundColorStart: THEME,
-          backgroundColorEnd: Colors.blueGrey[900],
-        ),
-
-        // PreferredSize(
-        //   child: new Container(
-        //     padding:
-        //         new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        //     child: new Padding(
-        //       padding: const EdgeInsets.all(
-        //         15,
-        //       ), //ความกว้างสูงยาวAppbar
-        //       child: new Text(
-        //         'PROJECT',
-        //         textAlign: TextAlign.center,
-        //         style: new TextStyle(
-        //             fontSize: 20.0,
-        //             fontWeight: FontWeight.w500,
-        //             color: Colors.white),
-        //       ),
-        //     ),
-
-        //     decoration: new BoxDecoration(
-        //       gradient: new LinearGradient(
-        //         begin: const FractionalOffset(0.3, 2.0),
-        //         end: const FractionalOffset(-0.2, 0.2),
-        //         colors: [
-        //           THEME,
-        //           Colors.lightBlueAccent[700],
-
-        //           /*THEME,
-        //               Colors.blueGrey[800],*/
-        //         ],
-        //       ),
-        //       /*boxShadow: [
-        //           new BoxShadow(
-        //             color: Colors.grey[500],
-        //             blurRadius: 10.0,
-        //             spreadRadius: 0.5,
-        //           )
-        //         ]*/
-        //     ),
-        //   ),
-        //   preferredSize: new Size(
-        //     MediaQuery.of(context).size.width,
-        //     150.0,
-        //   ),
-        // ),
-        body: SafeArea(child: FancyTabBar()),
       ),
+      appBar: new GradientAppBar(
+        centerTitle: true,
+        title: new Text(
+          'นัดยัง',
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+              fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.white),
+        ),
+        backgroundColorStart: THEME,
+        backgroundColorEnd: Colors.blueGrey[900],
+      ),
+
+      // PreferredSize(
+      //   child: new Container(
+      //     padding:
+      //         new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      //     child: new Padding(
+      //       padding: const EdgeInsets.all(
+      //         15,
+      //       ), //ความกว้างสูงยาวAppbar
+      //       child: new Text(
+      //         'PROJECT',
+      //         textAlign: TextAlign.center,
+      //         style: new TextStyle(
+      //             fontSize: 20.0,
+      //             fontWeight: FontWeight.w500,
+      //             color: Colors.white),
+      //       ),
+      //     ),
+
+      //     decoration: new BoxDecoration(
+      //       gradient: new LinearGradient(
+      //         begin: const FractionalOffset(0.3, 2.0),
+      //         end: const FractionalOffset(-0.2, 0.2),
+      //         colors: [
+      //           THEME,
+      //           Colors.lightBlueAccent[700],
+
+      //           /*THEME,
+      //               Colors.blueGrey[800],*/
+      //         ],
+      //       ),
+      //       /*boxShadow: [
+      //           new BoxShadow(
+      //             color: Colors.grey[500],
+      //             blurRadius: 10.0,
+      //             spreadRadius: 0.5,
+      //           )
+      //         ]*/
+      //     ),
+      //   ),
+      //   preferredSize: new Size(
+      //     MediaQuery.of(context).size.width,
+      //     150.0,
+      //   ),
+      // ),
+      body: SafeArea(child: FancyTabBar()),
     );
   }
 }
@@ -155,7 +153,7 @@ class _FancyTabBarState extends State<FancyTabBar>
       bottomNavigationBar: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          callPage(context),
+          callPage(),
           ConstrainedBox(
             constraints: new BoxConstraints(
               minHeight: 68,
@@ -190,7 +188,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                     setState(() {
                       nextIcon = Icons.local_hospital;
                       currentSelected = 2;
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         new MaterialPageRoute(
                           builder: (context) => new MedicalBudhosp(),
@@ -377,19 +375,17 @@ class _FancyTabBarState extends State<FancyTabBar>
   }
 }
 
-Widget callPage(BuildContext context) {
+Widget callPage() {
   if (currentSelected == 2) {
-    return new Home(); //
-  }
-  if (currentSelected == 1) {
-    return new Pagetwo();
-  }
-
-  if (currentSelected == 3) {
-    return new Pagetwo();
-  }
-  if (currentSelected == 4) {
-    return new ME();
+    return Home(); //
+  } else if (currentSelected == 1) {
+    return Pagetwo();
+  } else if (currentSelected == 3) {
+    return Pagetwo();
+  } else if (currentSelected == 4) {
+    return ME();
+  } else {
+    return Home();
   }
 }
 

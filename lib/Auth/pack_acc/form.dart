@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
 
 class FormCard extends StatelessWidget {
-  String validation;
+  final String validation;
   final saveemail;
   final savepwd;
   FormCard({this.saveemail, this.savepwd, this.validation});
@@ -46,6 +47,7 @@ class FormCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: ScreenUtil.getInstance().setSp(26))),
             TextFormField(
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     hintText: "อีเมล",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
@@ -64,6 +66,7 @@ class FormCard extends StatelessWidget {
                   fontSize: ScreenUtil.getInstance().setSp(26)),
             ),
             TextFormField(
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     hintText: "รหัสผ่าน",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),

@@ -5,6 +5,8 @@ import 'package:nuxyong_app/Pages/doctor_page/history.dart';
 import 'package:nuxyong_app/Pages/doctor_page/video.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 
+import 'chat/Tools/screenloadingchat.dart';
+
 class MedicalBudhosp extends StatefulWidget {
   @override
   _MedicalBudhospState createState() => _MedicalBudhospState();
@@ -14,9 +16,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MedicalBudhosp',
-      home: Scaffold(
+    return Scaffold(
         key: _scaffoldKey,
         appBar: GradientAppBar(
           leading: new IconButton(
@@ -36,23 +36,43 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.home,
+                const IconData(0xe800, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.pop(
                   context,
                   new MaterialPageRoute(
                     builder: (context) => new HomePage(
-                      
                     ),
+
                   ),
                 );
               },
             ),
+            SizedBox(
+              width: 5.0,
+            ),
             IconButton(
               icon: Icon(
-                Icons.notifications_none,
+                const IconData(0xe811, fontFamily: 'chat'),
+                color: Colors.blueGrey,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (context) => new LoadingChat(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              width: 5.0,
+            ),
+            IconButton(
+              icon: Icon(
+                const IconData(0xe801, fontFamily: 'chat'),
                 color: Colors.blueGrey,
               ),
               onPressed: () {
@@ -150,13 +170,27 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
           ),
         ),
         /****************************************************************************** */
-        body: Center(
-          child: Text(
-            'Za warudo',
-            style: TextStyle(fontSize: 40.0),
-          ),
-        ),
-      ),
-    );
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFEEEEEE),
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/homewall.png'),
+                  colorFilter: new ColorFilter.mode(
+                      Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                'Za warudo',
+                style: TextStyle(fontSize: 40.0),
+              ),
+            ),
+          ],
+        ));
   }
 }
