@@ -3,28 +3,25 @@ import 'dart:async';
 
 class ColorLoader extends StatefulWidget {
   final List<Color> colors;
-  final imagename;
+
   ColorLoader({
     @required this.colors,
-    @required this.imagename,
   });
 
   @override
   _ColorLoaderState createState() => _ColorLoaderState(
         this.colors,
-        this.imagename,
       );
 }
 
 class _ColorLoaderState extends State<ColorLoader>
     with SingleTickerProviderStateMixin {
   final List<Color> colors;
-  final imagename;
+
   Timer timer;
 
   _ColorLoaderState(
     this.colors,
-    this.imagename,
   );
 
   List<ColorTween> tweenAnimations = [];
@@ -63,7 +60,7 @@ class _ColorLoaderState extends State<ColorLoader>
 
     tweenIndex = 0;
 
-    timer = Timer.periodic(Duration(milliseconds: 1200), (Timer t) {
+    timer = Timer.periodic(Duration(milliseconds: 1000), (Timer t) {
       setState(() {
         tweenIndex = (tweenIndex + 1) % colors.length;
       });
@@ -76,30 +73,14 @@ class _ColorLoaderState extends State<ColorLoader>
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Container(
-            width: 140.0,
-            height: 140.0,
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: AssetImage(imagename),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: new BorderRadius.all(
-                new Radius.circular(100.0),
-              ),
-            ),
-          ),
-        ),
         SizedBox(
           child: CircularProgressIndicator(
-            strokeWidth: 8.0,
+            strokeWidth: 5.0,
             valueColor: colorAnimations[tweenIndex],
             // backgroundColor: Color(0xFFFFFFFF),
           ),
-          height: 150.0,
-          width: 150.0,
+          height: 50.0,
+          width: 50.0,
         )
       ],
     );

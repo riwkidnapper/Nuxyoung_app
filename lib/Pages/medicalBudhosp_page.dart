@@ -40,7 +40,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 color: Colors.blueGrey,
               ),
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.pop(
                   context,
                   new MaterialPageRoute(
                     builder: (context) => new HomePage(),
@@ -57,7 +57,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 color: Colors.blueGrey,
               ),
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (context) => new LoadingChat(),

@@ -185,7 +185,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                     setState(() {
                       nextIcon = Icons.local_hospital;
                       currentSelected = 2;
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         new MaterialPageRoute(
                           builder: (context) => new MedicalBudhosp(),
