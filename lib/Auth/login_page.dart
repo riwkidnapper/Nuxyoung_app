@@ -44,10 +44,10 @@ class _LoginpageState extends State<Loginpage> {
 
   void signInAnonymously() async {
     try {
-      final AuthResult authanoResult =
-          await FirebaseAuth.instance.signInAnonymously();
-      final FirebaseUser anouser = authanoResult.user;
-      print('Signed in: ${anouser.uid}');
+      // final AuthResult authanoResult =
+      //     await FirebaseAuth.instance.signInAnonymously();
+      // final FirebaseUser anouser = authanoResult.user;
+      // print('Signed in: ${anouser.uid}');
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomePage()));
 

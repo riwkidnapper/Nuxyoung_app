@@ -115,7 +115,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
             width: 30.0,
           ),
           InkWell(
-              child: avatar(proflieimg = "assets/images/dvm.jpg",
+              child: avatar(proflieimg = "assets/images/555.jpg",
                   'นพ.นิธิพัฒน์ บุษบารติ'),
               onTap: () async {
                 showDialog(
@@ -130,7 +130,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
                 await loginAction(
                   title = "นพ.นิธิพัฒน์ บุษบารติ",
                   description = "test",
-                  proflieimg = "assets/images/dvm.jpg",
+                  proflieimg = "assets/images/555.jpg",
                 );
                 Navigator.pop(context);
               }),
@@ -142,7 +142,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
     );
   }
 
-  Future<bool> loginAction(String savetitle, savedescription, saveimage) async {
+  Future<bool> loginAction(String savetitle,String  savedescription, String saveimage) async {
     await new Future.delayed(const Duration(milliseconds: 1500));
     return showDialog(
       context: context,
@@ -151,7 +151,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
         title: savetitle,
         description: savedescription,
         buttonText: 'OKAY',
-        image: Image.asset(saveimage),
+        image: saveimage,
       ),
     );
   }
@@ -167,7 +167,7 @@ avatar(imagename, String name) {
           decoration: new BoxDecoration(
             image: new DecorationImage(
               image: AssetImage(imagename),
-              fit: BoxFit.scaleDown,
+              fit: BoxFit.cover,
             ),
             borderRadius: new BorderRadius.all(
               new Radius.circular(100.0),

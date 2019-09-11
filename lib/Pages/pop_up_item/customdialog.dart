@@ -8,7 +8,7 @@ class Consts {
 
 class CustomDialog extends StatelessWidget {
   final String title, description, buttonText;
-  final Image image;
+  final String image;
 
   CustomDialog({
     @required this.title,
@@ -97,16 +97,18 @@ class CustomDialog extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
           child: Container(
-            child: CircleAvatar(
-              child: ClipOval(
-                child: image,
-              ),
-              //backgroundColor: Colors.blueAccent,
-              radius: Consts.avatarRadius,
-            ),
+            width: 140.0,
+            height: 140.0,
             decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                border: new Border.all(color: Colors.grey[400], width: 3.0)),
+              border: new Border.all(color: Colors.grey[400], width: 3.0),
+              borderRadius: new BorderRadius.all(
+                new Radius.circular(100.0),
+              ),              
+              image: new DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ), //...top circlular image part,
       ],
