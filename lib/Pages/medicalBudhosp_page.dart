@@ -44,7 +44,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   context,
                   new MaterialPageRoute(
                     builder: (context) => new HomePage(
-                      user: null,
+                      
                     ),
                   ),
                 );

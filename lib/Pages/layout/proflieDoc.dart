@@ -92,7 +92,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           InkWell(
-            child: avatar("assets/images/dvm.jpg", 'Profile DocTor l'),
+            child: avatar("assets/images/555.jpg", 'Profile DocTor l'),
             // onTap: () {
             //   ColorLoader(
             //     colors: colors,

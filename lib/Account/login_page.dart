@@ -31,7 +31,7 @@ class _LoginpageState extends State<Loginpage> {
         final FirebaseUser user = authResult.user;
         print('Signed in: ${user.uid},${user.email}');
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HomePage(user: user)));
+            MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
         print('Error : $e');
       }
@@ -45,7 +45,7 @@ class _LoginpageState extends State<Loginpage> {
       final FirebaseUser anouser = authanoResult.user;
       print('Signed in: ${anouser.uid}');
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomePage(user: anouser)));
+          MaterialPageRoute(builder: (context) => HomePage()));
     } catch (e) {
       print('Error : $e');
     }

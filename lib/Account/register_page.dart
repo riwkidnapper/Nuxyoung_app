@@ -419,7 +419,7 @@ class _Resgister_pageState extends State<Resgister_page> {
       context,
       MaterialPageRoute(
         builder: (context) => HomePage(
-          user: null,
+          //user: null,
         ),
       ),
     );

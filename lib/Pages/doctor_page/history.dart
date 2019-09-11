@@ -59,11 +59,7 @@ class MyHomePageState extends State<MyHisToRy> {
                 child: Column(
                   children: <Widget>[
                     // Name input *****************************************************************************************************
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.95,
-                          child: FormBuilderChipsInput(
+                           FormBuilderChipsInput(
                             decoration: InputDecoration(labelText: "Names"),
                             attribute: 'chips_test',
                             // readonly: true,
@@ -119,7 +115,7 @@ class MyHomePageState extends State<MyHisToRy> {
                               );
                             },
                           ),
-                        ),
+
                         /*Container(
                           width: MediaQuery.of(context).size.width*0.5,
                           child: FormBuilderChipsInput(
@@ -179,8 +175,8 @@ class MyHomePageState extends State<MyHisToRy> {
                             },
                           ),
                         ),*/
-                      ],
-                    ),
+                      
+                    
                     // Name input *****************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     // Identification Number ******************************************************************************************
@@ -290,7 +286,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     ),
                     // Address ********************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
-                    FormBuilderRadio(
+                    /*FormBuilderRadio(
                       decoration:
                           InputDecoration(labelText: 'My chosen language'),
                       attribute: "best_language",
@@ -306,7 +302,24 @@ class MyHomePageState extends State<MyHisToRy> {
                       ]
                           .map((lang) => FormBuilderFieldOption(value: lang))
                           .toList(growable: false),
-                    ),
+                    ),*/
+                    /* TextField(
+                      decoration: InputDecoration(
+                        labelText: "History",
+                        labelStyle: TextStyle(textBaseline: TextBaseline.alphabetic),
+                        hintText: 'เครื่องปลาสะระอึที่มีอายุไข 80 ปีเซอไอแซ็คมาโนจ'
+                      ),
+                      onChanged: _onChanged,
+                      maxLines: 10,
+                    ),*/
+                    /********************************************************************************************************* */
+                    new FormBuilderTextField(
+                        attribute: 'History',
+                        decoration: InputDecoration(labelText: "History",hintText: 'treatment history'),
+                        keyboardType: TextInputType.multiline, 
+                        onChanged: _onChanged,                      
+                        maxLines: null,
+                        ),
                     FormBuilderSegmentedControl(
                       decoration:
                           InputDecoration(labelText: "Movie Rating (Archer)"),
