@@ -2,15 +2,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nuxyong_app/Auth/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
 
 class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //logo before welcome
-      //body: SplashScreen(),
+      body: SplashScreen(),
 
-      body: Loginpage(),
+      //body: Loginpage(),
     );
   }
 }
@@ -22,13 +24,41 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
-    var _duration = new Duration(seconds: 5);
+    var _duration = new Duration(seconds: 3);
     //did you seen :) now lets try with 10 seconds
     return Timer(_duration, navigationPage);
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed("/login");
+    FirebaseAuth.instance
+        .currentUser()
+        .then((user) => {
+              if (user == null)
+                {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Loginpage(),
+                    ),
+                  )
+                }
+              else
+                {
+                  // Firestore.instance
+                  //     .collection("users")
+                  //     .document(user.uid)
+                  //     .get()
+                  //     .then((DocumentSnapshot result) =>
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  ).catchError((err) => print(err))
+                }
+            })
+        .catchError((err) => print(err));
+    super.initState();
   }
 
   @override

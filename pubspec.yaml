@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -27,8 +27,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_auth:
   firebase_core:
-  video_player : ^0.10.2+1
+  cached_network_image: ^1.1.1
+  cloud_firestore: ^0.12.9+4
+  shared_preferences: ^0.5.3+4
+  video_player: ^0.10.2+1
   chewie: ^0.9.7
+  firebase_database: ^3.0.7
 
 dev_dependencies:
   gradient_app_bar: ^0.0.1

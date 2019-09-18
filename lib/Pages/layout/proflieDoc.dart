@@ -3,12 +3,6 @@ import 'package:nuxyong_app/Pages/pop_up_item/adddoc.dart';
 import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyong_app/Pages/pop_up_item/customdialog.dart';
 
-enum DialogState {
-  LOADING,
-  COMPLETED,
-  DISMISSED,
-}
-
 List<Color> colors = [
   Colors.blueGrey,
   Colors.blueGrey[400],
@@ -86,12 +80,6 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
           InkWell(
               child: avatar(proflieimg = 'assets/images/profiledoc.png',
                   'นพ.ธนาธรณ์ พุฒิกานนท์'),
-              // onTap: () {
-              //   ColorLoader(
-              //     colors: colors,
-              //     ImageName: 'assets/images/dvm.jpg',
-              //   );
-
               onTap: () async {
                 showDialog(
                     context: context,
@@ -142,7 +130,8 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
     );
   }
 
-  Future<bool> loginAction(String savetitle,String  savedescription, String saveimage) async {
+  Future<bool> loginAction(
+      String savetitle, String savedescription, String saveimage) async {
     await new Future.delayed(const Duration(milliseconds: 1500));
     return showDialog(
       context: context,

@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'Tools/customCard.dart';
+import 'Tools/custom_heading.dart';
+
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nuxyong_app/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyong_app/pull_to_refresh.dart';
-
-import 'Tools/custom_heading.dart';
-import 'chat.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -19,6 +22,25 @@ class _ChatScreenState extends State<ChatScreen> {
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
+    // Navigator.of(context).pop();
+    // await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => ChatScreen()),
+    // );
+  }
+
+  FirebaseUser currentUser;
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
   }
 
   @override
@@ -76,143 +98,120 @@ class _ChatScreenState extends State<ChatScreen> {
               CustomHeading(
                 title: 'Direct Messages',
               ),
-              ListView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemBuilder: (BuildContext context, int index) {
-                  return Material(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Chat(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withAlpha(50),
-                              offset: Offset(0, 0),
-                              blurRadius: 5,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Stack(
-                              children: <Widget>[
-                                Container(
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        'https://i.pravatar.cc/11$index'),
-                                    minRadius: 35,
-                                    backgroundColor: Colors.grey[200],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Jocelyn',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5),
-                                  ),
-                                  Text(
-                                    'Hi How are you ?',
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5),
-                                  ),
-                                  Text(
-                                    '11:00 AM',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(right: 15),
-                                  child: Icon(
-                                    Icons.chevron_right,
-                                    size: 18,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+              StreamBuilder(
+                stream: Firestore.instance.collection('users').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        if ((snapshot.data.documents[index]['rule'] ==
+                                "doctor") ||
+                            (snapshot.data.documents[index]['rule'] ==
+                                    "nurse") &&
+                                (snapshot.data.documents[index]['rule'] !=
+                                    "")) {
+                          if ((snapshot.data.documents[index]['uid'] !=
+                              currentUser?.uid)) {
+                            return Customcard(
+                              photoUser: snapshot.data.documents[index]
+                                  ['photoUser'],
+                              username: snapshot.data.documents[index]
+                                  ['userName'],
+                              email: snapshot.data.documents[index]['email'],
+                            );
+                          } else {
+                            return Container();
+                          }
+                        } else {
+                          return Container();
+                        }
+                      },
+                    );
+                  }
                 },
               ),
             ],
           ),
         ),
-      )
-
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: <Widget>[
-          //     Container(
-          //       decoration: kMessageContainerDecoration,
-          //       child: Row(
-          //         crossAxisAlignment: CrossAxisAlignment.center,
-          //         children: <Widget>[
-          //           Expanded(
-          //             child: TextField(
-          //               onChanged: (value) {
-          //                 //Do something with the user input.
-          //               },
-          //               decoration: kMessageTextFieldDecoration,
-          //             ),
-          //           ),
-          //           FlatButton(
-          //             onPressed: () {
-          //               //Implement send functionality.
-          //             },
-          //             child: Text(
-          //               'Send',
-          //               style: kSendButtonTextStyle,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          ),
+      )),
     );
   }
 }
+
+//  child: Row(
+//                           children: <Widget>[
+//                             Stack(
+//                               children: <Widget>[
+//                                 Container(
+//                                   child: CircleAvatar(
+//                                     backgroundImage: NetworkImage(
+//                                         'https://i.pravatar.cc/11$index'),
+//                                     minRadius: 35,
+//                                     backgroundColor: Colors.grey[200],
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             Padding(
+//                               padding: EdgeInsets.only(left: 10),
+//                             ),
+//                             Expanded(
+//                               child: Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: <Widget>[
+//                                   Text(
+//                                     'Jocelyn',
+//                                     style: TextStyle(
+//                                       color: Colors.black,
+//                                       fontWeight: FontWeight.bold,
+//                                       fontSize: 18,
+//                                     ),
+//                                   ),
+//                                   Padding(
+//                                     padding: EdgeInsets.only(top: 5),
+//                                   ),
+//                                   Text(
+//                                     'Hi How are you ?',
+//                                     style: TextStyle(
+//                                       color: Colors.blueGrey,
+//                                       fontSize: 14,
+//                                     ),
+//                                   ),
+//                                   Padding(
+//                                     padding: EdgeInsets.only(top: 5),
+//                                   ),
+//                                   Text(
+//                                     '11:00 AM',
+//                                     style: TextStyle(
+//                                       color: Colors.grey,
+//                                       fontSize: 12,
+//                                     ),
+//                                   )
+//                                 ],
+//                               ),
+//                             ),
+//                             Column(
+//                               children: <Widget>[
+//                                 Padding(
+//                                   padding: EdgeInsets.only(right: 15),
+//                                   child: Icon(
+//                                     Icons.chevron_right,
+//                                     size: 18,
+//                                   ),
+//                                 )
+//                               ],
+//                             )
+//                           ],
+//                         ),

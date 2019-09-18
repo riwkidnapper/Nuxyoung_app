@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
+
+import 'bomtombar.dart';
 
 class TabItem extends StatefulWidget {
   TabItem({
@@ -66,13 +67,15 @@ class _TabItemState extends State<TabItem> {
                       ? DefaultTextStyle(
                           style: TextStyle(
                             color: THEME,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
                           child: Text(widget.title))
                       : DefaultTextStyle(
                           style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
                           ),
                           child: Text(widget.title)),
                 )),
@@ -93,7 +96,6 @@ class _TabItemState extends State<TabItem> {
                                 alignment: Alignment(0, -3.5),
                                 icon: Icon(
                                   widget.iconData,
-                                  size: 35,
                                 ),
                                 onPressed: () {
                                   widget.callbackFunction();
@@ -105,7 +107,6 @@ class _TabItemState extends State<TabItem> {
                                 alignment: Alignment(0, 0.2),
                                 icon: Icon(
                                   widget.iconData,
-                                  size: 35,
                                 ),
                                 onPressed: () {
                                   widget.callbackFunction();
@@ -121,7 +122,6 @@ class _TabItemState extends State<TabItem> {
                                 alignment: Alignment(0, 0.2),
                                 icon: Icon(
                                   widget.iconData,
-                                  size: 35,
                                 ),
                                 onPressed: () {
                                   widget.callbackFunction();
@@ -132,7 +132,6 @@ class _TabItemState extends State<TabItem> {
                                 alignment: Alignment(0, 0.2),
                                 icon: Icon(
                                   widget.iconData,
-                                  size: 35,
                                 ),
                                 onPressed: () {
                                   widget.callbackFunction();

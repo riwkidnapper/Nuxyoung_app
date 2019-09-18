@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
-
 import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
-
 import 'package:nuxyong_app/Auth/pack_acc/form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+List<Color> colors = [
+  Colors.blueGrey,
+  Colors.blueGrey[400],
+];
 
 class Loginpage extends StatefulWidget {
   @override
@@ -15,6 +19,7 @@ class _LoginpageState extends State<Loginpage> {
   final _formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
+  FirebaseUser currentUser;
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -28,76 +33,84 @@ class _LoginpageState extends State<Loginpage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
-        final AuthResult authResult = await FirebaseAuth.instance
+        //final AuthResult authResult =
+        await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
-        final FirebaseUser user = authResult.user;
-        print('Signed in: ${user.uid},${user.email}');
+        //final FirebaseUser firebaseUser = authResult.user;
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HomePage()));
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                child: ColorLoader(
+                  colors: colors,
+                ),
+              );
+            });
 
+        //print('Signed in: ${user.uid},${user.email}');
+        Future.delayed(new Duration(milliseconds: 1500), () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              ModalRoute.withName('/'));
+        });
       } catch (e) {
-        print('Error : $e');
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Color(0xFFFFFFFF),
+                content: SingleChildScrollView(
+                    child: Center(
+                        child: Column(
+                  children: <Widget>[
+                    Text('❗️มีบางอย่างผิดพลาด.'),
+                    Text('\tโปรดลองใหม่อีกครั้ง'),
+                  ],
+                ))),
+              );
+            });
       }
     }
   }
 
   void signInAnonymously() async {
     try {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Center(
+              child: ColorLoader(
+                colors: colors,
+              ),
+            );
+          });
+
       // final AuthResult authanoResult =
       //     await FirebaseAuth.instance.signInAnonymously();
       // final FirebaseUser anouser = authanoResult.user;
       // print('Signed in: ${anouser.uid}');
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomePage()));
-
+      Future.delayed(new Duration(milliseconds: 1200), () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+            ModalRoute.withName('/'));
+      });
     } catch (e) {
       print('Error : $e');
     }
   }
-
-  bool _isSelected = false;
-
-  void _radio() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
-  }
-
-  Widget radioButton(bool isSelected) => Container(
-        width: 16.0,
-        height: 16.0,
-        padding: EdgeInsets.all(2.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(width: 2.0, color: Colors.black)),
-        child: isSelected
-            ? Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-              )
-            : Container(),
-      );
-
-  Widget horizontalLine() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Container(
-          width: ScreenUtil.getInstance().setWidth(120),
-          height: 1.0,
-          color: Colors.black26.withOpacity(.2),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance =
         ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: buildLogin(),
       ),
@@ -127,27 +140,24 @@ class _LoginpageState extends State<Loginpage> {
         ],
       ),
       SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text("Welcome to Login",
-                      style: TextStyle(
-                          fontFamily: "",
-                          fontSize: ScreenUtil.getInstance().setSp(40),
-                          letterSpacing: .6,
-                          fontWeight: FontWeight.bold)),
-                  Text("****************",
-                      style: TextStyle(
-                          fontFamily: "",
-                          fontSize: ScreenUtil.getInstance().setSp(35),
-                          letterSpacing: .6,
-                          fontWeight: FontWeight.bold))
-                ],
-              ),
+              Text("Welcome to Login",
+                  style: TextStyle(
+                      fontFamily: "",
+                      fontSize: ScreenUtil.getInstance().setSp(40),
+                      letterSpacing: .6,
+                      fontWeight: FontWeight.bold)),
+              Text("****************",
+                  style: TextStyle(
+                      fontFamily: "",
+                      fontSize: ScreenUtil.getInstance().setSp(35),
+                      letterSpacing: .6,
+                      fontWeight: FontWeight.bold)),
               SizedBox(
                 height: ScreenUtil.getInstance().setHeight(220),
               ),
@@ -167,17 +177,6 @@ class _LoginpageState extends State<Loginpage> {
                       SizedBox(
                         width: 12.0,
                       ),
-                      GestureDetector(
-                        onTap: _radio,
-                        child: radioButton(_isSelected),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      Text(
-                        "Remember me",
-                        style: TextStyle(fontSize: 16, fontFamily: ""),
-                      )
                     ],
                   ),
                   InkWell(
@@ -221,61 +220,8 @@ class _LoginpageState extends State<Loginpage> {
               SizedBox(
                 height: ScreenUtil.getInstance().setHeight(30),
               ),
-              /*Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      horizontalLine(),
-                      Text("Social Login",
-                          style: TextStyle(
-                              fontSize: 16.0, fontFamily: "Poppins-Medium")),
-                      horizontalLine()
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(30),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF102397),
-                          Color(0xFF187adf),
-                          Color(0xFF00eaf8),
-                        ],
-                        iconData: CustomIcons.facebook,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFFff4f38),
-                          Color(0xFFff355d),
-                        ],
-                        iconData: CustomIcons.googlePlus,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF17ead9),
-                          Color(0xFF6078ea),
-                        ],
-                        iconData: CustomIcons.twitter,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF00c6fb),
-                          Color(0xFF005bea),
-                        ],
-                        iconData: CustomIcons.linkedin,
-                        onPressed: () {},
-                      )
-                    ],
-                  ),*/
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(60),
-              ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
@@ -297,11 +243,14 @@ class _LoginpageState extends State<Loginpage> {
                         )),
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 70.0,
+              ),
             ],
           ),
         ),
-      )
+      ),
     ];
   }
 }

@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
+  Chat({
+    @required this.photoUser,
+    @required this.username,
+  });
+  final photoUser;
+  final username;
   @override
-  _ChatState createState() => _ChatState();
+  _ChatState createState() =>
+      _ChatState(photoUser: photoUser, username: username);
 }
 
 class _ChatState extends State<Chat> {
+  _ChatState({
+    @required this.photoUser,
+    @required this.username,
+  });
+  final photoUser;
+  final username;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +32,24 @@ class _ChatState extends State<Chat> {
               width: 40,
               height: 40,
               margin: EdgeInsets.fromLTRB(0, 5, 10, 0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage('https://i.pravatar.cc/115'),
-                backgroundColor: Colors.grey[200],
-                minRadius: 30,
-              ),
+              child: (photoUser != "")
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(photoUser),
+                      backgroundColor: Colors.grey[200],
+                      minRadius: 30,
+                    )
+                  : Icon(
+                      Icons.account_circle,
+                      size: 40.0,
+                      color: Colors.grey,
+                    ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Selina Kyle',
+                  username,
                   style: TextStyle(color: Colors.black),
                 ),
                 Text(
