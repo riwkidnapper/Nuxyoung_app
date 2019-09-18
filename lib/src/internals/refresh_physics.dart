@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 
-import 'package:nuxyong_app/pull_to_refresh.dart';
-import 'package:nuxyong_app/src/internals/slivers.dart';
+import 'package:nuxyoung/pull_to_refresh.dart';
+import 'package:nuxyoung/src/internals/slivers.dart';
 
 /// a scrollPhysics for config refresh scroll effect,enable viewport out of edge whatever physics it is
 /// in [ClampingScrollPhysics], it doesn't allow to flip out of edge,but in RefreshPhysics,it will allow to do that,

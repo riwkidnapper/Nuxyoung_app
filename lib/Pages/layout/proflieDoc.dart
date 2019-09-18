@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/adddoc.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/customdialog.dart';
+import 'package:nuxyoung/Pages/pop_up_item/adddoc.dart';
+import 'package:nuxyoung/Pages/pop_up_item/color_loader.dart';
+import 'package:nuxyoung/Pages/pop_up_item/customdialog.dart';
 
 List<Color> colors = [
   Colors.blueGrey,

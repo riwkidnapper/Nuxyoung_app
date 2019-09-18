@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:nuxyong_app/package/chewie/src/chewie_player.dart';
-import 'package:nuxyong_app/package/chewie/src/chewie_progress_colors.dart';
-import 'package:nuxyong_app/package/chewie/src/material_progress_bar.dart';
-import 'package:nuxyong_app/package/chewie/src/utils.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_progress_colors.dart';
+import 'package:nuxyoung/package/chewie/src/material_progress_bar.dart';
+import 'package:nuxyoung/package/chewie/src/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/video_player.dart';
+import 'package:nuxyoung/package/video_player.dart';
 
 class MaterialControls extends StatefulWidget {
   const MaterialControls({Key key}) : super(key: key);

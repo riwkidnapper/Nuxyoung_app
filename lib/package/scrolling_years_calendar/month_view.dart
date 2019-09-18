@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/utils/dates.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/utils/screen_sizes.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/month_title.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/day_number.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/utils/dates.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/utils/screen_sizes.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/month_title.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/day_number.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({

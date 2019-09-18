@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/layout/article.dart';
-import 'package:nuxyong_app/Pages/layout/proflieDoc.dart';
-import 'package:nuxyong_app/pull_to_refresh.dart';
+import 'package:nuxyoung/Pages/layout/article.dart';
+import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
+import 'package:nuxyoung/pull_to_refresh.dart';
 // import './pop_up_item/color_loader.dart';
 import 'layout/header.dart';
 

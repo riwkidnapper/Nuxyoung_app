@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/color_loader.dart';
-import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
-import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
-import 'package:nuxyong_app/Auth/pack_acc/form.dart';
+import 'package:nuxyoung/Pages/pop_up_item/color_loader.dart';
+import 'package:nuxyoung/Tebbar/home_bottombar.dart';
+import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
+import 'package:nuxyoung/Auth/pack_acc/form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 List<Color> colors = [

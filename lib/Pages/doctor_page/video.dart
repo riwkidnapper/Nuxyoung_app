@@ -1,8 +1,8 @@
-import 'package:nuxyong_app/package/chewie/chewie.dart';
-import 'package:nuxyong_app/package/chewie/src/chewie_player.dart';
+import 'package:nuxyoung/package/chewie/chewie.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/video_player.dart';
+import 'package:nuxyoung/package/video_player.dart';
 
 void main() {
   runApp(
@@ -65,11 +65,9 @@ class _ChewieDemoState extends State<ChewieDemo> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-
       ),
       body: Column(
         children: <Widget>[

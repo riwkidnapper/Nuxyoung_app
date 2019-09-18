@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nuxyong_app/Auth/login_page.dart';
+import 'package:nuxyoung/Auth/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
+import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
 class Welcome extends StatelessWidget {
   @override

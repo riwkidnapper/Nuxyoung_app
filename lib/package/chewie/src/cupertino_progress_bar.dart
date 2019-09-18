@@ -1,7 +1,7 @@
-import 'package:nuxyong_app/package/chewie/src/chewie_progress_colors.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_progress_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nuxyong_app/package/video_player.dart';
+import 'package:nuxyoung/package/video_player.dart';
 
 class CupertinoVideoProgressBar extends StatefulWidget {
   CupertinoVideoProgressBar(

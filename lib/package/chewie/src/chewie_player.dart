@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:nuxyong_app/package/chewie/src/chewie_progress_colors.dart';
-import 'package:nuxyong_app/package/chewie/src/player_with_controls.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_progress_colors.dart';
+import 'package:nuxyoung/package/chewie/src/player_with_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nuxyong_app/package/screen/screen.dart';
-import 'package:nuxyong_app/package/video_player.dart';
+import 'package:nuxyoung/package/screen/screen.dart';
+import 'package:nuxyoung/package/video_player.dart';
 
 typedef Widget ChewieRoutePageBuilder(
     BuildContext context,

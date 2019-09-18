@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:nuxyong_app/Pages/doctor_page/calendar.dart';
-import 'package:nuxyong_app/Pages/doctor_page/history.dart';
-import 'package:nuxyong_app/Pages/doctor_page/video.dart';
-import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
+import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
+import 'package:nuxyoung/Pages/doctor_page/history.dart';
+import 'package:nuxyoung/Pages/doctor_page/video.dart';
+import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
 import 'chat/Tools/screenloadingchat.dart';
 
@@ -43,9 +43,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 Navigator.pop(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => new HomePage(
-                    ),
-
+                    builder: (context) => new HomePage(),
                   ),
                 );
               },

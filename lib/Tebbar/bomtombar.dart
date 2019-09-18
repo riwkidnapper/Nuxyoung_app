@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
-import 'package:nuxyong_app/Pages/homepage.dart';
-import 'package:nuxyong_app/Pages/Pages2.dart';
-import 'package:nuxyong_app/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyong_app/Pages/me.dart';
+import 'package:nuxyoung/Pages/homepage.dart';
+import 'package:nuxyoung/Pages/Pages2.dart';
+import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
+import 'package:nuxyoung/Pages/me.dart';
 
 import 'Teb_iteam.dart';
 
 int currentSelected = 2;
+
 class FancyTabBar extends StatefulWidget {
   @override
   _FancyTabBarState createState() => _FancyTabBarState();

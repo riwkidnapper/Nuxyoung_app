@@ -2,7 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/chat/chat.dart';
+import 'package:nuxyoung/Pages/chat/chat.dart';
 
 class Customcard extends StatefulWidget {
   Customcard({

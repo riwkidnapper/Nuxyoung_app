@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:nuxyong_app/package/chewie/src/chewie_player.dart';
-import 'package:nuxyong_app/package/chewie/src/chewie_progress_colors.dart';
-import 'package:nuxyong_app/package/chewie/src/cupertino_progress_bar.dart';
-import 'package:nuxyong_app/package/chewie/src/utils.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_progress_colors.dart';
+import 'package:nuxyoung/package/chewie/src/cupertino_progress_bar.dart';
+import 'package:nuxyoung/package/chewie/src/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/open_iconic_flutter/open_iconic_flutter.dart';
-import 'package:nuxyong_app/package/video_player.dart';
+import 'package:nuxyoung/package/open_iconic_flutter/open_iconic_flutter.dart';
+import 'package:nuxyoung/package/video_player.dart';
 
 class CupertinoControls extends StatefulWidget {
   const CupertinoControls({

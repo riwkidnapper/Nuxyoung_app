@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:nuxyong_app/package/screenutil/flutter_screenutil.dart';
+import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
 
 class FormCard extends StatelessWidget {
   final String validation;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nuxyong_app/Pages/chat/chat_screen.dart';
+import 'package:nuxyoung/Pages/chat/chat_screen.dart';
 import 'dart:async';
 
 class LoadingChat extends StatefulWidget {

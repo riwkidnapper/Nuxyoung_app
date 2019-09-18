@@ -1,5 +1,5 @@
-name: nuxyong_app
-description: A new Flutter project.
+name: nuxyoung
+description: A new Flutter application.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -32,7 +32,7 @@ dependencies:
   shared_preferences: ^0.5.3+4
   video_player: ^0.10.2+1
   chewie: ^0.9.7
-  firebase_database: ^3.0.7
+  # firebase_database: ^3.0.7
 
 dev_dependencies:
   gradient_app_bar: ^0.0.1
