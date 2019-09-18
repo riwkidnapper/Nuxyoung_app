@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/history.dart';
+import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
 import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
@@ -109,7 +111,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               ),
               ListTile(
                 leading: Icon(Icons.history),
-                title: Text('History'),
+                title: Text('แบบฟอร์ม'),
                 onTap: () {
                   // Update the state of the app
                   // ...
@@ -120,17 +122,18 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               ),
               ListTile(
                 leading: Icon(Icons.accessible_forward),
-                title: Text('Initial symptoms'),
+                title: Text('อาการเบื้องต้น'),
                 onTap: () {
                   // Update the state of the app
                   // ...
                   // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SymTom()));
                 },
               ),
               ListTile(
                 leading: Icon(Icons.videocam),
-                title: Text('Video'),
+                title: Text('วิดีโอ'),
                 onTap: () {
                   // Update the state of the app
                   // ...
@@ -141,7 +144,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               ),
               ListTile(
                 leading: Icon(Icons.chat),
-                title: Text('Chat'),
+                title: Text('แชท'),
                 onTap: () {
                   // Update the state of the app
                   // ...
@@ -151,7 +154,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               ),
               ListTile(
                 leading: Icon(Icons.calendar_today),
-                title: Text('Calendar'),
+                title: Text('ปฏิทิน'),
                 onTap: () {
                   // Update the state of the app
                   // ...
