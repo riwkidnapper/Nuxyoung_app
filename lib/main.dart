@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.teal,
       ),
       routes: <String, WidgetBuilder>{
-        'main': (BuildContext context) => HomePage(),
+        '/home': (BuildContext context) => HomePage(),
         '/login': (BuildContext context) => Loginpage()
       },
       title: 'Nux Young',

@@ -10,7 +10,7 @@
 .svn/
 *.lock
 *.yaml
-
+*.sh
 # IntelliJ related
 *.iml
 *.ipr

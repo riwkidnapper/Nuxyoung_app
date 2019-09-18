@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:nuxyong_app/Pages/layout/article.dart';
 import 'package:nuxyong_app/Pages/layout/proflieDoc.dart';
 import 'package:nuxyong_app/pull_to_refresh.dart';
@@ -15,7 +14,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  bool selected = false;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -33,7 +31,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new Stack(
+    return Stack(
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
