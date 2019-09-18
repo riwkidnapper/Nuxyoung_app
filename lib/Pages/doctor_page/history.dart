@@ -39,7 +39,7 @@ class MyHomePageState extends State<MyHisToRy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Form"),
+        title: Text("แบบฟอร์ม"),
         backgroundColor: Colors.blueGrey[500],
       ),
       body: Padding(
@@ -59,7 +59,7 @@ class MyHomePageState extends State<MyHisToRy> {
                   children: <Widget>[
                     // Name input *****************************************************************************************************
                            FormBuilderChipsInput(
-                            decoration: InputDecoration(labelText: "Names"),
+                            decoration: InputDecoration(labelText: "ชื่อ-นามสกุล"),
                             attribute: 'chips_test',
                             // readonly: true,
                             onChanged: _onChanged,
@@ -182,7 +182,7 @@ class MyHomePageState extends State<MyHisToRy> {
                      FormBuilderTextField(
                       attribute: "Identification Number",
                       decoration: InputDecoration(
-                        labelText: "Identification Number",
+                        labelText: "เลขบัตรประจำตัวประชาชน",
                         /*border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),*/
@@ -204,7 +204,7 @@ class MyHomePageState extends State<MyHisToRy> {
                       format: DateFormat("yyyy-MM-dd"),
                       initialValue: DateTime.now(),
                       decoration:
-                          InputDecoration(labelText: "Appointment Time"),
+                          InputDecoration(labelText: "วันเวลาที่เข้ารับการรักษา"),
                       // readonly: true,
                     ),
                     // Date ***********************************************************************************************************
@@ -213,7 +213,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     FormBuilderDropdown(
                       attribute: "gender",
                       decoration: InputDecoration(
-                        labelText: "Gender",
+                        labelText: "เพศ",
                         /*border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),*/
@@ -235,7 +235,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     FormBuilderTextField(
                       attribute: "age",
                       decoration: InputDecoration(
-                        labelText: "Age",
+                        labelText: "อายุ",
                         /*border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),*/
@@ -251,12 +251,8 @@ class MyHomePageState extends State<MyHisToRy> {
                     //-----------------------------------------------------------------------------------------------------------------
                     // Address ********************************************************************************************************
                     FormBuilderTypeAhead(
-                      // initialValue: "Canada",
                       decoration: InputDecoration(
-                        labelText: "Country",
-                        /*border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),*/
+                        labelText: "จังหวัด",
                       ),
                       attribute: 'country',
                       onChanged: _onChanged,
@@ -283,6 +279,27 @@ class MyHomePageState extends State<MyHisToRy> {
                         }
                       },
                     ),
+                    new FormBuilderTextField(
+                        attribute: 'District',
+                        decoration: InputDecoration(labelText: "ตำบล",hintText: null),
+                        keyboardType: TextInputType.multiline, 
+                        onChanged: _onChanged,                      
+                        maxLines: 1,
+                        ),
+                    new FormBuilderTextField(
+                        attribute: 'subdistrict',
+                        decoration: InputDecoration(labelText: "อำเภอ",hintText: null),
+                        keyboardType: TextInputType.multiline, 
+                        onChanged: _onChanged,                      
+                        maxLines: 1,
+                        ),
+                    new FormBuilderTextField(
+                        attribute: 'postcode',
+                        decoration: InputDecoration(labelText: "รหัสไปรษณีย์",hintText: null),
+                        keyboardType: TextInputType.multiline, 
+                        onChanged: _onChanged,                      
+                        maxLines: 1,
+                        ),   
                     // Address ********************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     /*FormBuilderRadio(
@@ -314,12 +331,12 @@ class MyHomePageState extends State<MyHisToRy> {
                     /********************************************************************************************************* */
                     new FormBuilderTextField(
                         attribute: 'History',
-                        decoration: InputDecoration(labelText: "History",hintText: 'treatment history'),
+                        decoration: InputDecoration(labelText: "ประวัติการเข้ารับการรักษา",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
                         maxLines: null,
                         ),
-                    FormBuilderSegmentedControl(
+                    /*FormBuilderSegmentedControl(
                       decoration:
                           InputDecoration(labelText: "Movie Rating (Archer)"),
                       attribute: "movie_rating",
@@ -329,14 +346,14 @@ class MyHomePageState extends State<MyHisToRy> {
                               (number) => FormBuilderFieldOption(value: number, child: Text("$number", style: TextStyle(fontWeight: FontWeight.bold),),))
                           .toList(),
                       onChanged: _onChanged,
-                    ),
-                    FormBuilderSwitch(
+                    ),*/
+                   /* FormBuilderSwitch(
                       label: Text('I Accept the tems and conditions'),
                       attribute: "accept_terms_switch",
                       initialValue: true,
                       onChanged: _onChanged,
-                    ),
-                    FormBuilderStepper(
+                    ),*/
+                   /* FormBuilderStepper(
                       decoration: InputDecoration(labelText: "Stepper"),
                       attribute: "stepper",
                       initialValue: 10,
@@ -355,8 +372,8 @@ class MyHomePageState extends State<MyHisToRy> {
                           return null;
                         }
                       ],
-                    ),
-                    FormBuilderRate(
+                    ),*/
+                    /*FormBuilderRate(
                       decoration: InputDecoration(labelText: "Rate this form"),
                       attribute: "rate",
                       iconSize: 32.0,
@@ -435,7 +452,7 @@ class MyHomePageState extends State<MyHisToRy> {
                           );
                         },
                       ),
-                    ),
+                    ),*/
                     FormBuilderSignaturePad(
                       decoration: InputDecoration(labelText: "Signature"),
                       attribute: "signature",
@@ -477,7 +494,7 @@ class MyHomePageState extends State<MyHisToRy> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        _fbKey.currentState.reset();
+                        _fbKey.currentState.fields.clear();
                       },
                     ),
                   ),
