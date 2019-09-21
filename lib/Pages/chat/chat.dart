@@ -1,254 +1,228 @@
-import 'package:flutter/material.dart';
+// //Chat with Cloud Firestore
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
-class Chat extends StatefulWidget {
-  Chat({
-    @required this.photoUser,
-    @required this.username,
-  });
-  final photoUser;
-  final username;
-  @override
-  _ChatState createState() =>
-      _ChatState(photoUser: photoUser, username: username);
-}
+// import 'package:flutter/material.dart';
 
-class _ChatState extends State<Chat> {
-  _ChatState({
-    @required this.photoUser,
-    @required this.username,
-  });
-  final photoUser;
-  final username;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.4,
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        title: Row(
-          children: <Widget>[
-            Container(
-              width: 40,
-              height: 40,
-              margin: EdgeInsets.fromLTRB(0, 5, 10, 0),
-              child: (photoUser != "")
-                  ? CircleAvatar(
-                      backgroundImage: NetworkImage(photoUser),
-                      backgroundColor: Colors.grey[200],
-                      minRadius: 30,
-                    )
-                  : Icon(
-                      Icons.account_circle,
-                      size: 40.0,
-                      color: Colors.grey,
-                    ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  username,
-                  style: TextStyle(color: Colors.black),
-                ),
-                Text(
-                  'Online Now',
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 12,
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Flexible(
-                  child: ListView.builder(
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Today',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                            Bubble(
-                              message: 'Hi How are you ?',
-                              isMe: true,
-                            ),
-                            Bubble(
-                              message: 'have you seen the docs yet?',
-                              isMe: true,
-                            ),
-                            Text(
-                              'Feb 25, 2018',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                            Bubble(
-                              message: 'i am fine !',
-                              isMe: false,
-                            ),
-                            Bubble(
-                              message: 'yes i\'ve seen the docs',
-                              isMe: false,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[300],
-                  offset: Offset(-2, 0),
-                  blurRadius: 5,
-                ),
-              ]),
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.camera,
-                      color: Color(0xff3E8DF3),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.image,
-                      color: Color(0xff3E8DF3),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Message',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.send,
-                      color: Color(0xff3E8DF3),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+// class Chat extends StatefulWidget {
+//   final FirebaseUser user;
+//   final photoUser;
+//   final username;
+//   const Chat({Key key, this.user, this.photoUser, this.username})
+//       : super(key: key);
 
-class Bubble extends StatelessWidget {
-  final bool isMe;
-  final String message;
+//   @override
+//   _ChatState createState() =>
+//       _ChatState(photoUser: photoUser, username: username);
+// }
 
-  Bubble({this.message, this.isMe});
+// class _ChatState extends State<Chat> {
+//   final Firestore _firestore = Firestore.instance;
+//   TextEditingController messageController = TextEditingController();
+//   ScrollController scrollController = ScrollController();
 
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      padding: isMe ? EdgeInsets.only(left: 40) : EdgeInsets.only(right: 40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment:
-                isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            crossAxisAlignment:
-                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  gradient: isMe
-                      ? LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          stops: [
-                              0.1,
-                              1
-                            ],
-                          colors: [
-                              Color(0xFFF6D365),
-                              Color(0xFFFDA085),
-                            ])
-                      : LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          stops: [
-                              0.1,
-                              1
-                            ],
-                          colors: [
-                              Color(0xFFEBF5FC),
-                              Color(0xFFEBF5FC),
-                            ]),
-                  borderRadius: isMe
-                      ? BorderRadius.only(
-                          topRight: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(15),
-                        )
-                      : BorderRadius.only(
-                          topRight: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(0),
-                        ),
-                ),
-                child: Column(
-                  crossAxisAlignment:
-                      isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      message,
-                      textAlign: isMe ? TextAlign.end : TextAlign.start,
-                      style: TextStyle(
-                        color: isMe ? Colors.white : Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
+//   _ChatState({
+//     @required this.photoUser,
+//     @required this.username,
+//   });
+//   final photoUser;
+//   final username;
+
+//   Future<void> callback() async {
+//     if (messageController.text.length > 0) {
+//       await _firestore.collection('messages').add({
+//         'text': messageController.text,
+//         'from': widget.user.email,
+//         'date': DateTime.now().toIso8601String().toString(),
+//       });
+//       messageController.clear();
+//       scrollController.animateTo(
+//         scrollController.position.maxScrollExtent,
+//         curve: Curves.easeOut,
+//         duration: const Duration(milliseconds: 300),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         elevation: 0.4,
+//         iconTheme: IconThemeData(color: Colors.black),
+//         backgroundColor: Colors.white,
+//         title: Row(
+//           children: <Widget>[
+//             Container(
+//               width: 40,
+//               height: 40,
+//               margin: EdgeInsets.fromLTRB(0, 5, 10, 0),
+//               child: (photoUser != "")
+//                   ? CircleAvatar(
+//                       backgroundImage: NetworkImage(photoUser),
+//                       backgroundColor: Colors.grey[200],
+//                       minRadius: 30,
+//                     )
+//                   : Icon(
+//                       Icons.account_circle,
+//                       size: 40.0,
+//                       color: Colors.grey,
+//                     ),
+//             ),
+//             Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: <Widget>[
+//                 Text(
+//                   username,
+//                   style: TextStyle(color: Colors.black),
+//                 ),
+//                 // Text(
+//                 //   'Online Now',
+//                 //   style: TextStyle(
+//                 //     color: Colors.grey[400],
+//                 //     fontSize: 12,
+//                 //   ),
+//                 // )
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//       body: SafeArea(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: <Widget>[
+//             Expanded(
+//               child: StreamBuilder<QuerySnapshot>(
+//                 stream: _firestore
+//                     .collection('messages')
+//                     .orderBy('date')
+//                     .snapshots(),
+//                 builder: (context, snapshot) {
+//                   if (!snapshot.hasData)
+//                     return Center(
+//                       child: CircularProgressIndicator(),
+//                     );
+
+//                   List<DocumentSnapshot> docs = snapshot.data.documents;
+
+//                   List<Widget> messages = docs
+//                       .map((doc) => Message(
+//                             from: doc.data['from'],
+//                             text: doc.data['text'],
+//                             me: widget.user.email == doc.data['from'],
+//                           ))
+//                       .toList();
+
+//                   return ListView(
+//                     controller: scrollController,
+//                     children: <Widget>[
+//                       ...messages,
+//                     ],
+//                   );
+//                 },
+//               ),
+//             ),
+//             Container(
+//               color: Colors.grey[200],
+//               child: Row(
+//                 children: <Widget>[
+//                   IconButton(
+//                     onPressed: () {},
+//                     icon: Icon(
+//                       Icons.camera_alt,
+//                       color: Colors.blueGrey,
+//                     ),
+//                   ),
+//                   IconButton(
+//                     onPressed: () {},
+//                     icon: Icon(
+//                       Icons.image,
+//                       color: Colors.blueGrey,
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 15),
+//                   ),
+//                   Expanded(
+//                     child: TextField(
+//                       onSubmitted: (value) => callback(),
+//                       keyboardType: TextInputType.text,
+//                       decoration: InputDecoration(
+//                         hintText: 'Enter a Message...',
+//                         border: InputBorder.none,
+//                       ),
+//                       controller: messageController,
+//                     ),
+//                   ),
+//                   SendButton(
+//                     callback: callback,
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class SendButton extends StatelessWidget {
+//   final String text;
+//   final VoidCallback callback;
+
+//   const SendButton({Key key, this.text, this.callback}) : super(key: key);
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//       onPressed: callback,
+//       icon: Icon(
+//         Icons.send,
+//         color: Colors.blueGrey,
+//       ),
+//     );
+//   }
+// }
+
+// class Message extends StatelessWidget {
+//   final String from;
+//   final String text;
+
+//   final bool me;
+
+//   const Message({Key key, this.from, this.text, this.me}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 5),
+//       child: Container(
+//         child: Column(
+//           crossAxisAlignment:
+//               me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+//           children: <Widget>[
+//             Text(
+//               from,
+//             ),
+//             SizedBox(
+//               height: 5.0,
+//             ),
+//             Material(
+//               color: me ? Colors.blueGrey : Colors.grey[300],
+//               borderRadius: BorderRadius.circular(10.0),
+//               child: Container(
+//                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+//                 child: Text(text,
+//                     style: me
+//                         ? TextStyle(color: Colors.white)
+//                         : TextStyle(color: Colors.black)),
+//               ),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

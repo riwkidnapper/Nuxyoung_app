@@ -125,12 +125,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           if ((snapshot.data.documents[index]['uid'] !=
                               currentUser?.uid)) {
                             return Customcard(
-                              photoUser: snapshot.data.documents[index]
-                                  ['photoUser'],
-                              username: snapshot.data.documents[index]
-                                  ['userName'],
-                              email: snapshot.data.documents[index]['email'],
-                            );
+                                photoUser: snapshot.data.documents[index]
+                                    ['photoUser'],
+                                username: snapshot.data.documents[index]
+                                    ['userName'],
+                                email: snapshot.data.documents[index]['email'],
+                                uid: snapshot.data.documents[index]['uid']);
                           } else {
                             return Container();
                           }
