@@ -129,7 +129,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   // ...
                   // Then close the drawer
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SymTom()));
+                      MaterialPageRoute(builder: (context) => ExpansionTileSample()));
                 },
               ),
               ListTile(
@@ -141,16 +141,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   // Then close the drawer
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ChewieDemo()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.chat),
-                title: Text('แชท'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
                 },
               ),
               ListTile(

@@ -54,7 +54,7 @@ class _CaLenDarState extends State<CaLenDar> with TickerProviderStateMixin {
       _selectedDay.subtract(Duration(days: 10)): [],
       _selectedDay.subtract(Duration(days: 4)): [],
       _selectedDay.subtract(Duration(days: 2)): [],
-      _selectedDay: ['Free 02:46 AM','Free 28:69 PM'],
+      _selectedDay: ['02:46 AM','28:69 PM'],
       _selectedDay.add(Duration(days: 1)): [],
       _selectedDay.add(Duration(days: 3)): Set.from([]).toList(),
       _selectedDay.add(Duration(days: 7)): [],

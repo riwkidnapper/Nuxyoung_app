@@ -26,13 +26,32 @@ class _AddproflieStateDoc extends State<AddproflieDoc> {
 
 Future<String> _asyncInputDialog(BuildContext context) async {
   //String teamName = '';
+  ValueChanged _onChanged = (val) => print(val);
   return showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-          title: Text('กรอกชื่อ-นามสกุล\nและตารางเวรของคุณที่นี่'),
-          content: Container()
+        title: Text('กรอกชื่อ-นามสกุล\nและตารางเวรของคุณที่นี่'),
+          content: Container( 
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: "ชื่อ-นามสกุล",hintText: null),              
+                  validator: (value){
+                    if (value.isEmpty){
+                      return 'Please Enter Text';
+                    }
+                    return null;
+                  },
+                  maxLines: 1,
+                  maxLength: 30,
+                  onChanged: _onChanged,
+                ),
+              ],
+            ),
+          ),
           //         children: <Widget>[
           //           Expanded(
           //             child: TextField(

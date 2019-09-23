@@ -30,8 +30,8 @@ class MyHomePageState extends State<MyHisToRy> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  final GlobalKey<FormFieldState> _specifyTextFieldKey =
-      GlobalKey<FormFieldState>();
+  /*final GlobalKey<FormFieldState> _specifyTextFieldKey =
+      GlobalKey<FormFieldState>();*/
 
   ValueChanged _onChanged = (val) => print(val);
 
@@ -39,7 +39,7 @@ class MyHomePageState extends State<MyHisToRy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("แบบฟอร์ม"),
+        title: Text("กรอกประวัติ"),
         backgroundColor: Colors.blueGrey[500],
       ),
       body: Padding(
@@ -180,6 +180,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     //-----------------------------------------------------------------------------------------------------------------
                     // Identification Number ******************************************************************************************
                      FormBuilderTextField(
+                      keyboardType: TextInputType.number,
                       attribute: "Identification Number",
                       decoration: InputDecoration(
                         labelText: "เลขบัตรประจำตัวประชาชน",
@@ -188,7 +189,7 @@ class MyHomePageState extends State<MyHisToRy> {
                         ),*/
                       ),
                       onChanged: _onChanged,
-                      valueTransformer: (text) => num.tryParse(text),
+                      //valueTransformer: (text) => num.tryParse(text),
                       validators: [
                         FormBuilderValidators.numeric(),
                         FormBuilderValidators.max(9999999999999999),
@@ -233,6 +234,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     //-----------------------------------------------------------------------------------------------------------------
                     // Age ************************************************************************************************************
                     FormBuilderTextField(
+                      keyboardType: TextInputType.number,
                       attribute: "age",
                       decoration: InputDecoration(
                         labelText: "อายุ",
@@ -241,7 +243,7 @@ class MyHomePageState extends State<MyHisToRy> {
                         ),*/
                       ),
                       onChanged: _onChanged,
-                      valueTransformer: (text) => num.tryParse(text),
+                      //valueTransformer: (text) => num.tryParse(text),
                       validators: [
                         FormBuilderValidators.numeric(),
                         FormBuilderValidators.max(70),
@@ -281,14 +283,14 @@ class MyHomePageState extends State<MyHisToRy> {
                     ),
                     new FormBuilderTextField(
                         attribute: 'District',
-                        decoration: InputDecoration(labelText: "ตำบล",hintText: null),
+                        decoration: InputDecoration(labelText: "อำเภอ",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
                         maxLines: 1,
                         ),
                     new FormBuilderTextField(
                         attribute: 'subdistrict',
-                        decoration: InputDecoration(labelText: "อำเภอ",hintText: null),
+                        decoration: InputDecoration(labelText: "ตำบล",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
                         maxLines: 1,
@@ -296,8 +298,8 @@ class MyHomePageState extends State<MyHisToRy> {
                     new FormBuilderTextField(
                         attribute: 'postcode',
                         decoration: InputDecoration(labelText: "รหัสไปรษณีย์",hintText: null),
-                        keyboardType: TextInputType.multiline, 
-                        onChanged: _onChanged,                      
+                        keyboardType: TextInputType.number, 
+                        onChanged: _onChanged,                    
                         maxLines: 1,
                         ),   
                     // Address ********************************************************************************************************
@@ -336,6 +338,13 @@ class MyHomePageState extends State<MyHisToRy> {
                         onChanged: _onChanged,                      
                         maxLines: null,
                         ),
+                    new FormBuilderTextField(
+                        attribute: 'logic',
+                        decoration: InputDecoration(labelText: "เหตุผลในการส่งต่อ",hintText: null),
+                        keyboardType: TextInputType.multiline, 
+                        onChanged: _onChanged,                      
+                        maxLines: null,
+                        ),
                     /*FormBuilderSegmentedControl(
                       decoration:
                           InputDecoration(labelText: "Movie Rating (Archer)"),
@@ -347,12 +356,12 @@ class MyHomePageState extends State<MyHisToRy> {
                           .toList(),
                       onChanged: _onChanged,
                     ),*/
-                   /* FormBuilderSwitch(
-                      label: Text('I Accept the tems and conditions'),
+                    FormBuilderSwitch(
+                      label: Text('ต้องการจะอัพโหลดวิดีโอหรือไม่'),
                       attribute: "accept_terms_switch",
                       initialValue: true,
                       onChanged: _onChanged,
-                    ),*/
+                    ),
                    /* FormBuilderStepper(
                       decoration: InputDecoration(labelText: "Stepper"),
                       attribute: "stepper",
@@ -454,7 +463,7 @@ class MyHomePageState extends State<MyHisToRy> {
                       ),
                     ),*/
                     FormBuilderSignaturePad(
-                      decoration: InputDecoration(labelText: "Signature"),
+                      decoration: InputDecoration(labelText: "ลงชื่อ"),
                       attribute: "signature",
                       // height: 250,
                       clearButtonText: "Start Over",

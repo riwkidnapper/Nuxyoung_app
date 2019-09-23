@@ -74,7 +74,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                 TabItem(
                   selected: currentSelected == 0,
                   iconData: Icons.local_hospital,
-                  title: "เจ้าหน้าที่",
+                  title: "บุคคลากร",
                   callbackFunction: () {
                     setState(() {
                       nextIcon = Icons.local_hospital;
