@@ -99,7 +99,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 title: 'Direct Messages',
               ),
               StreamBuilder(
-                stream: Firestore.instance.collection('users').snapshots(),
+                stream: Firestore.instance
+                    .collection('users')
+                    .orderBy('createAt')
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
@@ -116,20 +119,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
-                        if ((snapshot.data.documents[index]['rule'] ==
-                                "doctor") ||
-                            (snapshot.data.documents[index]['rule'] ==
-                                    "nurse") &&
-                                (snapshot.data.documents[index]['rule'] !=
-                                    "")) {
-                          if ((snapshot.data.documents[index]['uid'] !=
-                              currentUser?.uid)) {
+                        final documents = snapshot.data.documents[index];
+                        if ((documents['rule'] == "doctor") ||
+                            (documents['rule'] == "nurse") &&
+                                (documents['rule'] != "")) {
+                          if ((documents['uid'] != currentUser?.uid)) {
                             return Customcard(
-                              photoUser: snapshot.data.documents[index]
-                                  ['photoUser'],
-                              username: snapshot.data.documents[index]
-                                  ['userName'],
-                              email: snapshot.data.documents[index]['email'],
+                              photoUser: documents['photoUser'],
+                              username: documents['userName'],
+                              email: documents['email'],
+                              uid: documents['uid'],
+                              fromUid: currentUser.uid,
                             );
                           } else {
                             return Container();

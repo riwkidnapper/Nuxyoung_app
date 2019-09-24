@@ -58,7 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 }
             })
         .catchError((err) => print(err));
-    super.initState();
   }
 
   @override
