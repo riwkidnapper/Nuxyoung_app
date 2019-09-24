@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class Items {
   String key;
@@ -7,6 +8,7 @@ class Items {
   String form;
   String isTo;
   String isFrom;
+  var time = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
 
   Items(this.message, this.form, this.isTo, this.isFrom);
 
@@ -21,7 +23,7 @@ class Items {
     return {
       "message": message,
       "form": form,
-      "timestamp": DateTime.now().millisecondsSinceEpoch,
+      "timestamp": time,
       "isTo": isTo,
       "isFrom": isFrom,
     };

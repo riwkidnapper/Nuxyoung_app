@@ -12,12 +12,14 @@ class Customcard extends StatefulWidget {
     @required this.username,
     @required this.email,
     @required this.uid,
+    @required this.fromUid,
   });
 
   final photoUser;
   final username;
   final email;
   final uid;
+  final fromUid;
 
   @override
   _CustomcardState createState() => _CustomcardState(
@@ -25,6 +27,7 @@ class Customcard extends StatefulWidget {
         photoUser: photoUser,
         username: username,
         uid: uid,
+        fromUid: fromUid,
       );
 }
 
@@ -48,12 +51,14 @@ class _CustomcardState extends State<Customcard> {
     @required this.username,
     @required this.email,
     @required this.uid,
+    @required this.fromUid,
   });
 
   final photoUser;
   final username;
   final email;
   final uid;
+  final fromUid;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +92,7 @@ class _CustomcardState extends State<Customcard> {
                         photoUser: photoUser,
                         username: username,
                         uid: uid,
+                        fromUid: fromUid,
                       )
                   // // Chat(
                   //   photoUser: photoUser,

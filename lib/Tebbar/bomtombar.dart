@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:nuxyoung/Pages/homepage.dart';
@@ -27,6 +28,7 @@ class _FancyTabBarState extends State<FancyTabBar>
   @override
   void initState() {
     super.initState();
+    _loadCurrentUser();
 //กำหนดเวลา
     _animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
@@ -37,6 +39,16 @@ class _FancyTabBarState extends State<FancyTabBar>
       ..addListener(() {
         setState(() {});
       });
+  }
+
+  FirebaseUser currentUser;
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
   }
 
   @override
@@ -83,7 +95,9 @@ class _FancyTabBarState extends State<FancyTabBar>
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => new MedicalBudhosp(),
+                          builder: (context) => new MedicalBudhosp(
+                            userEmail: currentUser.email,
+                          ),
                         ),
                       );
                     });
