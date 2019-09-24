@@ -6,7 +6,7 @@ library table_calendar;
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/scrolling_years_calendar.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/scrolling_years_calendar.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 part 'src/calendar.dart';

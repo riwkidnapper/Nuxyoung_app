@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Auth/login_page.dart';
-// import 'package:nuxyong_app/Account/register_page.dart';
+import 'package:nuxyoung/Auth/login_page.dart';
+// import 'package:nuxyoung/Account/register_page.dart';
 
-import 'package:nuxyong_app/Tebbar/Teb_iteam.dart';
-import 'package:nuxyong_app/Tebbar/bomtombar.dart';
+import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
+import 'package:nuxyoung/Tebbar/bomtombar.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 

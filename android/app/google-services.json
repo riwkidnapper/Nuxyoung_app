@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:528753372285:android:135245a4b4d21b1bd19514",
+        "mobilesdk_app_id": "1:528753372285:android:de5f5927aaf2c0b9d19514",
         "android_client_info": {
-          "package_name": "com.example.nuxyong_app"
+          "package_name": "com.rino.nuxyoung"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "528753372285-5efpv3qo36gb78p79ltoal1nu9re3ios.apps.googleusercontent.com",
+              "client_id": "528753372285-3rfl96mh0d56sp2c5q369mt7olhf5bcf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.nuxyongApp"
+                "bundle_id": "toey.toey.05"
               }
             }
           ]

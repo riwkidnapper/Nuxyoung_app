@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/pull_to_refresh.dart';
+import 'package:nuxyoung/pull_to_refresh.dart';
 
 class Pagetwo extends StatefulWidget {
   PagetwoState createState() => PagetwoState();

@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:nuxyong_app/Pages/doctor_page/calendar.dart';
-import 'package:nuxyong_app/Pages/doctor_page/history.dart';
-import 'package:nuxyong_app/Pages/doctor_page/symptoms.dart';
-import 'package:nuxyong_app/Pages/doctor_page/video.dart';
-import 'package:nuxyong_app/Tebbar/home_bottombar.dart';
+
+import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
+import 'package:nuxyoung/Pages/doctor_page/history.dart';
+import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
+import 'package:nuxyoung/Pages/doctor_page/video.dart';
+import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
 import 'chat/Tools/screenloadingchat.dart';
 
 class MedicalBudhosp extends StatefulWidget {
+  final String userEmail;
+
+  const MedicalBudhosp({Key key, this.userEmail}) : super(key: key);
   @override
-  _MedicalBudhospState createState() => _MedicalBudhospState();
+  _MedicalBudhospState createState() => _MedicalBudhospState(userEmail);
 }
 
 class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final String userEmail;
+
+  _MedicalBudhospState(this.userEmail);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +51,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 Navigator.pop(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => new HomePage(
-                    ),
-
+                    builder: (context) => new HomePage(),
                   ),
                 );
               },
@@ -98,7 +103,9 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text("Doctor Marnoj"),
-                accountEmail: Text("marnoj@doctor.com"),
+                accountEmail: Text(
+                  userEmail,
+                ),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.blue.shade800,
                   child: Text(

@@ -1,13 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
-import 'package:nuxyong_app/Pages/homepage.dart';
-import 'package:nuxyong_app/Pages/Pages2.dart';
-import 'package:nuxyong_app/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyong_app/Pages/me.dart';
+import 'package:nuxyoung/Pages/homepage.dart';
+import 'package:nuxyoung/Pages/Pages2.dart';
+import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
+import 'package:nuxyoung/Pages/me.dart';
 
 import 'Teb_iteam.dart';
 
 int currentSelected = 2;
+
 class FancyTabBar extends StatefulWidget {
   @override
   _FancyTabBarState createState() => _FancyTabBarState();
@@ -26,6 +28,7 @@ class _FancyTabBarState extends State<FancyTabBar>
   @override
   void initState() {
     super.initState();
+    _loadCurrentUser();
 //กำหนดเวลา
     _animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
@@ -36,6 +39,16 @@ class _FancyTabBarState extends State<FancyTabBar>
       ..addListener(() {
         setState(() {});
       });
+  }
+
+  FirebaseUser currentUser;
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
   }
 
   @override
@@ -82,7 +95,9 @@ class _FancyTabBarState extends State<FancyTabBar>
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => new MedicalBudhosp(),
+                          builder: (context) => new MedicalBudhosp(
+                            userEmail: currentUser.email,
+                          ),
                         ),
                       );
                     });

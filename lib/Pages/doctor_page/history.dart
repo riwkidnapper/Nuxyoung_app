@@ -30,8 +30,8 @@ class MyHomePageState extends State<MyHisToRy> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  /*final GlobalKey<FormFieldState> _specifyTextFieldKey =
-      GlobalKey<FormFieldState>();*/
+  // final GlobalKey<FormFieldState> _specifyTextFieldKey =
+  //     GlobalKey<FormFieldState>();
 
   ValueChanged _onChanged = (val) => print(val);
 
@@ -58,64 +58,64 @@ class MyHomePageState extends State<MyHisToRy> {
                 child: Column(
                   children: <Widget>[
                     // Name input *****************************************************************************************************
-                           FormBuilderChipsInput(
-                            decoration: InputDecoration(labelText: "ชื่อ-นามสกุล"),
-                            attribute: 'chips_test',
-                            // readonly: true,
-                            onChanged: _onChanged,
-                            // valueTransformer: (val) => val.length > 0 ? val[0] : null,
-                            initialValue: [
-                              Contact('Andrew', 'stock@man.com',
-                                  'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4057996.jpg'),
-                            ],
-                            maxChips: 5,
-                            findSuggestions: (String query) {
-                              if (query.length != 0) {
-                                var lowercaseQuery = query.toLowerCase();
-                                return mockResults.where((profile) {
-                                  return profile.name
-                                          .toLowerCase()
-                                          .contains(query.toLowerCase()) ||
-                                      profile.email
-                                          .toLowerCase()
-                                          .contains(query.toLowerCase());
-                                }).toList(growable: false)
-                                  ..sort((a, b) => a.name
-                                      .toLowerCase()
-                                      .indexOf(lowercaseQuery)
-                                      .compareTo(b.name
-                                          .toLowerCase()
-                                          .indexOf(lowercaseQuery)));
-                              } else {
-                                return const <Contact>[];
-                              }
-                            },
-                            chipBuilder: (context, state, profile) {
-                              return InputChip(
-                                key: ObjectKey(profile),
-                                label: Text(profile.name),
-                                avatar: CircleAvatar(
-                                  backgroundImage: NetworkImage(profile.imageUrl),
-                                ),
-                                onDeleted: () => state.deleteChip(profile),
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                              );
-                            },
-                            suggestionBuilder: (context, state, profile) {
-                              return ListTile(
-                                key: ObjectKey(profile),
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(profile.imageUrl),
-                                ),
-                                title: Text(profile.name),
-                                subtitle: Text(profile.email),
-                                onTap: () => state.selectSuggestion(profile),
-                              );
-                            },
+                    FormBuilderChipsInput(
+                      decoration: InputDecoration(labelText: "ชื่อ-นามสกุล"),
+                      attribute: 'chips_test',
+                      // readonly: true,
+                      onChanged: _onChanged,
+                      // valueTransformer: (val) => val.length > 0 ? val[0] : null,
+                      initialValue: [
+                        Contact('Andrew', 'stock@man.com',
+                            'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4057996.jpg'),
+                      ],
+                      maxChips: 5,
+                      findSuggestions: (String query) {
+                        if (query.length != 0) {
+                          var lowercaseQuery = query.toLowerCase();
+                          return mockResults.where((profile) {
+                            return profile.name
+                                    .toLowerCase()
+                                    .contains(query.toLowerCase()) ||
+                                profile.email
+                                    .toLowerCase()
+                                    .contains(query.toLowerCase());
+                          }).toList(growable: false)
+                            ..sort((a, b) => a.name
+                                .toLowerCase()
+                                .indexOf(lowercaseQuery)
+                                .compareTo(b.name
+                                    .toLowerCase()
+                                    .indexOf(lowercaseQuery)));
+                        } else {
+                          return const <Contact>[];
+                        }
+                      },
+                      chipBuilder: (context, state, profile) {
+                        return InputChip(
+                          key: ObjectKey(profile),
+                          label: Text(profile.name),
+                          avatar: CircleAvatar(
+                            backgroundImage: NetworkImage(profile.imageUrl),
                           ),
+                          onDeleted: () => state.deleteChip(profile),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        );
+                      },
+                      suggestionBuilder: (context, state, profile) {
+                        return ListTile(
+                          key: ObjectKey(profile),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(profile.imageUrl),
+                          ),
+                          title: Text(profile.name),
+                          subtitle: Text(profile.email),
+                          onTap: () => state.selectSuggestion(profile),
+                        );
+                      },
+                    ),
 
-                        /*Container(
+                    /*Container(
                           width: MediaQuery.of(context).size.width*0.5,
                           child: FormBuilderChipsInput(
                             decoration: InputDecoration(labelText: "Names"),
@@ -174,8 +174,7 @@ class MyHomePageState extends State<MyHisToRy> {
                             },
                           ),
                         ),*/
-                      
-                    
+
                     // Name input *****************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     // Identification Number ******************************************************************************************
@@ -204,8 +203,8 @@ class MyHomePageState extends State<MyHisToRy> {
                       inputType: InputType.date,
                       format: DateFormat("yyyy-MM-dd"),
                       initialValue: DateTime.now(),
-                      decoration:
-                          InputDecoration(labelText: "วันเวลาที่เข้ารับการรักษา"),
+                      decoration: InputDecoration(
+                          labelText: "วันเวลาที่เข้ารับการรักษา"),
                       // readonly: true,
                     ),
                     // Date ***********************************************************************************************************
@@ -301,7 +300,7 @@ class MyHomePageState extends State<MyHisToRy> {
                         keyboardType: TextInputType.number, 
                         onChanged: _onChanged,                    
                         maxLines: 1,
-                        ),   
+                        ),
                     // Address ********************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     /*FormBuilderRadio(

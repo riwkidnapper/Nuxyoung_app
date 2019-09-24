@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/package/scrolling_years_calendar/utils/dates.dart';
+import 'package:nuxyoung/package/scrolling_years_calendar/utils/dates.dart';
 
 class MonthTitle extends StatelessWidget {
   const MonthTitle({

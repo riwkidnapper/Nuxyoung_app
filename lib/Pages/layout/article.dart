@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/pop_up_item/food_details.dart';
+import 'package:nuxyoung/Pages/pop_up_item/food_details.dart';
 
 class Article extends StatefulWidget {
   @override

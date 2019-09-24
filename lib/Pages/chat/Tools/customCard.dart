@@ -1,38 +1,64 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nuxyong_app/Pages/chat/chat.dart';
+import 'package:nuxyoung/Pages/chat/realtimeChat.dart';
+// import 'package:nuxyoung/Pages/chat/chat.dart';
 
 class Customcard extends StatefulWidget {
   Customcard({
     @required this.photoUser,
     @required this.username,
     @required this.email,
+    @required this.uid,
+    @required this.fromUid,
   });
 
   final photoUser;
   final username;
   final email;
+  final uid;
+  final fromUid;
 
   @override
   _CustomcardState createState() => _CustomcardState(
         email: email,
         photoUser: photoUser,
         username: username,
+        uid: uid,
+        fromUid: fromUid,
       );
 }
 
 class _CustomcardState extends State<Customcard> {
+  FirebaseUser currentUser;
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
+  }
+
   _CustomcardState({
     @required this.photoUser,
     @required this.username,
     @required this.email,
+    @required this.uid,
+    @required this.fromUid,
   });
 
   final photoUser;
   final username;
   final email;
+  final uid;
+  final fromUid;
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +83,23 @@ class _CustomcardState extends State<Customcard> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Chat(
-                  photoUser: photoUser,
-                  username: username,
-                ),
-              ),
+                  builder: (context) =>
+                      // Chat(
+                      //       peerAvatar: photoUser,
+                      //       peerId: uid,
+                      //     )
+                      ChatReal(
+                        photoUser: photoUser,
+                        username: username,
+                        uid: uid,
+                        fromUid: fromUid,
+                      )
+                  // // Chat(
+                  //   photoUser: photoUser,
+                  //   username: username,
+                  //   user: currentUser,
+                  // ),
+                  ),
             );
           },
           child: Row(
