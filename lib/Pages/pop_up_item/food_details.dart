@@ -36,7 +36,7 @@ class _MyPageState extends State<FoodScreen> {
                       centerTitle: true,
                       collapseMode: CollapseMode.pin,
                       background: Image.asset(
-                        'assets/images/dvm.jpg',
+                        'assets/images/a.jpg',
                         fit: BoxFit.cover,
                       )),
                 ),
@@ -59,7 +59,7 @@ class _MyPageState extends State<FoodScreen> {
                             left: 10.0,
                           ),
                           child: new Text(
-                            "Doctor Strange",
+                            "Doctor Marnoj",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 30.0,
@@ -69,7 +69,7 @@ class _MyPageState extends State<FoodScreen> {
                           padding: EdgeInsets.only(
                             right: 12.0,
                           ),
-                          child: new Text("6.2K\nCooked",
+                          child: new Text("",
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12.0,
@@ -81,7 +81,7 @@ class _MyPageState extends State<FoodScreen> {
                   child: Padding(
                       padding: EdgeInsets.only(left: 12.0),
                       child: Text(
-                        "Master the king breakfast dish",
+                        "Phutthachinnarat Hospital",
                         style: TextStyle(color: Colors.grey[600]),
                       )),
                 ),
@@ -137,58 +137,6 @@ class _MyPageState extends State<FoodScreen> {
                     ]),
                 SizedBox(
                   height: 20.0,
-                ),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "Servings",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "2pp",
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.grey[700],
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "Prep Time",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        Text(
-                          "20m",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "Cook Time",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        Text(
-                          "20m",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
                 SizedBox(height: 25.0),
                 Align(

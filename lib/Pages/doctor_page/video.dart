@@ -117,7 +117,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
             },
             child: Text('Fullscreen'),
           ),
-          Row(
+         /* Row(
             children: <Widget>[
               Expanded(
                 child: FlatButton(
@@ -162,8 +162,8 @@ class _ChewieDemoState extends State<ChewieDemo> {
                 ),
               )
             ],
-          ),
-          Row(
+          ),*/
+          /*Row(
             children: <Widget>[
               Expanded(
                 child: FlatButton(
@@ -192,7 +192,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
                 ),
               )
             ],
-          ),
+          ),*/
           Row(
             children: <Widget>[
               Expanded(
@@ -208,10 +208,10 @@ class _ChewieDemoState extends State<ChewieDemo> {
                             hint: new Text('LOAD PATH FROM'),
                             value: _pickingType,
                             items: <DropdownMenuItem>[
-                              new DropdownMenuItem(
-                                child: new Text('FROM AUDIO'),
-                                value: FileType.AUDIO,
-                              ),
+                              // new DropdownMenuItem(
+                              //   child: new Text('FROM AUDIO'),
+                              //   value: FileType.AUDIO,
+                              // ),
                               new DropdownMenuItem(
                                 child: new Text('FROM IMAGE'),
                                 value: FileType.IMAGE,
@@ -220,14 +220,14 @@ class _ChewieDemoState extends State<ChewieDemo> {
                                 child: new Text('FROM VIDEO'),
                                 value: FileType.VIDEO,
                               ),
-                              new DropdownMenuItem(
-                                child: new Text('FROM ANY'),
-                                value: FileType.ANY,
-                              ),
-                              new DropdownMenuItem(
-                                child: new Text('CUSTOM FORMAT'),
-                                value: FileType.CUSTOM,
-                              ),
+                              // new DropdownMenuItem(
+                              //   child: new Text('FROM ANY'),
+                              //   value: FileType.ANY,
+                              // ),
+                              // new DropdownMenuItem(
+                              //   child: new Text('CUSTOM FORMAT'),
+                              //   value: FileType.CUSTOM,
+                              // ),
                             ],
                             onChanged: (value) => setState(() {
                                   _pickingType = value;
@@ -259,16 +259,16 @@ class _ChewieDemoState extends State<ChewieDemo> {
                               )
                             : new Container(),
                       ),
-                      new ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: 200.0),
-                        child: new SwitchListTile.adaptive(
-                          title: new Text('Pick multiple files',
-                              textAlign: TextAlign.right),
-                          onChanged: (bool value) =>
-                              setState(() => _multiPick = value),
-                          value: _multiPick,
-                        ),
-                      ),
+                      // new ConstrainedBox(
+                      //   constraints: BoxConstraints.tightFor(width: 200.0),
+                      //   child: new SwitchListTile.adaptive(
+                      //     title: new Text('Pick multiple files',
+                      //         textAlign: TextAlign.right),
+                      //     onChanged: (bool value) =>
+                      //         setState(() => _multiPick = value),
+                      //     value: _multiPick,
+                      //   ),
+                      // ),
                       new Padding(
                         padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
                         child: new RaisedButton(
