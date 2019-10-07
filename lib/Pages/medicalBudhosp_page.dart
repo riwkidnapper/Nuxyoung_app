@@ -6,7 +6,7 @@ import 'package:nuxyoung/Pages/doctor_page/history.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
 import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat/Tools/screenloadingchat.dart';
 
 class MedicalBudhosp extends StatefulWidget {
@@ -168,6 +168,16 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
             ],
           ),
         ),
+        // body: ListView.builder(
+        //   itemBuilder: (context, position){
+        //     return Card(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(40.0),
+        //         child: Text(position.toString(),style: TextStyle(fontSize: 22.0),
+        //         ),
+        //       ),);
+        //   },
+        // ),
         /****************************************************************************** */
         body: Stack(
           children: <Widget>[
@@ -183,13 +193,8 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 ),
               ),
             ),
-            Center(
-              child: Text(
-                'Za warudo',
-                style: TextStyle(fontSize: 40.0),
-              ),
-            ),
           ],
-        ));
+        )
+      );
   }
 }

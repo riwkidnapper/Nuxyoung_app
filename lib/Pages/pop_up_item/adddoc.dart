@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddproflieDoc extends StatefulWidget {
   @override
@@ -25,18 +26,29 @@ class _AddproflieStateDoc extends State<AddproflieDoc> {
 }
 
 Future<String> _asyncInputDialog(BuildContext context) async {
-  //String teamName = '';
   ValueChanged _onChanged = (val) => print(val);
   return showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return AlertDialog(
+      return AlertDialog(         
         title: Text('กรอกชื่อ-นามสกุล\nและตารางเวรของคุณที่นี่'),
           content: Container( 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(left: 200.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.camera_alt,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        //getImage();
+                      },
+                    ),
+                  ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "ชื่อ-นามสกุล",hintText: null),              
                   validator: (value){
@@ -48,7 +60,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                   maxLines: 1,
                   maxLength: 30,
                   onChanged: _onChanged,
-                ),
+                ),             
               ],
             ),
           ),

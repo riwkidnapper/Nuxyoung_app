@@ -13,10 +13,12 @@ import 'package:nuxyoung/Pages/chat/Tools/modal.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'Tools/messageUI.dart';
-
+const String kTypeImage = 'image';
+const String kTypeVideo = 'video';
 // import 'package:firebase_core/firebase_core.dart'; not nessecary
 
 class ChatReal extends StatefulWidget {
+  
   final photoUser;
   final username;
   final uid;

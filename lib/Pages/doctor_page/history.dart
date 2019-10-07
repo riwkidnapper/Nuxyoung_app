@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './data.dart';
 
@@ -29,10 +30,11 @@ class MyHomePageState extends State<MyHisToRy> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
+  final Firestore store = Firestore.instance;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   // final GlobalKey<FormFieldState> _specifyTextFieldKey =
   //     GlobalKey<FormFieldState>();
-
+  
   ValueChanged _onChanged = (val) => print(val);
 
   @override
@@ -58,61 +60,12 @@ class MyHomePageState extends State<MyHisToRy> {
                 child: Column(
                   children: <Widget>[
                     // Name input *****************************************************************************************************
-                    FormBuilderChipsInput(
+                    FormBuilderTextField(
                       decoration: InputDecoration(labelText: "ชื่อ-นามสกุล"),
-                      attribute: 'chips_test',
+                      attribute: 'name',
                       // readonly: true,
                       onChanged: _onChanged,
                       // valueTransformer: (val) => val.length > 0 ? val[0] : null,
-                      initialValue: [
-                        Contact('Andrew', 'stock@man.com',
-                            'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4057996.jpg'),
-                      ],
-                      maxChips: 5,
-                      findSuggestions: (String query) {
-                        if (query.length != 0) {
-                          var lowercaseQuery = query.toLowerCase();
-                          return mockResults.where((profile) {
-                            return profile.name
-                                    .toLowerCase()
-                                    .contains(query.toLowerCase()) ||
-                                profile.email
-                                    .toLowerCase()
-                                    .contains(query.toLowerCase());
-                          }).toList(growable: false)
-                            ..sort((a, b) => a.name
-                                .toLowerCase()
-                                .indexOf(lowercaseQuery)
-                                .compareTo(b.name
-                                    .toLowerCase()
-                                    .indexOf(lowercaseQuery)));
-                        } else {
-                          return const <Contact>[];
-                        }
-                      },
-                      chipBuilder: (context, state, profile) {
-                        return InputChip(
-                          key: ObjectKey(profile),
-                          label: Text(profile.name),
-                          avatar: CircleAvatar(
-                            backgroundImage: NetworkImage(profile.imageUrl),
-                          ),
-                          onDeleted: () => state.deleteChip(profile),
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                        );
-                      },
-                      suggestionBuilder: (context, state, profile) {
-                        return ListTile(
-                          key: ObjectKey(profile),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(profile.imageUrl),
-                          ),
-                          title: Text(profile.name),
-                          subtitle: Text(profile.email),
-                          onTap: () => state.selectSuggestion(profile),
-                        );
-                      },
                     ),
 
                     /*Container(
@@ -180,7 +133,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     // Identification Number ******************************************************************************************
                      FormBuilderTextField(
                       keyboardType: TextInputType.number,
-                      attribute: "Identification Number",
+                      attribute: "identification number",
                       decoration: InputDecoration(
                         labelText: "เลขบัตรประจำตัวประชาชน",
                         /*border: OutlineInputBorder(
@@ -251,6 +204,13 @@ class MyHomePageState extends State<MyHisToRy> {
                     // Age ************************************************************************************************************
                     //-----------------------------------------------------------------------------------------------------------------
                     // Address ********************************************************************************************************
+                    new FormBuilderTextField(
+                        attribute: 'postcode',
+                        decoration: InputDecoration(labelText: "รหัสไปรษณีย์",hintText: null),
+                        keyboardType: TextInputType.number, 
+                        onChanged: _onChanged,                    
+                        maxLines: 1,
+                        ),
                     FormBuilderTypeAhead(
                       decoration: InputDecoration(
                         labelText: "จังหวัด",
@@ -281,7 +241,7 @@ class MyHomePageState extends State<MyHisToRy> {
                       },
                     ),
                     new FormBuilderTextField(
-                        attribute: 'District',
+                        attribute: 'district',
                         decoration: InputDecoration(labelText: "อำเภอ",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
@@ -292,13 +252,6 @@ class MyHomePageState extends State<MyHisToRy> {
                         decoration: InputDecoration(labelText: "ตำบล",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
-                        maxLines: 1,
-                        ),
-                    new FormBuilderTextField(
-                        attribute: 'postcode',
-                        decoration: InputDecoration(labelText: "รหัสไปรษณีย์",hintText: null),
-                        keyboardType: TextInputType.number, 
-                        onChanged: _onChanged,                    
                         maxLines: 1,
                         ),
                     // Address ********************************************************************************************************
@@ -331,7 +284,7 @@ class MyHomePageState extends State<MyHisToRy> {
                     ),*/
                     /********************************************************************************************************* */
                     new FormBuilderTextField(
-                        attribute: 'History',
+                        attribute: 'history',
                         decoration: InputDecoration(labelText: "ประวัติการเข้ารับการรักษา",hintText: null),
                         keyboardType: TextInputType.multiline, 
                         onChanged: _onChanged,                      
@@ -355,12 +308,6 @@ class MyHomePageState extends State<MyHisToRy> {
                           .toList(),
                       onChanged: _onChanged,
                     ),*/
-                    FormBuilderSwitch(
-                      label: Text('ต้องการจะอัพโหลดวิดีโอหรือไม่'),
-                      attribute: "accept_terms_switch",
-                      initialValue: true,
-                      onChanged: _onChanged,
-                    ),
                    /* FormBuilderStepper(
                       decoration: InputDecoration(labelText: "Stepper"),
                       attribute: "stepper",
@@ -480,10 +427,29 @@ class MyHomePageState extends State<MyHisToRy> {
                         "Submit",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         _fbKey.currentState.save();
                         if (_fbKey.currentState.validate()) {
-                          print(_fbKey.currentState.value);
+                          var values = _fbKey.currentState.value;
+                          print(values);
+                          var data = <String, dynamic>{};
+                          data["name"] = values["name"];
+                          data["identification number"] = values["identification number"];
+                          data["date"] = values["date"];
+                          data["gender"] = values["gender"];
+                          data["age"] = values["age"];
+                          data["postcode"] = values["postcode"];
+                          data["country"] = values["country"];
+                          data["district"] = values["district"];
+                          data["subdistrict"] = values["subdistrict"];
+                          data["history"] = values["history"];
+                          data["logic"] = values["logic"];
+                          //data["signature"] = values["signature"];
+                          await store.collection("form").add(data).then((value) {
+                            print(value.documentID);
+                          }).catchError((err) {
+                            print(err);
+                          });
                         } else {
                           print(_fbKey.currentState.value);
                           print("validation failed");
