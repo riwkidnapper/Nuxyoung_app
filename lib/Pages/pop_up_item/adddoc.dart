@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class AddproflieDoc extends StatefulWidget {
   @override
@@ -7,6 +8,13 @@ class AddproflieDoc extends StatefulWidget {
 }
 
 class _AddproflieStateDoc extends State<AddproflieDoc> {
+  var data;
+  bool autoValidate = true;
+  bool readOnly = false;
+  bool showSegmentedControl = true;
+  final Firestore store = Firestore.instance;
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -23,7 +31,7 @@ class _AddproflieStateDoc extends State<AddproflieDoc> {
       backgroundColor: Colors.blueGrey[200],
     );
   }
-}
+
 
 Future<String> _asyncInputDialog(BuildContext context) async {
   ValueChanged _onChanged = (val) => print(val);
@@ -50,7 +58,9 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                     ),
                   ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "ชื่อ-นามสกุล",hintText: null),              
+                  
+                  decoration: InputDecoration(labelText: "ชื่อ-นามสกุล",hintText: null),   
+                             
                   validator: (value){
                     if (value.isEmpty){
                       return 'Please Enter Text';
@@ -60,7 +70,29 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                   maxLines: 1,
                   maxLength: 30,
                   onChanged: _onChanged,
-                ),             
+                ),  
+                Row(
+                  children: <Widget>[
+                      Expanded(
+                      child: MaterialButton(
+                      color: Theme.of(context).accentColor,
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                         _fbKey.currentState.save();
+                          await store.collection("docname").add(data).then((value) {
+                             print(value.documentID);
+                           }).catchError((err) {
+                             print(err);
+                           });
+                        
+                      },
+                    ),
+                  ),
+                  ],
+                ),           
               ],
             ),
           ),
@@ -78,7 +110,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
           );
     },
   );
-
+}
   // showDialog<String>(
   //   context: context,
   //   barrierDismissible:

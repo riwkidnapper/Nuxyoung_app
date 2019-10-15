@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:nuxyoung/Pages/homepage.dart';
-import 'package:nuxyoung/Pages/Pages2.dart';
+import 'package:nuxyoung/Pages/nutmai.dart';
 import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyoung/Pages/me.dart';
 

@@ -6,7 +6,6 @@ import 'package:nuxyoung/Pages/doctor_page/history.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
 import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat/Tools/screenloadingchat.dart';
 
 class MedicalBudhosp extends StatefulWidget {
@@ -146,8 +145,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   // Update the state of the app
                   // ...
                   // Then close the drawer
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ChewieDemo()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChewieDemo()));
                 },
               ),
               ListTile(
@@ -157,8 +155,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   // Update the state of the app
                   // ...
                   // Then close the drawer
-                  Navigator.push(
-                      context,
+                  Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) => CaLenDar(
                                 title: 'Calendar',
