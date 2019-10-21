@@ -45,7 +45,7 @@ class Records extends State<Medicalrec> {
                     attribute: "date",
                     onChanged: _onChanged,
                     inputType: InputType.date,
-                    format: DateFormat("yyyy-MM-dd"),
+                    format: DateFormat("dd-MM-yyyy"),
                     initialValue: DateTime.now(),
                     decoration:
                         InputDecoration(labelText: "วันเวลาที่เข้ารับการรักษา"),
@@ -155,7 +155,7 @@ class Records extends State<Medicalrec> {
                       ),
                     ),
                     onPressed: () {
-                      _fbKey.currentState.fields.clear();
+                      _fbKey.currentState.reset();
                     },
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
 
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/profile.dart';
@@ -123,9 +124,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 leading: Icon(Icons.content_paste),
                 title: Text('กรอกประวัติผู้ป่วย'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Profilerecord()));
                 },
@@ -134,9 +132,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 leading: Icon(Icons.healing),
                 title: Text('อาการเบื้องต้น'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -147,19 +142,14 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 leading: Icon(Icons.videocam),
                 title: Text('วิดีโอ'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChewieDemo()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChewieDemo()));
                 },
               ),
               ListTile(
                 leading: Icon(Icons.today),
                 title: Text('ตารางแพทย์เวร'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -172,14 +162,11 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 leading: Icon(Icons.add_to_queue),
                 title: Text('การนัดหมาย'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.push(context,
+                  Navigator.push(
+                      context,
                       MaterialPageRoute(
-                          builder: (context) => CaLenDar(
-                                title: 'Calendar',
-                              )));
+                        builder: (context) => Appointment(),
+                      ));
                 },
               )
             ],
