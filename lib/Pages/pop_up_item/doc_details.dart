@@ -69,7 +69,7 @@ class _MyPageState extends State<FoodScreen> {
   //************************************************************************************************************* */
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
         /*appBar: AppBar(
           title: Text("Second Route"),
@@ -111,10 +111,10 @@ class _MyPageState extends State<FoodScreen> {
                             left: 10.0,
                           ),
                           child: new Text(
-                            "นพ.ธนาธรณ์ พุฒิกานนท์",
+                            "บทความของ นพ.ธนาธรณ์ พุฒิกานนท์",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 30.0,
+                                fontSize: 20.0,
                                 color: Colors.blueGrey),
                           )),
                       Padding(
@@ -127,15 +127,55 @@ class _MyPageState extends State<FoodScreen> {
                                   fontSize: 12.0,
                                   color: Colors.grey)))
                     ]),
+              
                 SizedBox(height: 5.0),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                       padding: EdgeInsets.only(left: 12.0),
                       child: Text(
-                        "Phutthachinnarat Hospital",
-                        style: TextStyle(color: Colors.grey[600]),
+                        "โรงพยาบาล พุทธชินราช",
+                        style: TextStyle(color: Colors.grey[600],fontSize: 18.0),
                       )),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                      RaisedButton(
+                      shape: StadiumBorder(),
+                      color: Colors.blueGrey[300],
+                      child: Text("เปิดบนอินเทอร์เน็ต"),
+                      onPressed: () {
+                        if (urlPDFPath != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PdfViewPage(path: assetPDFPath)));
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    RaisedButton(
+                      shape: StadiumBorder(),
+                      color: Colors.cyan[300],
+                      child: Text("เปิดบนแอพพลิเคชั่น"),
+                      onPressed: () {
+                        if (assetPDFPath != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PdfViewPage(path: assetPDFPath)));
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                  ],
                 ),
                 //SizedBox(height: 10),
                 // new Row(
@@ -187,35 +227,117 @@ class _MyPageState extends State<FoodScreen> {
                 //             ),
                 //           )))
                 //     ]),
-                SizedBox(
-                  height: 20.0,
-                ),
-                SizedBox(height: 25.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        "บทความ สำหรับพ่อแม่ผู้ปกครอง เรื่อง ลูกติดมือถือ เกมส์ ทีวีโซเชียล",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey),
-                      )),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    descriptionText,
-                    style: TextStyle(
-                        wordSpacing: 2.0,
-                        textBaseline: TextBaseline.alphabetic),
-                  ),
+                // SizedBox(
+                //   height: 20.0,
+                // ),
+                // SizedBox(height: 25.0),
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Padding(
+                //       padding: EdgeInsets.only(left: 12.0),
+                //       child: Text(
+                //         "บทความ สำหรับพ่อแม่ผู้ปกครอง เรื่อง ลูกติดมือถือ เกมส์ ทีวีโซเชียล",
+                //         style: TextStyle(
+                //             fontSize: 20.0,
+                //             fontWeight: FontWeight.w500,
+                //             color: Colors.grey),
+                //       )),
+                // ),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 10.0),
+                //   child: Text(
+                //     descriptionText,
+                //     style: TextStyle(
+                //         wordSpacing: 2.0,
+                //         textBaseline: TextBaseline.alphabetic),
+                //   ),
+                // )
+        ], 
+    ),
+    )
+    );
+  }
+}
+class PdfViewPage extends StatefulWidget {
+  final String path;
+
+  const PdfViewPage({Key key, this.path}) : super(key: key);
+  @override
+  _PdfViewPageState createState() => _PdfViewPageState();
+}
+class _PdfViewPageState extends State<PdfViewPage> {
+  int _totalPages = 0;
+  int _currentPage = 0;
+  bool pdfReady = false;
+  PDFViewController _pdfViewController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My Document"),
+      ),
+      body: Stack(
+        children: <Widget>[
+          PDFView(
+            filePath: widget.path,
+            autoSpacing: true,
+            enableSwipe: true,
+            pageSnap: true,
+            swipeHorizontal: true,
+            nightMode: false,
+            onError: (e) {
+              print(e);
+            },
+            onRender: (_pages) {
+              setState(() {
+                _totalPages = _pages;
+                pdfReady = true;
+              });
+            },
+            onViewCreated: (PDFViewController vc) {
+              _pdfViewController = vc;
+            },
+            onPageChanged: (int page, int total) {
+              setState(() {});
+            },
+            onPageError: (page, e) {},
+          ),
+          !pdfReady
+              ? Center(
+                  child: CircularProgressIndicator(),
                 )
-              ],
-            )));
+              : Offstage()
+        ],
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          _currentPage > 0
+              ? FloatingActionButton.extended(
+                  backgroundColor: Colors.red,
+                  label: Text("Go to ${_currentPage - 1}"),
+                  onPressed: () {
+                    _currentPage -= 1;
+                    _pdfViewController.setPage(_currentPage);
+                  },
+                )
+              : Offstage(),
+          _currentPage+1 < _totalPages
+              ? FloatingActionButton.extended(
+                  backgroundColor: Colors.green,
+                  label: Text("Go to ${_currentPage + 1}"),
+                  onPressed: () {
+                    _currentPage += 1;
+                    _pdfViewController.setPage(_currentPage);
+                  },
+                )
+              : Offstage(),
+        ],
+      ),
+    );
   }
 }

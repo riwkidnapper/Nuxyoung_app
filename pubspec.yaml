@@ -73,6 +73,7 @@ flutter:
     - assets/images/profiledoc.png
     - assets/images/555.jpg
     - assets/images/p2.jpg
+    - assets/mypdf.pdf
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
     # For details regarding adding assets from package dependencies, see

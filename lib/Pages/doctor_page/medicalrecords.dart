@@ -37,7 +37,6 @@ class Records extends State<Medicalrec> {
               // context,
               key: _fbKey,
               autovalidate: true,
-
               // readonly: true,
               child: Column(
                 children: <Widget>[
