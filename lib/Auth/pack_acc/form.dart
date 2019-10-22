@@ -38,7 +38,7 @@ class FormCard extends StatelessWidget {
   //save;
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       //resizeToAvoidBottomInset: false,
       width: double.infinity,
       height: 320.0,
@@ -77,6 +77,7 @@ class FormCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: ScreenUtil.getInstance().setSp(26))),
                 TextFormField(
+                    //keyboardAppearance: Brightness.dark,
                     decoration: InputDecoration(
                         hintText: "อีเมล",
                         hintStyle:

@@ -206,7 +206,7 @@ class ChatRealState extends State<ChatReal> {
     if (_txtCtrl.text != '' && _txtCtrl.text.length > 0) {
       Items message =
           new Items(messageItem.toString(), currentUser.email, uid, fromUid);
-      print("จาก:" + fromUid + "chatID : " + chatUID);
+      //print("จาก:" + fromUid + "chatID : " + chatUID);
       itemRef.push().set(message.toJson()
           //   {
           //   "message": _txtCtrl.text,

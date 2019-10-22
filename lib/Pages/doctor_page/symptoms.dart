@@ -3,14 +3,28 @@ import 'package:flutter/material.dart';
 class ExpansionTileSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('อาการเบื้องต้น'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "อาการเบื้องต้น",
+          style: TextStyle(color: Colors.blueGrey[800]),
         ),
-        body: ListView.builder(
-          itemBuilder: (BuildContext context, int index) => EntryItem(data[index]),
-          itemCount: data.length,
+        backgroundColor: Colors.grey[300],
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            ListView.builder(
+              itemBuilder: (BuildContext context, int index) =>
+                  EntryItem(data[index]),
+              itemCount: data.length,
+            )
+          ],
         ),
       ),
     );
@@ -26,9 +40,11 @@ class Entry {
 
 // The entire multilevel list displayed by this app.
 final List<Entry> data = <Entry>[
-  Entry('เคสที่ 1',
+  Entry(
+    'เคสที่ 1',
     <Entry>[
-      Entry('ตัวอย่างที่ 1.1',
+      Entry(
+        'ตัวอย่างที่ 1.1',
         <Entry>[
           Entry('รายละเอียด'),
           Entry('รายละเอียด'),
@@ -39,15 +55,18 @@ final List<Entry> data = <Entry>[
       Entry('ตัวอย่างที่ 1.3'),
     ],
   ),
-  Entry('เคสที่ 2',
+  Entry(
+    'เคสที่ 2',
     <Entry>[
       Entry('ตัวอย่างที่ 2.1'),
       Entry('ตัวอย่างที่ 2.2 '),
     ],
   ),
-  Entry('เคสที่ 3',
+  Entry(
+    'เคสที่ 3',
     <Entry>[
-      Entry('ตัวอย่างที่ 3.1',
+      Entry(
+        'ตัวอย่างที่ 3.1',
         <Entry>[
           Entry('รายละเอียด'),
         ],
@@ -64,11 +83,13 @@ class EntryItem extends StatelessWidget {
   final Entry entry;
 
   Widget _buildTiles(Entry root) {
-    if (root.children.isEmpty)
-      return ListTile(title: Text(root.title));
+    if (root.children.isEmpty) return ListTile(title: Text(root.title));
     return ExpansionTile(
       key: PageStorageKey<Entry>(root),
-      trailing: SizedBox(height: 0, width: 0,),
+      trailing: SizedBox(
+        height: 0,
+        width: 0,
+      ),
       title: Text(root.title),
       children: root.children.map<Widget>(_buildTiles).toList(),
     );
@@ -79,12 +100,6 @@ class EntryItem extends StatelessWidget {
     return _buildTiles(entry);
   }
 }
-
-
-
-
-
-
 
 /*import 'package:flutter/material.dart';
 

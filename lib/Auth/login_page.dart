@@ -111,8 +111,13 @@ class _LoginpageState extends State<Loginpage> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: buildLogin(),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Stack(
+          children: buildLogin(),
+        ),
       ),
     );
   }

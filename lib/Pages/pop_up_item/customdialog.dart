@@ -94,23 +94,32 @@ class CustomDialog extends StatelessWidget {
           ]),
         ),
         //...bottom card part,
-        Padding(
-          padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
-          child: Container(
-            width: 140.0,
-            height: 140.0,
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.grey[400], width: 3.0),
-              borderRadius: new BorderRadius.all(
-                new Radius.circular(100.0),
-              ),              
-              image: new DecorationImage(
-                image: AssetImage(image),
-                fit: BoxFit.cover,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 140.0,
+              height: 140.0,
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: new BorderRadius.all(
+                  new Radius.circular(100.0),
+                ),
+                border: new Border.all(
+                  color: Colors.grey,
+                  width: 2.0,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
+                ],
               ),
             ),
-          ),
-        ), //...top circlular image part,
+          ],
+        ),
       ],
     );
   }
