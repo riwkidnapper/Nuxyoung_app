@@ -14,7 +14,7 @@ class Signature extends StatefulWidget {
     this.height,
     this.backgroundColor = Colors.grey,
     this.penColor = Colors.black,
-    this.penStrokeWidth = 3.0,
+    this.penStrokeWidth = 1.0,
     this.onChanged,
   });
 
@@ -52,6 +52,7 @@ class SignatureState extends State<Signature> {
   void clear() {
     setState(() => _points.clear());
     //NOTIFY OF CHANGE AFTER SIGNATURE PAD CLEARED
+    widget.onChanged(_points);
   }
 
   //CHECK IF SIGNATURE IS EMPTY
@@ -70,6 +71,8 @@ class SignatureState extends State<Signature> {
     var maxHeight = widget.height ?? double.infinity;
     painter = _SignaturePainter(
       _points,
+      widget.penColor,
+      widget.penStrokeWidth,
     );
     //SIGNATURE CANVAS
     var signatureCanvas = Container(
@@ -78,6 +81,11 @@ class SignatureState extends State<Signature> {
       ),
       child: Listener(
         onPointerDown: (event) => _addPoint(event, PointType.tap),
+        onPointerUp: (event) {
+          _addPoint(event, PointType.tap);
+          //NOTIFY OF CHANGE AFTER MOVEMENT IS DONE
+          widget.onChanged(_points);
+        },
         onPointerMove: (event) => _addPoint(event, PointType.move),
         child: RepaintBoundary(
           child: CustomPaint(
@@ -132,7 +140,7 @@ class SignatureState extends State<Signature> {
   }
 
   bool _isFar(Offset o1, Offset o2) {
-    return (o1.dx - o2.dx).abs() > 30 || (o1.dy - o2.dy).abs() > 30;
+    return (o1.dx - o2.dx).abs() > 100 || (o1.dy - o2.dy).abs() > 100;
   }
 }
 
@@ -147,23 +155,28 @@ class Point {
 
 class _SignaturePainter extends CustomPainter {
   Size _canvasSize;
-  List<Point> points;
-  
+  List<Point> _points;
+  Paint _penStyle;
 
-  _SignaturePainter(this.points);
+  _SignaturePainter(this._points, Color penColor, double penStrokeWidth) {
+    this._penStyle = Paint()
+      ..color = penColor
+      ..strokeWidth = 2.0;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = new Paint()
-      ..color = Colors.black87
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 2.0;
-    if (points == null || points.isEmpty) return;
-    for (int i = 0; i < (points.length - 1); i++) {
-      if ((points[i + 1].type == PointType.move) &&
-          (points[i] != null || points.isNotEmpty) &&
-          (points[i + 1] != null || points.isNotEmpty)) {
-        canvas.drawLine(points[i].offset, points[i + 1].offset, paint);
+    _canvasSize = size;
+    if (_points == null || _points.isEmpty) return;
+    for (int i = 0; i < (_points.length - 1); i++) {
+      if (_points[i+1].type == PointType.move) {
+        canvas.drawLine(
+          _points[i].offset,
+          _points[i + 1].offset,
+          _penStyle,
+        );
+      } else {
+        canvas.drawCircle(_points[i+3].offset, 1.0, _penStyle);
       }
     }
   }

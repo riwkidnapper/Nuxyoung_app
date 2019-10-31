@@ -30,73 +30,72 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: GradientAppBar(
-          leading: new IconButton(
-            icon: new Icon(
-              Icons.menu,
-              color: Colors.blueGrey,
-            ),
-            onPressed: () => _scaffoldKey.currentState.openDrawer(),
-          ),
-          title: Text(
-            'Welcome Doctor',
-            style: TextStyle(
-              color: Colors.blueGrey[700],
-            ),
-          ),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                const IconData(0xe800, fontFamily: 'chat'),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.menu,
                 color: Colors.blueGrey,
               ),
-              onPressed: () {
-                Navigator.pop(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => new HomePage(),
-                  ),
-                );
-              },
+              onPressed: () => _scaffoldKey.currentState.openDrawer(),
             ),
-            SizedBox(
-              width: 5.0,
-            ),
-            IconButton(
-              icon: Icon(
-                const IconData(0xe811, fontFamily: 'chat'),
-                color: Colors.blueGrey,
+            title: Text(
+              'Welcome Doctor',
+              style: TextStyle(
+                color: Colors.blueGrey[700],
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => new LoadingChat(),
-                  ),
-                );
-              },
             ),
-            SizedBox(
-              width: 5.0,
-            ),
-            IconButton(
-              icon: Icon(
-                const IconData(0xe801, fontFamily: 'chat'),
-                color: Colors.blueGrey,
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  const IconData(0xe800, fontFamily: 'chat'),
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  Navigator.pop(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new HomePage(),
+                    ),
+                  );
+                },
               ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => new Container(),
-                  ),
-                );
-              },
-            ),
-          ],
-          backgroundColorStart: Colors.white,
-          backgroundColorEnd: Colors.blueGrey[50],
-        ),
+              SizedBox(
+                width: 5.0,
+              ),
+              IconButton(
+                icon: Icon(
+                  const IconData(0xe811, fontFamily: 'chat'),
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new LoadingChat(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(
+                width: 5.0,
+              ),
+              IconButton(
+                icon: Icon(
+                  const IconData(0xe801, fontFamily: 'chat'),
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new Container(),
+                    ),
+                  );
+                },
+              ),
+            ],
+            gradient:
+                LinearGradient(colors: [Colors.white, Colors.blueGrey[50]])),
         /************************************************************************ */
         drawer: new Drawer(
           elevation: 20.0,

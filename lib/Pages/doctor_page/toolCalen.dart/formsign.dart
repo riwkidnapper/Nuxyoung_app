@@ -34,14 +34,15 @@ class FormBuilderSignature extends StatefulWidget {
     this.clearButtonText = "Clear",
     this.initialValue,
     this.points,
-    this.width,
+    this.width = 320,
     this.height = 200,
     this.valueTransformer,
     this.onChanged,
   });
 
   @override
-  _FormBuilderSignatureState createState() => _FormBuilderSignatureState();
+  _FormBuilderSignatureState createState() =>
+      _FormBuilderSignatureState();
 }
 
 class _FormBuilderSignatureState extends State<FormBuilderSignature> {
@@ -77,7 +78,7 @@ class _FormBuilderSignatureState extends State<FormBuilderSignature> {
       validator: (val) {
         for (int i = 0; i < widget.validators.length; i++) {
           if (widget.validators[i](val) != null)
-            return ((widget.validators[i](val)));
+            return widget.validators[i](val);
         }
         return null;
       },
