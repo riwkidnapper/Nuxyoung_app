@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-//import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
+import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
+
 //import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 //import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
 //import 'package:nuxyoung/pull_to_refresh.dart';
@@ -35,17 +36,35 @@ class PagetwoState extends State<Pagetwo> {
   //  }
 
   Widget build(BuildContext context) {
-  return LayoutBuilder(
-    builder: (BuildContext context, BoxConstraints viewportConstraints) {
-      return Container(
-           child:
-        SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: viewportConstraints.maxHeight,
-          ),
-          child: Column(
+  return Scaffold(
+    body: NestedScrollView(
+      headerSliverBuilder: 
+      (BuildContext context, bool innerBoxIsScrolled){
+         return <Widget>[
+                // SliverAppBar(
+                //   automaticallyImplyLeading: true,
+                //   backgroundColor: Colors.transparent,
+                //   expandedHeight: 300.0,
+                //   floating: false,
+                //   pinned: true,
+                //   flexibleSpace: FlexibleSpaceBar(
+                //       centerTitle: true,
+                //       collapseMode: CollapseMode.pin,
+                //       background: Image.asset(
+                //         'assets/images/a.jpg',
+                //         fit: BoxFit.cover,
+                //       )),
+                // ),
+              ];
+      },
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: ConstrainedBox(
+             constraints: BoxConstraints(
+               
+               ),
+               child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -65,95 +84,116 @@ class PagetwoState extends State<Pagetwo> {
                   ),
                 ),
               ),
-              new Padding(
-                padding: new EdgeInsets.all(8.0),
-                child: new TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
-                    hintText: "ค้นหา",
-                  ),
-                ),
-                ),
-                Container(
-                    width: 320,
-                    height: 150,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      color: Colors.pink[100],
-                      elevation: 10,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const ListTile(
-                        //   leading: Icon(Icons.album, size: 70.0, ),
-                            title: Text('เวลานัดหมาย', style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
-                        //   subtitle: Text('TWICE', style: TextStyle(color: Colors.white)),
-                        ),
-                        ],
-                      ),
-                    ),
-                  ),
+              // new Padding(
+              //   padding: new EdgeInsets.all(8.0),
+              //   child: new TextField(
+              //     controller: searchController,
+              //     decoration: InputDecoration(
+              //       prefixIcon: Icon(Icons.search),
+              //       border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(32.0)),
+              //       hintText: "ค้นหา",
+              //     ),
+              //   ),
+              //   ),
               Container(
                     width: 320,
                     height: 150,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => Calendar()
+                        )
                       ),
-                      color: Colors.green[200],
-                      elevation: 10,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color: Colors.pink[100],
+                        elevation: 10,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
                           const ListTile(
-                        //   leading: Icon(Icons.album, size: 70.0, ),
-                          title: Text('เลื่อนเวลานัด', style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
-                        //   subtitle: Text('TWICE', style: TextStyle(color: Colors.white)),
+                            //leading: Icon(Icons.album, size: 70.0, ),
+                            title: Text('วันนัดหมายของคุณ', style: TextStyle(color: Colors.black,fontSize: 20.0),
+                            textAlign: TextAlign.center),
+                            subtitle: Text('21 พฤศจิกายน 62', style: TextStyle(color: Colors.black,fontSize: 24.0),
+                            textAlign: TextAlign.center),
                         ),
                         ],
+                        ),
                       ),
                     ),
                   ),
-                  //  Container(
-                  //   width: 320,
-                  //   height: 150,
-                  //   child: GestureDetector(
-                  //     onTap: () => Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (_) => Calendar()
-                  //       )
-                  //     ),
-                  //     child: Card(
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(15.0),
-                  //       ),
-                  //       color: Colors.blue[100],
-                  //       elevation: 10,
-                  //       child: Column(
-                  //         mainAxisSize: MainAxisSize.min,
-                  //         children: <Widget>[
-                  //           const ListTile(
-                  //         //   leading: Icon(Icons.album, size: 70.0, ),
-                  //           title: Text('ปฏิทินหมอ', style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
-                  //         //   subtitle: Text('TWICE', style: TextStyle(color: Colors.white)),
-                  //         ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Container(
+                   child: RaisedButton.icon(
+                     icon: Icon(
+                       Icons.date_range,
+                       color: Colors.blueGrey[700],
+                     ),
+                     color: Colors.blueGrey[300],
+                      label: Text(
+                        "เลื่อนเวลานัดหมาย",
+                        style: TextStyle(
+                          color: Colors.blueGrey[800],
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ), onPressed: () async {},
+                   ),
+                  ),
+
+                  Container(
+                   child: RaisedButton.icon(
+                     icon: Icon(
+                       Icons.assignment_turned_in,
+                       color: Colors.blueGrey[700],
+                     ),
+                     color: Colors.blueGrey[300],
+                      label: Text(
+                        "เลื่อนเวลานัดหมาย",
+                        style: TextStyle(
+                          color: Colors.blueGrey[800],
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ), onPressed: () async {},
+                   ),
+                  ),
+              // Container(
+              //       width: 320,
+              //       height: 150,
+              //       child: Card(
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(15.0),
+              //         ),
+              //         color: Colors.green[200],
+              //         elevation: 10,
+              //         child: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: <Widget>[
+              //             const ListTile(
+              //           //   leading: Icon(Icons.album, size: 70.0, ),
+              //             title: Text('เลื่อนเวลานัด', style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
+              //           //   subtitle: Text('TWICE', style: TextStyle(color: Colors.white)),
+              //           ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
             ],
           ),
-        ),
-      ),);
-    },
-  );
+            ),
+          )
+        ],
+      ),
+      ),
+      );
+  } 
 }
+
     // return Scaffold(
     //   body: SmartRefresher(
     //     enablePullDown: true,
@@ -185,6 +225,4 @@ class PagetwoState extends State<Pagetwo> {
     //     ),
     //   ),
     // );
-
-  }
 
