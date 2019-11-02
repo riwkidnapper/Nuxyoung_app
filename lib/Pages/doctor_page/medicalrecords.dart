@@ -56,23 +56,129 @@ class _MedicalrecState extends State<Medicalrec> {
   Widget build(BuildContext context) {
     //// var dayofbirth = birthday.day;
     //// var mothofbirth = birthday.month;
-
-    if (date.compareTo(birthday) > 0) throw ("Can't be born in the future");
     num nowYear = date.year;
     num birthdayOfyear = birthday.year;
     num age = nowYear - birthdayOfyear;
     num nowMonth = date.month;
-    num birthdayOfMonth = birthday.month;
-    if (birthdayOfMonth > nowMonth) {
-      age--;
-    } else if (nowMonth == birthdayOfMonth) {
-      num nowDay = date.day;
-      num birthdayOfday = birthday.day;
-      if (birthdayOfday > nowDay) {
-        age--;
+    num birthdaymoth = birthday.month;
+    num birthdayOfMonth;
+    num nowDay = date.day;
+    num birthdaydate = birthday.day;
+    num birthdayOfday;
+    if (date.compareTo(birthday) >= 0) {
+      if (nowMonth > birthdaymoth) {
+        birthdayOfMonth = nowMonth - birthdaymoth;
+        if (birthdaydate > nowDay) {
+          birthdayOfMonth--;
+          if (birthdaymoth == 1 ||
+              birthdaymoth == 3 ||
+              birthdaymoth == 5 ||
+              birthdaymoth == 7 ||
+              birthdaymoth == 8 ||
+              birthdaymoth == 10 ||
+              birthdaymoth == 12) {
+            birthdayOfday = (31 - birthdaydate) + nowDay;
+          } else if (birthdaymoth == 4 ||
+              birthdaymoth == 6 ||
+              birthdaymoth == 9 ||
+              birthdaymoth == 11) {
+            birthdayOfday = (30 - birthdaydate) + nowDay;
+          } else {
+            if ((birthdayOfyear - 543) % 4 == 0) {
+              if (birthdayOfyear % 100 == 0) {
+                if (birthdayOfyear % 400 == 0) {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                } else {
+                  birthdayOfday = (28 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (29 - birthdaydate) + nowDay;
+              }
+            } else {
+              birthdayOfday = (28 - birthdaydate) + nowDay;
+            }
+          }
+        } else if (birthdaydate == nowDay) {
+          birthdayOfday = birthdaydate - nowDay;
+        } else {
+          birthdayOfday = nowDay - birthdaydate;
+        }
+      } else if (nowMonth == birthdaymoth) {
+        if (birthdaydate > nowDay) {
+          if (birthdaymoth == 1 ||
+              birthdaymoth == 3 ||
+              birthdaymoth == 5 ||
+              birthdaymoth == 7 ||
+              birthdaymoth == 8 ||
+              birthdaymoth == 10 ||
+              birthdaymoth == 12) {
+            birthdayOfday = (31 - birthdaydate) + nowDay;
+          } else if (birthdaymoth == 4 ||
+              birthdaymoth == 6 ||
+              birthdaymoth == 9 ||
+              birthdaymoth == 11) {
+            birthdayOfday = (30 - birthdaydate) + nowDay;
+          } else {
+            if ((birthdayOfyear - 543) % 4 == 0) {
+              if (birthdayOfyear % 100 == 0) {
+                if (birthdayOfyear % 400 == 0) {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                } else {
+                  birthdayOfday = (28 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (29 - birthdaydate) + nowDay;
+              }
+            } else {
+              birthdayOfday = (28 - birthdaydate) + nowDay;
+            }
+          }
+        } else if (birthdaydate == nowDay) {
+          birthdayOfday = birthdaydate - nowDay;
+        } else {
+          birthdayOfday = nowDay - birthdaydate;
+        }
       }
+    } else {
+      throw (date.compareTo(birthday));
     }
 
+    // if (birthdaymoth > nowMonth) {
+    //   age--;
+    //   birthdayOfMonth = nowMonth;
+    // } else if (nowMonth == birthdaymoth) {
+    //   if (birthdayOfday == nowDay) {
+    //     birthdayOfday = birthdayOfday - nowDay;
+    //     birthdayOfMonth = birthdaymoth - nowMonth;
+    //   } else if (nowDay > birthdayOfday) {
+    //     birthdayOfday = nowDay - birthdayOfday;
+    //     birthdayOfMonth = nowMonth - birthdaymoth;
+    //   } else {
+    //     age--;
+    //     birthdayOfMonth = birthday.month;
+    //   }
+    // } else {
+    //   birthdayOfMonth = nowMonth - birthdaymoth;
+
+    //   if (birthdayOfday > nowDay) {
+    //     birthdayOfMonth--;
+    //   }
+    // }
+// if (birthdayOfMonth == 1 ||
+//             birthdayOfMonth == 3 ||
+//             birthdayOfMonth == 5 ||
+//             birthdayOfMonth == 7 ||
+//             birthdayOfMonth == 8 ||
+//             birthdayOfMonth == 12) {
+//           birthdayOfday = (31 - birthdayOfday) + nowDay;
+//         } else if (birthdayOfMonth == 4 ||
+//             birthdayOfMonth == 6 ||
+//             birthdayOfMonth == 9 ||
+//             birthdayOfMonth == 11) {
+//           birthdayOfday = (30 - birthdayOfday) + nowDay;
+//         } else if (birthdayOfMonth == 2) {
+//           birthdayOfday = (28 - birthdayOfday) + nowDay;
+//         }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -107,7 +213,7 @@ class _MedicalrecState extends State<Medicalrec> {
                         // readonly: true,
                       ),
                       TextFormField(
-                        initialValue: birthdayOfMonth.toString(),
+                        initialValue: age.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(
@@ -118,7 +224,7 @@ class _MedicalrecState extends State<Medicalrec> {
                         maxLines: null,
                       ),
                       TextFormField(
-                        initialValue: age.toString(),
+                        initialValue: "อายุ" + birthdayOfMonth.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(
@@ -128,6 +234,7 @@ class _MedicalrecState extends State<Medicalrec> {
                         maxLines: null,
                       ),
                       TextFormField(
+                        initialValue: "วัน" + birthdayOfday.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(

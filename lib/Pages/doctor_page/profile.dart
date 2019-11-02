@@ -167,12 +167,12 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "เขต/อำเภอ",
                                 ),
                                 controller: _amphures,
-                                validator: (_controller) {
-                                  if (_controller.isEmpty) {
-                                    return 'กรุณาระบุจังหวัด';
-                                  }
-                                  return null;
-                                },
+                                // validator: (_controller) {
+                                //   if (_controller.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัด';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                             ),
                             GestureDetector(
@@ -213,12 +213,12 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "แขวง/ตำบล",
                                 ),
                                 controller: _district,
-                                validator: (_amphures) {
-                                  if (_amphures.isEmpty) {
-                                    return 'กรุณาระบุจังหวัดและอำเภอ';
-                                  }
-                                  return null;
-                                },
+                                // validator: (_amphures) {
+                                //   if (_amphures.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัดและอำเภอ';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                             ),
                             GestureDetector(
@@ -260,12 +260,12 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "รหัสไปรษณีย์",
                                 ),
                                 controller: _zipcode,
-                                validator: (_amphures) {
-                                  if (_amphures.isEmpty) {
-                                    return 'กรุณาระบุจังหวัดและอำเภอ';
-                                  }
-                                  return null;
-                                },
+                                // validator: (_amphures) {
+                                //   if (_amphures.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัดและอำเภอ';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                             ),
                             GestureDetector(
