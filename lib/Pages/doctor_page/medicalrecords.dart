@@ -12,16 +12,26 @@ class Medicalrec extends StatefulWidget {
   final String idnumber;
   final DateTime birthday;
   final String gender;
+  final String address;
+  final String provinces;
+  final String amphures;
+  final String district;
+  final String zipcode;
   const Medicalrec({
     Key key,
     @required this.name,
     @required this.idnumber,
     @required this.birthday,
     @required this.gender,
+    @required this.address,
+    @required this.provinces,
+    @required this.amphures,
+    @required this.district,
+    @required this.zipcode,
   }) : super(key: key);
   @override
-  _MedicalrecState createState() =>
-      _MedicalrecState(name, idnumber, birthday, gender);
+  _MedicalrecState createState() => _MedicalrecState(name, idnumber, birthday,
+      gender, address, provinces, amphures, district, zipcode);
 }
 
 class _MedicalrecState extends State<Medicalrec> {
@@ -32,12 +42,17 @@ class _MedicalrecState extends State<Medicalrec> {
   final date = DateTime(
       DateTime.now().year + 543, DateTime.now().month, DateTime.now().day);
   ValueChanged _onChanged = (val) => (val);
-
   final String name;
   final String idnumber;
   final DateTime birthday;
   final String gender;
-  _MedicalrecState(this.name, this.idnumber, this.birthday, this.gender);
+  final String address;
+  final String provinces;
+  final String amphures;
+  final String district;
+  final String zipcode;
+  _MedicalrecState(this.name, this.idnumber, this.birthday, this.gender,
+      this.address, this.provinces, this.amphures, this.district, this.zipcode);
   void _clear() {
     _fbKey.currentState?.reset();
     Navigator.pushReplacement(
@@ -48,14 +63,17 @@ class _MedicalrecState extends State<Medicalrec> {
                 idnumber: idnumber,
                 birthday: birthday,
                 gender: gender,
+                address: address,
+                provinces: provinces,
+                amphures: amphures,
+                district: district,
+                zipcode: zipcode,
               )),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    //// var dayofbirth = birthday.day;
-    //// var mothofbirth = birthday.month;
     num nowYear = date.year;
     num birthdayOfyear = birthday.year;
     num age = nowYear - birthdayOfyear;
@@ -66,119 +84,172 @@ class _MedicalrecState extends State<Medicalrec> {
     num birthdaydate = birthday.day;
     num birthdayOfday;
     if (date.compareTo(birthday) >= 0) {
-      if (nowMonth > birthdaymoth) {
-        birthdayOfMonth = nowMonth - birthdaymoth;
-        if (birthdaydate > nowDay) {
-          birthdayOfMonth--;
-          if (birthdaymoth == 1 ||
-              birthdaymoth == 3 ||
-              birthdaymoth == 5 ||
-              birthdaymoth == 7 ||
-              birthdaymoth == 8 ||
-              birthdaymoth == 10 ||
-              birthdaymoth == 12) {
-            birthdayOfday = (31 - birthdaydate) + nowDay;
-          } else if (birthdaymoth == 4 ||
-              birthdaymoth == 6 ||
-              birthdaymoth == 9 ||
-              birthdaymoth == 11) {
-            birthdayOfday = (30 - birthdaydate) + nowDay;
-          } else {
-            if ((birthdayOfyear - 543) % 4 == 0) {
-              if (birthdayOfyear % 100 == 0) {
-                if (birthdayOfyear % 400 == 0) {
-                  birthdayOfday = (29 - birthdaydate) + nowDay;
+      if (nowYear > birthdayOfyear) {
+        if (nowMonth > birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
+          if (birthdaydate > nowDay) {
+            birthdayOfMonth--;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
                 } else {
-                  birthdayOfday = (28 - birthdaydate) + nowDay;
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
                 }
               } else {
-                birthdayOfday = (29 - birthdaydate) + nowDay;
+                birthdayOfday = (28 - birthdaydate) + nowDay;
               }
-            } else {
-              birthdayOfday = (28 - birthdaydate) + nowDay;
             }
+          } else if (birthdaydate == nowDay) {
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
           }
-        } else if (birthdaydate == nowDay) {
-          birthdayOfday = birthdaydate - nowDay;
-        } else {
-          birthdayOfday = nowDay - birthdaydate;
         }
-      } else if (nowMonth == birthdaymoth) {
-        if (birthdaydate > nowDay) {
-          if (birthdaymoth == 1 ||
-              birthdaymoth == 3 ||
-              birthdaymoth == 5 ||
-              birthdaymoth == 7 ||
-              birthdaymoth == 8 ||
-              birthdaymoth == 10 ||
-              birthdaymoth == 12) {
-            birthdayOfday = (31 - birthdaydate) + nowDay;
-          } else if (birthdaymoth == 4 ||
-              birthdaymoth == 6 ||
-              birthdaymoth == 9 ||
-              birthdaymoth == 11) {
-            birthdayOfday = (30 - birthdaydate) + nowDay;
-          } else {
-            if ((birthdayOfyear - 543) % 4 == 0) {
-              if (birthdayOfyear % 100 == 0) {
-                if (birthdayOfyear % 400 == 0) {
+        if (nowMonth == birthdaymoth) {
+          if (birthdaydate > nowDay) {
+            age--;
+            birthdayOfMonth = nowMonth;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
+                } else {
                   birthdayOfday = (29 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (28 - birthdaydate) + nowDay;
+              }
+            }
+          } else if (birthdaydate == nowDay) {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
+          }
+        } else {
+          birthdayOfMonth = nowMonth;
+          if (birthdaydate > nowDay) {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfMonth--;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
+                } else {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (28 - birthdaydate) + nowDay;
+              }
+            }
+          } else if (birthdaydate == nowDay) {
+            age--;
+            birthdayOfMonth = nowMonth;
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
+          }
+        }
+      } else {
+        if (nowMonth > birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
+          if (nowDay >= birthdaydate) {
+            birthdayOfday = nowDay - birthdaydate;
+          } else {
+            if (birthdaydate > nowDay) {
+              birthdayOfMonth--;
+              if (birthdaymoth == 1 ||
+                  birthdaymoth == 3 ||
+                  birthdaymoth == 5 ||
+                  birthdaymoth == 7 ||
+                  birthdaymoth == 8 ||
+                  birthdaymoth == 10 ||
+                  birthdaymoth == 12) {
+                birthdayOfday = (31 - birthdaydate) + nowDay;
+              } else if (birthdaymoth == 4 ||
+                  birthdaymoth == 6 ||
+                  birthdaymoth == 9 ||
+                  birthdaymoth == 11) {
+                birthdayOfday = (30 - birthdaydate) + nowDay;
+              } else {
+                if ((birthdayOfyear - 543) % 4 == 0) {
+                  if (birthdayOfyear % 100 == 0) {
+                    if (birthdayOfyear % 400 == 0) {
+                      birthdayOfday = (29 - birthdaydate) + nowDay;
+                    } else {
+                      birthdayOfday = (28 - birthdaydate) + nowDay;
+                    }
+                  } else {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  }
                 } else {
                   birthdayOfday = (28 - birthdaydate) + nowDay;
                 }
-              } else {
-                birthdayOfday = (29 - birthdaydate) + nowDay;
               }
-            } else {
-              birthdayOfday = (28 - birthdaydate) + nowDay;
             }
           }
-        } else if (birthdaydate == nowDay) {
-          birthdayOfday = birthdaydate - nowDay;
-        } else {
+        } else if (nowMonth == birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
           birthdayOfday = nowDay - birthdaydate;
         }
       }
-    } else {
-      throw (date.compareTo(birthday));
     }
 
-    // if (birthdaymoth > nowMonth) {
-    //   age--;
-    //   birthdayOfMonth = nowMonth;
-    // } else if (nowMonth == birthdaymoth) {
-    //   if (birthdayOfday == nowDay) {
-    //     birthdayOfday = birthdayOfday - nowDay;
-    //     birthdayOfMonth = birthdaymoth - nowMonth;
-    //   } else if (nowDay > birthdayOfday) {
-    //     birthdayOfday = nowDay - birthdayOfday;
-    //     birthdayOfMonth = nowMonth - birthdaymoth;
-    //   } else {
-    //     age--;
-    //     birthdayOfMonth = birthday.month;
-    //   }
-    // } else {
-    //   birthdayOfMonth = nowMonth - birthdaymoth;
-
-    //   if (birthdayOfday > nowDay) {
-    //     birthdayOfMonth--;
-    //   }
-    // }
-// if (birthdayOfMonth == 1 ||
-//             birthdayOfMonth == 3 ||
-//             birthdayOfMonth == 5 ||
-//             birthdayOfMonth == 7 ||
-//             birthdayOfMonth == 8 ||
-//             birthdayOfMonth == 12) {
-//           birthdayOfday = (31 - birthdayOfday) + nowDay;
-//         } else if (birthdayOfMonth == 4 ||
-//             birthdayOfMonth == 6 ||
-//             birthdayOfMonth == 9 ||
-//             birthdayOfMonth == 11) {
-//           birthdayOfday = (30 - birthdayOfday) + nowDay;
-//         } else if (birthdayOfMonth == 2) {
-//           birthdayOfday = (28 - birthdayOfday) + nowDay;
-//         }
     return Scaffold(
       appBar: AppBar(
         title: Text(

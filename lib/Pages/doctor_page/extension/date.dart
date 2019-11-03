@@ -293,7 +293,8 @@ class _DateTimeFieldState extends FormFieldState<DateTime> {
       final newValue = await widget.onShowPicker(context, value);
       isShowingDialog = false;
       if (newValue != null) {
-        _effectiveController.text = format(DateTime(newValue.year + 543, newValue.month, newValue.day));
+        _effectiveController.text =
+            format(DateTime(newValue.year + 543, newValue.month, newValue.day));
       }
     }
   }
@@ -679,9 +680,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
           initialDatePickerMode:
               widget.initialDatePickerMode ?? DatePickerMode.day,
           // ignore: deprecated_member_use_from_same_package
-          initialDate: currentValue ?? widget.initialDate ?? DateTime.now(),
+          initialDate: currentValue != null ? DateTime(currentValue.year - 543, currentValue.month, currentValue.day) : (widget.initialDate ?? DateTime.now()),
           firstDate: widget.firstDate ?? DateTime(1900),
-          lastDate: widget.lastDate ?? DateTime(3000));
+          lastDate: widget.lastDate ?? DateTime(2700));
     }
   }
 

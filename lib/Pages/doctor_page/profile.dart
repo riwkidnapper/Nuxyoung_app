@@ -30,13 +30,20 @@ class _ProfilerecordState extends State<Profilerecord> {
   DistrictDao districtSelected;
   ProvinceDao province;
   ProvinceDao provinceSelected;
+
   final Firestore store = Firestore.instance;
   ValueChanged _onChanged = (val) => (val);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String zipcode;
+
   void _clear() {
     _fbKey.currentState?.reset();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Profilerecord()),
+    );
   }
 
   bool onClick = false;
@@ -44,6 +51,11 @@ class _ProfilerecordState extends State<Profilerecord> {
   Widget build(BuildContext context) {
     String idnumber;
     String name;
+    String address;
+    String provinces;
+    String amphures;
+    String district;
+    String zipcode;
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -94,7 +106,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                           locale: Locale("th", "TH"),
                           attribute: "birthday",
                           onChanged: _onChanged,
-                          inputType: InputTypedate.date,
+                          inputType: InputTypedate?.date ?? false,
                           decoration:
                               InputDecoration(labelText: "วันเดือนปีเกิด"),
                         ),
@@ -116,10 +128,14 @@ class _ProfilerecordState extends State<Profilerecord> {
                         ),
                         TextFormField(
                           decoration: InputDecoration(labelText: "ที่อยู่"),
-
-                          // readonly: true,
                           onChanged: _onChanged,
-                          // valueTransformer: (val) => val.length > 0 ? val[0] : null,
+                          onSaved: (val) => address = val,
+                          validator: (_controller) {
+                            if (_controller.isEmpty) {
+                              return 'ที่อยู่ไม่ควรเว้นว่าง';
+                            }
+                            return null;
+                          },
                         ),
                         Row(
                           children: <Widget>[
@@ -130,6 +146,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "จังหวัด",
                                 ),
                                 controller: _controller,
+                                onSaved: (val) => provinces = val,
                               )),
                             ),
                             GestureDetector(
@@ -141,7 +158,8 @@ class _ProfilerecordState extends State<Profilerecord> {
                                 );
                                 setState(() {
                                   provinceSelected = province;
-                                  _controller.text = provinceSelected.nameTh;
+                                  _controller.text =
+                                      provinceSelected?.nameTh ?? "";
                                 });
                               },
                               child: Container(
@@ -167,6 +185,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "เขต/อำเภอ",
                                 ),
                                 controller: _amphures,
+                                onSaved: (val) => amphures = val,
                                 // validator: (_controller) {
                                 //   if (_controller.isEmpty) {
                                 //     return 'กรุณาระบุจังหวัด';
@@ -178,7 +197,20 @@ class _ProfilerecordState extends State<Profilerecord> {
                             GestureDetector(
                               onTap: () async {
                                 List list = await AmphureProvider.all(
-                                    provinceId: province.id);
+                                  provinceId: province?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัด',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
+                                      ),
+                                );
 
                                 AmphureDao amphure =
                                     await ChooseAmphreDialog.show(
@@ -187,7 +219,8 @@ class _ProfilerecordState extends State<Profilerecord> {
                                 );
                                 setState(() {
                                   amphureSelected = amphure;
-                                  _amphures.text = amphureSelected.nameTh;
+                                  _amphures.text =
+                                      amphureSelected?.nameTh ?? "";
                                 });
                               },
                               child: Container(
@@ -213,6 +246,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "แขวง/ตำบล",
                                 ),
                                 controller: _district,
+                                onSaved: (val) => district = val,
                                 // validator: (_amphures) {
                                 //   if (_amphures.isEmpty) {
                                 //     return 'กรุณาระบุจังหวัดและอำเภอ';
@@ -224,7 +258,20 @@ class _ProfilerecordState extends State<Profilerecord> {
                             GestureDetector(
                               onTap: () async {
                                 List list = await DistrictProvider.all(
-                                    amphureId: amphureSelected.id);
+                                  amphureId: amphureSelected?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัดแะลระบุอำเภอ',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
+                                      ),
+                                );
 
                                 DistrictDao districtDao =
                                     await DistrictDialog.show(
@@ -233,7 +280,8 @@ class _ProfilerecordState extends State<Profilerecord> {
                                 );
                                 setState(() {
                                   districtSelected = districtDao;
-                                  _district.text = districtSelected.nameTh;
+                                  _district.text =
+                                      districtSelected?.nameTh ?? "";
                                 });
                               },
                               child: Container(
@@ -260,6 +308,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                                   labelText: "รหัสไปรษณีย์",
                                 ),
                                 controller: _zipcode,
+                                onSaved: (val) => zipcode = val,
                                 // validator: (_amphures) {
                                 //   if (_amphures.isEmpty) {
                                 //     return 'กรุณาระบุจังหวัดและอำเภอ';
@@ -271,7 +320,20 @@ class _ProfilerecordState extends State<Profilerecord> {
                             GestureDetector(
                               onTap: () async {
                                 List list = await DistrictProvider.all(
-                                    amphureId: amphureSelected.id);
+                                  amphureId: amphureSelected?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัดแะลระบุอำเภอ',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
+                                      ),
+                                );
 
                                 DistrictDao districtDao =
                                     await ZipcodeDialog.show(
@@ -280,7 +342,8 @@ class _ProfilerecordState extends State<Profilerecord> {
                                 );
                                 setState(() {
                                   districtSelected = districtDao;
-                                  _zipcode.text = districtSelected.zipCode;
+                                  _zipcode.text =
+                                      districtSelected?.zipCode ?? "";
                                 });
                               },
                               child: Container(
@@ -314,18 +377,42 @@ class _ProfilerecordState extends State<Profilerecord> {
 
                           if (_fbKey.currentState.validate()) {
                             var values = _fbKey.currentState.value;
+                            final DateTime hbd = values["birthday"];
+
                             print(values);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Medicalrec(
-                                  idnumber: idnumber,
-                                  name: name,
-                                  gender: values["gender"],
-                                  birthday: values["birthday"],
+                            if (DateTime(
+                                        DateTime.now().year + 543,
+                                        DateTime.now().month,
+                                        DateTime.now().day)
+                                    .compareTo(hbd) >=
+                                0) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Medicalrec(
+                                    idnumber: idnumber,
+                                    name: name,
+                                    gender: values["gender"],
+                                    birthday: values["birthday"],
+                                    address: address,
+                                    provinces: provinces,
+                                    amphures: amphures,
+                                    district: district,
+                                    zipcode: zipcode,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else
+                              _scaffoldKey.currentState
+                                  .showSnackBar(new SnackBar(
+                                content: Text(
+                                  'วันเดือนปีเกิดไม่ถูกต้อง/ไม่สามารถระบุวันเดือนเกิดในอนาคตได้',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                                duration: Duration(milliseconds: 2500),
+                                backgroundColor: Colors.red,
+                              ));
                           }
                         },
                         icon: Icon(
