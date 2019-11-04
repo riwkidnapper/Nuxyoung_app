@@ -202,32 +202,32 @@ class Profile extends State<Profilerecord> {
                                 FlatButton.icon(
                                   onPressed: () async {
                                     _fbKey.currentState.save();
-                                    // if (_fbKey.currentState.validate()) {
-                                    //   var values = _fbKey.currentState.value;
-                                    //   print(values);
-                                    //   var data = <String, dynamic>{};
-                                    //   data["name"] = values["name"];
-                                    //   data["identification number"] =
-                                    //       values["identification number"];
-                                    //   data["date"] = values["date"];
-                                    //   data["gender"] = values["gender"];
-                                    //   data["age"] = values["age"];
-                                    //   data["postcode"] = values["postcode"];
-                                    //   data["country"] = values["country"];
-                                    //   data["district"] = values["district"];
-                                    //   data["subdistrict"] = values["subdistrict"];
-                                    //   data["history"] = values["history"];
-                                    //   data["logic"] = values["logic"];
-                                    //   //data["signature"] = values["signature"];
-                                    //   await store.collection("form").add(data).then((value) {
-                                    //     print(value.documentID);
-                                    //   }).catchError((err) {
-                                    //     print(err);
-                                    //   });
-                                    // } else {
-                                    //   print(_fbKey.currentState.value);
-                                    //   print("validation failed");
-                                    // }
+                                    if (_fbKey.currentState.validate()) {
+                                      var values = _fbKey.currentState.value;
+                                      print(values);
+                                      var data = <String, dynamic>{};
+                                      data["name"] = values["name"];
+                                      data["identification number"] =
+                                          values["identification number"];
+                                      data["date"] = values["date"];
+                                      data["gender"] = values["gender"];
+                                      data["age"] = values["age"];
+                                      data["postcode"] = values["postcode"];
+                                      data["country"] = values["country"];
+                                      data["district"] = values["district"];
+                                      data["subdistrict"] = values["subdistrict"];
+                                      data["history"] = values["history"];
+                                      data["logic"] = values["logic"];
+                                      //data["signature"] = values["signature"];
+                                      await store.collection("form").add(data).then((value) {
+                                        print(value.documentID);
+                                      }).catchError((err) {
+                                        print(err);
+                                      });
+                                    } else {
+                                      print(_fbKey.currentState.value);
+                                      print("validation failed");
+                                    }
                                     await ctrl.nextPage(
                                       duration:
                                           const Duration(milliseconds: 300),

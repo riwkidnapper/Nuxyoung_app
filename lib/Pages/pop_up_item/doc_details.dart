@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-//import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -81,7 +81,7 @@ class _MyPageState extends State<FoodScreen> {
                 SliverAppBar(
                   automaticallyImplyLeading: true,
                   backgroundColor: Colors.transparent,
-                  expandedHeight: 300.0,
+                  expandedHeight: 250.0,
                   floating: false,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
@@ -138,6 +138,24 @@ class _MyPageState extends State<FoodScreen> {
                         style: TextStyle(color: Colors.grey[600],fontSize: 18.0),
                       )),
                 ),
+                  
+                // Column(
+                //   children: <Widget>[
+                //     Text(
+                //         'ชื่อเจ้าของบทความ',
+                //         style: TextStyle(
+                //         fontSize: 16,
+                //         color: Colors.blueGrey[700],
+                //         fontWeight: FontWeight.w700,
+                //       ),
+                //     ),
+                //     TextFormField(
+                //        maxLines: 4,
+                //        style: TextStyle(fontSize: 18),
+                //     ),
+                //   ],
+                // ),
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

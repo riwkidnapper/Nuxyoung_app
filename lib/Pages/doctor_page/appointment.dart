@@ -73,7 +73,7 @@ class _AppointmentState extends State<Appointment>
                       : Container(
                           margin: EdgeInsets.all(11.0),
                           padding: EdgeInsets.all(15.0),
-                          height: 250,
+                          height: 280,
                           width: 500,
                           decoration: BoxDecoration(
                             color: Colors.white,

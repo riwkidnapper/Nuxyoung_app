@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Pages/pop_up_item/doc_details.dart';
+import 'package:nuxyoung/Pages/pop_up_item/editll.dart';
+
 
 class Article extends StatefulWidget {
   @override
@@ -83,7 +85,7 @@ class _ArticleState extends State<Article> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            _editll,
+                            Editll(),
                           ],
                         ),
                       ),
@@ -169,15 +171,3 @@ Widget _disabilityCard(
         ),
       ));
 }
-
-Widget _editll = new FloatingActionButton(
-  onPressed: () {},
-  child: Icon(
-    Icons.add,
-    size: 30,
-  ),
-  heroTag: null,
-  mini: true,
-  foregroundColor: Colors.blueGrey[900],
-  backgroundColor: Colors.blueGrey[200],
-);
