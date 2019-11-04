@@ -174,8 +174,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w500,
                 color: Colors.white),
           ),
-          backgroundColorStart: THEME,
-          backgroundColorEnd: Colors.blueGrey[900],
+          gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])
         ),
         body: SafeArea(child: FancyTabBar()),
       );
@@ -212,8 +211,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w500,
                 color: Colors.white),
           ),
-          backgroundColorStart: THEME,
-          backgroundColorEnd: Colors.blueGrey[900],
+          gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])
         ),
         body: SafeArea(child: FancyTabBar()),
       );

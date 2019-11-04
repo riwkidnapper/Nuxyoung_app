@@ -46,12 +46,12 @@ class _AddproflieStateDoc extends State<AddproflieDoc> {
       final File file = await ImagePicker.pickVideo(source: source);
       await _playVideo(file);
     } else {
-      try {
-        _imageFile = await ImagePicker.pickImage(source: source);
-        setState(() {});
-      } catch (e) {
-        _pickImageError = e;
-      }
+      // try {
+      //   _imageFile = await ImagePicker.pickImage(source: source);
+      //   setState(() {});
+      // } catch (e) {
+      //   _pickImageError = e;
+      // }
     }
   }
   @override

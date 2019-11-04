@@ -6,7 +6,7 @@ import 'Tools/custom_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyoung/pull_to_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChatScreen extends StatefulWidget {
   @override

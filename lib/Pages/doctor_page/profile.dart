@@ -1,299 +1,473 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_thailand_provinces/dao/amphure_dao.dart';
+import 'package:flutter_thailand_provinces/dao/district_dao.dart';
+import 'package:flutter_thailand_provinces/dao/province_dao.dart';
+import 'package:flutter_thailand_provinces/provider/amphure_provider.dart';
+import 'package:flutter_thailand_provinces/provider/district_provider.dart';
+import 'package:flutter_thailand_provinces/provider/province_provider.dart';
+import 'extension/ProvinceDialog.dart';
+import 'extension/ZipcodeDialog.dart';
+import 'extension/choose_dialog.dart';
+import 'extension/date.dart';
+import 'extension/districtDialog.dart';
 import 'medicalrecords.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import './data.dart';
+// import './data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Profilerecord extends StatefulWidget {
   @override
-  Profile createState() {
-    return Profile();
-  }
+  _ProfilerecordState createState() => _ProfilerecordState();
 }
 
-class Profile extends State<Profilerecord> {
-  PageController ctrl;
-  var data;
-  bool autoValidate = true;
-  bool readOnly = false;
-  bool showSegmentedControl = true;
+class _ProfilerecordState extends State<Profilerecord> {
+  TextEditingController _controller = new TextEditingController();
+  TextEditingController _amphures = new TextEditingController();
+  TextEditingController _district = new TextEditingController();
+  TextEditingController _zipcode = new TextEditingController();
+  AmphureDao amphureSelected;
+  DistrictDao districtSelected;
+  ProvinceDao province;
+  ProvinceDao provinceSelected;
+
   final Firestore store = Firestore.instance;
-  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-
   ValueChanged _onChanged = (val) => (val);
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    ctrl = PageController();
-    super.initState();
+  String zipcode;
+
+  void _clear() {
+    _fbKey.currentState?.reset();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Profilerecord()),
+    );
   }
 
+  bool onClick = false;
+  @override
   Widget build(BuildContext context) {
+    String idnumber;
+    String name;
+    String address;
+    String provinces;
+    String amphures;
+    String district;
+    String zipcode;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "กรอกประวัติผู้ป่วย",
-          style: TextStyle(color: Colors.blueGrey[800]),
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text(
+            "กรอกประวัติผู้ป่วย",
+            style: TextStyle(color: Colors.blueGrey[800]),
+          ),
+          backgroundColor: Colors.grey[300],
         ),
-        backgroundColor: Colors.grey[300],
-      ),
-      body: GestureDetector(
+        body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  controller: ctrl,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: SingleChildScrollView(
-                        child: Column(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: <Widget>[
+                  FormBuilder(
+                    key: _fbKey,
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          decoration:
+                              InputDecoration(labelText: "ชื่อ-นามสกุล"),
+                          autocorrect: true,
+                          // readonly: true,
+                          onChanged: _onChanged,
+                          // validator: (value) =>
+                          //     value.isEmpty ? 'ชื่อ-นามสกุลไม่ควรเว้นว่าง' : null,
+                          onSaved: (val) => name = val,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "เลขบัตรประจำตัวประชาชน",
+                          ),
+                          onChanged: _onChanged,
+                          // validator: (val) => val.isEmpty
+                          //     ? 'เลขบัตรประจำตัวประชาชนไม่ควรเว้นว่าง'
+                          //     : null,
+                          onSaved: (val) => idnumber = val,
+                        ),
+                        DateTimePicker(
+                          firstDate: DateTime(DateTime.now().year - 162),
+                          lastDate: DateTime(DateTime.now().year + 138),
+                          locale: Locale("th", "TH"),
+                          attribute: "birthday",
+                          onChanged: _onChanged,
+                          inputType: InputTypedate?.date ?? false,
+                          decoration:
+                              InputDecoration(labelText: "วันเดือนปีเกิด"),
+                        ),
+                        FormBuilderDropdown(
+                          attribute: "gender",
+                          decoration: InputDecoration(
+                            labelText: "ระบุเพศ",
+                          ),
+                          initialValue: 'ชาย',
+                          items: [
+                            'ชาย',
+                            'หญิง',
+                          ].map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "ที่อยู่"),
+                          onChanged: _onChanged,
+                          onSaved: (val) => address = val,
+                          validator: (_controller) {
+                            if (_controller.isEmpty) {
+                              return 'ที่อยู่ไม่ควรเว้นว่าง';
+                            }
+                            return null;
+                          },
+                        ),
+                        Row(
                           children: <Widget>[
-                            FormBuilder(
-                              // context,
-                              key: _fbKey,
-                              autovalidate: true,
-
-                              // readonly: true,
-                              child: Column(
-                                children: <Widget>[
-                                  FormBuilderTextField(
-                                    decoration: InputDecoration(
-                                        labelText: "ชื่อ-นามสกุล"),
-                                    attribute: 'name',
-                                    // readonly: true,
-                                    onChanged: _onChanged,
-                                    // valueTransformer: (val) => val.length > 0 ? val[0] : null,
-                                  ),
-                                  FormBuilderTextField(
-                                    keyboardType: TextInputType.number,
-                                    attribute: "identification number",
-                                    decoration: InputDecoration(
-                                      labelText: "เลขบัตรประจำตัวประชาชน",
-                                      /*border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),*/
-                                    ),
-                                    onChanged: _onChanged,
-                                    //valueTransformer: (text) => num.tryParse(text),
-                                    validators: [
-                                      FormBuilderValidators.numeric(),
-                                      FormBuilderValidators.max(
-                                          9999999999999999),
-                                    ],
-                                  ),
-                                  FormBuilderTextField(
-                                    keyboardType: TextInputType.number,
-                                    attribute: "age",
-                                    decoration: InputDecoration(
-                                      labelText: "อายุ",
-                                      /*border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),*/
-                                    ),
-                                    onChanged: _onChanged,
-                                    //valueTransformer: (text) => num.tryParse(text),
-                                    validators: [
-                                      FormBuilderValidators.numeric(),
-                                      FormBuilderValidators.max(70),
-                                    ],
-                                  ),
-                                  FormBuilderDropdown(
-                                    attribute: "gender",
-                                    decoration: InputDecoration(
-                                      labelText: "ระบุเพศ",
-                                      /*border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),*/
-                                    ),
-                                    // readOnly: true,
-                                    initialValue: 'ชาย',
-                                    items: [
-                                      'ชาย',
-                                      'หญิง',
-                                    ].map((String value) {
-                                      return DropdownMenuItem(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                  FormBuilderTextField(
-                                    decoration:
-                                        InputDecoration(labelText: "ที่อยู่"),
-                                    attribute: 'addres',
-                                    // readonly: true,
-                                    onChanged: _onChanged,
-                                    // valueTransformer: (val) => val.length > 0 ? val[0] : null,
-                                  ),
-                                  FormBuilderTypeAhead(
-                                    decoration: InputDecoration(
-                                      labelText: "จังหวัด",
-                                    ),
-                                    attribute: 'country',
-                                    onChanged: _onChanged,
-                                    itemBuilder: (context, country) {
-                                      return ListTile(
-                                        title: Text(country),
-                                      );
-                                    },
-                                    suggestionsCallback: (query) {
-                                      if (query.length != 0) {
-                                        var lowercaseQuery =
-                                            query.toLowerCase();
-                                        return allCountries.where((country) {
-                                          return country
-                                              .toLowerCase()
-                                              .contains(lowercaseQuery);
-                                        }).toList(growable: false)
-                                          ..sort((a, b) => a
-                                              .toLowerCase()
-                                              .indexOf(lowercaseQuery)
-                                              .compareTo(b
-                                                  .toLowerCase()
-                                                  .indexOf(lowercaseQuery)));
-                                      } else {
-                                        return allCountries;
-                                      }
-                                    },
-                                  ),
-                                  new FormBuilderTextField(
-                                    attribute: 'district',
-                                    decoration: InputDecoration(
-                                        labelText: "เขต/อำเภอ", hintText: null),
-                                    keyboardType: TextInputType.multiline,
-                                    onChanged: _onChanged,
-                                    maxLines: 1,
-                                  ),
-                                  new FormBuilderTextField(
-                                    attribute: 'subdistrict',
-                                    decoration: InputDecoration(
-                                        labelText: "แขวง/ตำบล", hintText: null),
-                                    keyboardType: TextInputType.multiline,
-                                    onChanged: _onChanged,
-                                    maxLines: 1,
-                                  ),
-                                  new FormBuilderTextField(
-                                    attribute: 'postcode',
-                                    decoration: InputDecoration(
-                                        labelText: "รหัสไปรษณีย์",
-                                        hintText: null),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: _onChanged,
-                                    maxLines: 1,
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                ],
+                            Expanded(
+                              child: (TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                decoration: InputDecoration(
+                                  labelText: "จังหวัด",
+                                ),
+                                controller: _controller,
+                                onSaved: (val) => provinces = val,
+                              )),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                List list = await ProvinceProvider.all();
+                                province = await ProvinceDialog.show(
+                                  context,
+                                  listProvinces: list,
+                                );
+                                setState(() {
+                                  provinceSelected = province;
+                                  _controller.text =
+                                      provinceSelected?.nameTh ?? "";
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(18, 16, 10, 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 30.0,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                            Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 20,
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                decoration: InputDecoration(
+                                  labelText: "เขต/อำเภอ",
                                 ),
-                                FlatButton.icon(
-                                  onPressed: () async {
-                                    _fbKey.currentState.save();
-                                    if (_fbKey.currentState.validate()) {
-                                      var values = _fbKey.currentState.value;
-                                      print(values);
-                                      var data = <String, dynamic>{};
-                                      data["name"] = values["name"];
-                                      data["identification number"] =
-                                          values["identification number"];
-                                      data["date"] = values["date"];
-                                      data["gender"] = values["gender"];
-                                      data["age"] = values["age"];
-                                      data["postcode"] = values["postcode"];
-                                      data["country"] = values["country"];
-                                      data["district"] = values["district"];
-                                      data["subdistrict"] = values["subdistrict"];
-                                      data["history"] = values["history"];
-                                      data["logic"] = values["logic"];
-                                      //data["signature"] = values["signature"];
-                                      await store.collection("form").add(data).then((value) {
-                                        print(value.documentID);
-                                      }).catchError((err) {
-                                        print(err);
-                                      });
-                                    } else {
-                                      print(_fbKey.currentState.value);
-                                      print("validation failed");
-                                    }
-                                    await ctrl.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.navigate_next,
-                                    color: Colors.blueGrey[700],
-                                  ),
-                                  label: Text(
-                                    "ถัดไป",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 60,
-                                ),
-                                Expanded(
-                                  child: RaisedButton.icon(
-                                    icon: Icon(
-                                      Icons.autorenew,
-                                      color: Colors.blueGrey[700],
-                                    ),
-                                    color: Colors.blueGrey[300],
-                                    label: Text(
-                                      "ล้างทั้งหมด",
-                                      style: TextStyle(
-                                        color: Colors.blueGrey[800],
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+
+                                controller: _amphures,
+                                onSaved: (val) => amphures = val,
+                                // validator: (_controller) {
+                                //   if (_controller.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัด';
+                                //   }
+                                //   return null;
+                                // },
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                List list = await AmphureProvider.all(
+                                  provinceId: province?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัด',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      _fbKey.currentState.reset();
-                                    },
-                                  ),
+                                );
+
+                                AmphureDao amphure =
+                                    await ChooseAmphreDialog.show(
+                                  context,
+                                  listProvinces: list,
+                                );
+                                setState(() {
+                                  amphureSelected = amphure;
+                                  _amphures.text =
+                                      amphureSelected?.nameTh ?? "";
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(18, 16, 10, 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 30.0,
+                                    )
+                                  ],
+
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Icon(
-                              Icons.hdr_weak,
-                              color: Colors.blueGrey,
+                              ),
                             )
                           ],
                         ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                decoration: InputDecoration(
+                                  labelText: "แขวง/ตำบล",
+                                ),
+                                controller: _district,
+                                onSaved: (val) => district = val,
+                                // validator: (_amphures) {
+                                //   if (_amphures.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัดและอำเภอ';
+                                //   }
+                                //   return null;
+                                // },
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                List list = await DistrictProvider.all(
+                                  amphureId: amphureSelected?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัดแะลระบุอำเภอ',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
+                                      ),
+                                );
+
+                                DistrictDao districtDao =
+                                    await DistrictDialog.show(
+                                  context,
+                                  listProvinces: list,
+                                );
+                                setState(() {
+                                  districtSelected = districtDao;
+                                  _district.text =
+                                      districtSelected?.nameTh ?? "";
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(18, 16, 10, 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 30.0,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(fontSize: 18),
+                                decoration: InputDecoration(
+                                  labelText: "รหัสไปรษณีย์",
+                                ),
+                                controller: _zipcode,
+                                onSaved: (val) => zipcode = val,
+                                // validator: (_amphures) {
+                                //   if (_amphures.isEmpty) {
+                                //     return 'กรุณาระบุจังหวัดและอำเภอ';
+                                //   }
+                                //   return null;
+                                // },
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                List list = await DistrictProvider.all(
+                                  amphureId: amphureSelected?.id ??
+                                      _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'กรุณาระบุจังหวัดแะลระบุอำเภอ',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.grey[600],
+                                        ),
+                                      ),
+                                );
+
+                                DistrictDao districtDao =
+                                    await ZipcodeDialog.show(
+                                  context,
+                                  listProvinces: list,
+                                );
+                                setState(() {
+                                  districtSelected = districtDao;
+                                  _zipcode.text =
+                                      districtSelected?.zipCode ?? "";
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(18, 16, 10, 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 30.0,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
                       ),
-                    ),
-                    Container(
-                      child: Medicalrec(),
-                    ),
-                  ],
-                ),
+                      FlatButton.icon(
+                        onPressed: () async {
+                          _fbKey.currentState.save();
+
+                          if (_fbKey.currentState.validate()) {
+                            var values = _fbKey.currentState.value;
+                            final DateTime hbd = values["birthday"];
+
+                            print(values);
+                            if (DateTime(
+                                        DateTime.now().year + 543,
+                                        DateTime.now().month,
+                                        DateTime.now().day)
+                                    .compareTo(hbd) >=
+                                0) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Medicalrec(
+                                    idnumber: idnumber,
+                                    name: name,
+                                    gender: values["gender"],
+                                    birthday: values["birthday"],
+                                    address: address,
+                                    provinces: provinces,
+                                    amphures: amphures,
+                                    district: district,
+                                    zipcode: zipcode,
+                                  ),
+                                ),
+                              );
+                            } else
+                              _scaffoldKey.currentState
+                                  .showSnackBar(new SnackBar(
+                                content: Text(
+                                  'วันเดือนปีเกิดไม่ถูกต้อง/ไม่สามารถระบุวันเดือนเกิดในอนาคตได้',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                                duration: Duration(milliseconds: 2500),
+                                backgroundColor: Colors.red,
+                              ));
+                          }
+                        },
+                        icon: Icon(
+                          Icons.navigate_next,
+                          color: Colors.blueGrey[700],
+                        ),
+                        label: Text(
+                          "ถัดไป",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                      ),
+                      Expanded(
+                        child: RaisedButton.icon(
+                            icon: Icon(
+                              Icons.autorenew,
+                              color: Colors.blueGrey[700],
+                            ),
+                            color: Colors.blueGrey[300],
+                            label: Text(
+                              "ล้างทั้งหมด",
+                              style: TextStyle(
+                                color: Colors.blueGrey[800],
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () => {
+                                  _clear(),
+                                }),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Icon(
+                    Icons.hdr_weak,
+                    color: Colors.blueGrey,
+                  )
+                ],
               ),
-            ],
-          )),
-    );
+            ),
+          ),
+        ));
   }
 }

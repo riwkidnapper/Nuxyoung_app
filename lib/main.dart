@@ -1,9 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_thailand_provinces/flutter_thailand_provinces.dart';
 import 'package:nuxyoung/Pages/welcome_page.dart';
 import 'package:nuxyoung/Auth/login_page.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ThailandProvincesDatabase.init();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -12,6 +19,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.cyan[900],
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale('th', 'TH'),
+      supportedLocales: [
+        const Locale('en', 'US'), // English
+        const Locale('th', 'TH'), // Thai
+      ],
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => HomePage(),
         '/login': (BuildContext context) => Loginpage()
@@ -22,68 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// import 'package:flutter/material.dart';
-
-// void main() => runApp(new MaterialApp(
-//       home: new HomePage(),
-//       debugShowCheckedModeBanner: false,
-//     ));
-
-// class HomePage extends StatefulWidget {
-//   @override
-//   _HomePageState createState() => new _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   List<Offset> _points = <Offset>[];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Scaffold(
-//       body: new Container(
-//         child: new GestureDetector(
-//           onPanUpdate: (DragUpdateDetails details) {
-//             setState(() {
-//               RenderBox object = context.findRenderObject();
-//               Offset _localPosition =
-//                   object.globalToLocal(details.globalPosition);
-//               _points = new List.from(_points)..add(_localPosition);
-//             });
-//           },
-//           onPanEnd: (DragEndDetails details) => _points.add(null),
-//           child: new CustomPaint(
-//             painter: new Signature(points: _points),
-//             size: Size.infinite,
-//           ),
-//         ),
-//       ),
-//       floatingActionButton: new FloatingActionButton(
-//         child: new Icon(Icons.clear),
-//         onPressed: () => _points.clear(),
-//       ),
-//     );
-//   }
-// }
-
-// class Signature extends CustomPainter {
-//   List<Offset> points;
-
-//   Signature({this.points});
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     Paint paint = new Paint()
-//       ..color = Colors.blue
-//       ..strokeCap = StrokeCap.round
-//       ..strokeWidth = 10.0;
-
-//     for (int i = 0; i < points.length - 1; i++) {
-//       if (points[i] != null && points[i + 1] != null) {
-//         canvas.drawLine(points[i], points[i + 1], paint);
-//       }
-//     }
-//   }
-
-//   @override
-//   bool shouldRepaint(Signature oldDelegate) => oldDelegate.points != points;
-// }

@@ -1,26 +1,3 @@
-class Contact {
-  final String name;
-  final String email;
-  final String imageUrl;
-
-  const Contact(this.name, this.email, this.imageUrl);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is Contact &&
-              runtimeType == other.runtimeType &&
-              name == other.name;
-
-  @override
-  int get hashCode => name.hashCode;
-
-  @override
-  String toString() {
-    return name;
-  }
-}
-
 const allCountries = [
   "กระบี่",
   "กรุงเทพฯ",
@@ -101,29 +78,148 @@ const allCountries = [
   "อุบลราชธานี",
 ];
 
-const mockResults = <Contact>[
-  Contact('Andrew', 'stock@man.com',
-      'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4057996.jpg'),
-  Contact('Paul', 'paul@google.com',
-      'https://mbtskoudsalg.com/images/person-stock-image-png.png'),
-  Contact('Fred', 'fred@google.com',
-      'https://media.istockphoto.com/photos/feeling-great-about-my-corporate-choices-picture-id507296326'),
-  Contact('Brian', 'brian@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('John', 'john@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Thomas', 'thomas@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Nelly', 'nelly@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Marie', 'marie@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Charlie', 'charlie@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Diana', 'diana@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Ernie', 'ernie@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
-  Contact('Gina', 'fred@flutter.io',
-      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
+const krabee = [
+  "เมืองกระบี่",
+  "เขาพนม",
+  "เกาะลันตา",
+  "คลองท่อม",
+  "อ่าวลึก",
+  "ปลายพระยา",
+  "ลำทับ",
+  "เหนือคลอง"
 ];
+
+const bangkok = [
+  "เขตพระนคร",
+  "เขตดุสิต",
+  "เขตหนองจอก",
+  "เขตบางรัก",
+  "เขตบางเขน",
+  "เขตบางกะปิ",
+  "เขตปทุมวัน",
+  "เขตป้อมปราบศัตรูพ่าย",
+  "เขตพระโขนง",
+  "เขตมีนบุรี",
+  "เขตลาดกระบัง",
+  "เขตยานนาวา",
+  "เขตสัมพันธวงศ์",
+  "เขตพญาไท",
+  "เขตธนบุรี",
+  "เขตบางกอกใหญ่",
+  "เขตห้วยขวาง",
+  "เขตคลองสาน",
+  "เขตตลิ่งชัน",
+  "เขตบางกอกน้อย",
+  "เขตบางขุนเทียน",
+  "เขตภาษีเจริญ",
+  "เขตหนองแขม",
+  "เขตราษฎร์บูรณะ",
+  "เขตบางพลัด",
+  "เขตดินแดง",
+  "เขตบึงกุ่ม",
+  "เขตสาทร",
+  "เขตบางซื่อ",
+  "เขตจตุจักร",
+  "เขตบางคอแหลม",
+  "เขตประเวศ",
+  "เขตคลองเตย",
+  "เขตสวนหลวง",
+  "เขตจอมทอง",
+  "เขตดอนเมือง",
+  "เขตราชเทวี",
+  "เขตลาดพร้าว",
+  "เขตวัฒนา",
+  "เขตบางแค",
+  "เขตหลักสี่",
+  "เขตสายไหม",
+  "เขตคันนายาว",
+  "เขตสะพานสูง",
+  "เขตวังทองหลาง",
+  "เขตคลองสามวา",
+  "เขตบางนา",
+  "เขตทวีวัฒนา",
+  "เขตทุ่งครุ",
+  "เขตบางบอน",
+  "บ้านทะวาย"
+];
+
+const kanchanaburi = [
+  "เมืองกาญจนบุรี",
+  "ไทรโยค",
+  "บ่อพลอย",
+  "ศรีสวัสดิ์",
+  "ท่ามะกา",
+  "ท่าม่วง",
+  "ทองผาภูมิ",
+  "สังขละบุรี",
+  "พนมทวน",
+  "เลาขวัญ",
+  "ด่านมะขามเตี้ย",
+  "หนองปรือ",
+  "ห้วยกระเจา",
+  "สาขาตำบลท่ากระดาน",
+  "บ้านทวน"
+];
+
+const kalasin = [
+  "เมืองกาฬสินธุ์",
+  "นามน",
+  "กมลาไสย",
+  "ร่องคำ",
+  "กุฉินารายณ์",
+  "เขาวง",
+  "ยางตลาด",
+  "ห้วยเม็ก",
+  "สหัสขันธ์",
+  "คำม่วง",
+  "ท่าคันโท",
+  "หนองกุงศรี",
+  "สมเด็จ",
+  "ห้วยผึ้ง",
+  "สามชัย",
+  "นาคู",
+  "ดอนจาน",
+  "ฆ้องชัย"
+];
+
+const kamphaengPhet = [
+  "เมืองกำแพงเพชร",
+  "ไทรงาม",
+  "คลองลาน",
+  "ขาณุวรลักษบุรี",
+  "คลองขลุง",
+  "พรานกระต่าย",
+  "ลานกระบือ",
+  "ทรายทองวัฒนา",
+  "ปางศิลาทอง",
+  "บึงสามัคคี",
+  "โกสัมพีนคร"
+];
+
+const khonKaen = [
+  "เมืองขอนแก่น","บ้านฝาง" ,"พระยืน","หนองเรือ" ,"ชุมแพ","สีชมพู" ,"น้ำพอง","อุบลรัตน์" ,"กระนวน","บ้านไผ่" ,"เปือยน้อย","พล" ,"แวงใหญ่","แวงน้อย" ,"หนองสองห้อง","ภูเวียง" ,"มัญจาคีรี","ชนบท" ,"เขาสวนกวาง","ภูผาม่าน" ,"ซำสูง","โคกโพธิ์ไชย" ,"หนองนาคำ","บ้านแฮด" ,"โนนศิลา","เวียงเก่า" ,"ท้องถิ่นเทศบาลตำบลบ้านเป็ด","เทศบาลตำบลเมืองพล"
+  ];
+
+  const chanthaburi = [
+  "เมืองจันทบุรี","ขลุง" ,"ท่าใหม่","โป่งน้ำร้อน" ,"มะขาม","แหลมสิงห์" ,"สอยดาว","แก่งหางแมว" ,"นายายอาม","เขาคิชฌกูฏ"
+];
+
+const chachoengsao =[
+  "เมืองฉะเชิงเทรา","บางคล้า" ,"บางน้ำเปรี้ยว","บางปะกง" ,"บ้านโพธิ์","พนมสารคาม" ,"ราชสาส์น","สนามชัยเขต" ,"แปลงยาว","ท่าตะเกียบ" ,"คลองเขื่อน"
+  ];
+
+const chonburi =[
+"เมืองชลบุรี","บ้านบึง" ,"หนองใหญ่","บางละมุง" ,"พานทอง","พนัสนิคม" ,"ศรีราชา","เกาะสีชัง" ,"สัตหีบ","บ่อทอง" ,"เกาะจันทร์","สัตหีบ(สาขาตำบลบางเสร่)","ท้องถิ่นเทศบาลเมืองหนองปรือ","เทศบาลตำบลแหลมฉบัง" ,"เทศบาลเมืองชลบุรี"
+];
+
+const chainat =[
+  "เมืองชัยนาท","มโนรมย์" ,"วัดสิงห์","สรรพยา" ,"สรรคบุรี","หันคา" ,"หนองมะโมง","เนินขาม"
+  ];
+  const chaiyaphum  = [
+  "สัตหีบ(สาขาตำบลบางเสร่)","ท้องถิ่นเทศบาลเมืองหนองปรือ","เทศบาลตำบลแหลมฉบัง" ,"เทศบาลเมืองชลบุรี","เมืองชัยภูมิ","บ้านเขว้า" ,"คอนสวรรค์","เกษตรสมบูรณ์" ,"หนองบัวแดง","จัตุรัส" ,"บำเหน็จณรงค์","หนองบัวระเหว" ,"เทพสถิต","ภูเขียว" ,"บ้านแท่น","แก้งคร้อ" ,"คอนสาร","ภักดีชุมพล" ,"เนินสง่า","ซับใหญ่" ,"เมืองชัยภูมิ (สาขาตำบลโนนสำราญ)"," สาขาตำบลบ้านหว่าเฒ่า" ,"หนองบัวแดง (สาขาตำบลวังชมภู)","กิ่งอำเภอซับใหญ่ (สาขาตำบลซับใหญ่)", "สาขาตำบลโคกเพชร" ,"เทพสถิต (สาขาตำบลนายางกลัก)" ,"บ้านแท่น (สาขาตำบลบ้านเต่า)", "แก้งคร้อ (สาขาตำบลท่ามะไฟหวาน)","คอนสาร (สาขาตำบลโนนคูณ)"
+];
+// const kanchanaburi = [
+//   "",
+// ];
+//
+
