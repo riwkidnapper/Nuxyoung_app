@@ -20,7 +20,7 @@ class _AddappointState extends State<Addappoint> {
   DateTime date;
   DateTime time = DateTime.now();
   DateTime dateandtime;
-  final TextEditingController _controller = new TextEditingController();
+
   final GlobalKey<FormState> _fbKey = GlobalKey<FormState>();
   TextEditingController _nameController;
   TextEditingController _lastController;

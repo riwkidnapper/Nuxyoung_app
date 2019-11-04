@@ -21,8 +21,8 @@ class _AddproflieStateDoc extends State<AddproflieDoc> {
   final Firestore store = Firestore.instance;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   DateTime date;
-  File _imageFile;
-  dynamic _pickImageError;
+  // File _imageFile;
+  // dynamic _pickImageError;
   //String _retrieveDataError;
   bool isVideo = false;
   VideoPlayerController _controller;
