@@ -14,6 +14,7 @@ class Appointment extends StatefulWidget {
 
 class _AppointmentState extends State<Appointment>
     with TickerProviderStateMixin {
+  final String doctorName = "นพ.ธนาธรณ์ พุฒิกานนท์";
   bool click = false;
   void _click() {
     setState(() {
@@ -122,10 +123,11 @@ class _AppointmentState extends State<Appointment>
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          "นพ.ธนาธรณ์ พุฒิกานนท์",
+                                          doctorName,
                                           style: TextStyle(
-                                              fontSize: 40,
-                                              color: Colors.blueGrey),
+                                            fontSize: 40,
+                                            color: Colors.blueGrey,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 30,
@@ -221,7 +223,10 @@ class _AppointmentState extends State<Appointment>
       });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Addappoint()),
+        MaterialPageRoute(
+            builder: (context) => Addappoint(
+                  doctorName: doctorName,
+                )),
       );
     });
   }

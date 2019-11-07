@@ -126,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           if ((documents['uid'] != currentUser?.uid)) {
                             return Customcard(
                               photoUser: documents['photoUser'],
-                              username: documents['userName'],
+                              username: documents['name'],
                               email: documents['email'],
                               uid: documents['uid'],
                               fromUid: currentUser.uid,

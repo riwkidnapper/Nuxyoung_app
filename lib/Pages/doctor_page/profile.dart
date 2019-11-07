@@ -130,12 +130,12 @@ class _ProfilerecordState extends State<Profilerecord> {
                           decoration: InputDecoration(labelText: "ที่อยู่"),
                           onChanged: _onChanged,
                           onSaved: (val) => address = val,
-                          validator: (_controller) {
-                            if (_controller.isEmpty) {
-                              return 'ที่อยู่ไม่ควรเว้นว่าง';
-                            }
-                            return null;
-                          },
+                          // validator: (_controller) {
+                          //   if (_controller.isEmpty) {
+                          //     return 'ที่อยู่ไม่ควรเว้นว่าง';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                         Row(
                           children: <Widget>[
@@ -233,7 +233,6 @@ class _ProfilerecordState extends State<Profilerecord> {
                                       size: 30.0,
                                     )
                                   ],
-
                                 ),
                               ),
                             )

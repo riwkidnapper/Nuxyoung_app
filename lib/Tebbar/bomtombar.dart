@@ -28,7 +28,7 @@ class _FancyTabBarState extends State<FancyTabBar>
   @override
   void initState() {
     super.initState();
-    _loadCurrentUser();
+    loadCurrentUser();
 //กำหนดเวลา
     _animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
@@ -43,7 +43,7 @@ class _FancyTabBarState extends State<FancyTabBar>
 
   FirebaseUser currentUser;
 
-  void _loadCurrentUser() {
+  void loadCurrentUser() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       setState(() {
         this.currentUser = user;

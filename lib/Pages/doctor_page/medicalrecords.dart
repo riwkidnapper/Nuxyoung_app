@@ -51,6 +51,9 @@ class _MedicalrecState extends State<Medicalrec> {
   final String amphures;
   final String district;
   final String zipcode;
+
+  bool load = false;
+
   _MedicalrecState(this.name, this.idnumber, this.birthday, this.gender,
       this.address, this.provinces, this.amphures, this.district, this.zipcode);
   void _clear() {
@@ -73,7 +76,16 @@ class _MedicalrecState extends State<Medicalrec> {
   }
 
   @override
+  void initState() {
+    load = false;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String medicalrecords;
+    String diagnosis;
+    String reasonOfforward;
     num nowYear = date.year;
     num birthdayOfyear = birthday.year;
     num age = nowYear - birthdayOfyear;
@@ -275,7 +287,7 @@ class _MedicalrecState extends State<Medicalrec> {
                     children: <Widget>[
                       DateTimePicker(
                         locale: Locale("th", "TH"),
-                        attribute: "date",
+                        attribute: "dateOfadmitted",
                         onChanged: _onChanged,
                         inputType: InputTypedate.date,
                         decoration: InputDecoration(
@@ -284,7 +296,6 @@ class _MedicalrecState extends State<Medicalrec> {
                         // readonly: true,
                       ),
                       TextFormField(
-                        initialValue: age.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(
@@ -293,9 +304,9 @@ class _MedicalrecState extends State<Medicalrec> {
                         keyboardType: TextInputType.multiline,
                         onChanged: _onChanged,
                         maxLines: null,
+                        onSaved: (val) => medicalrecords = val,
                       ),
                       TextFormField(
-                        initialValue: "อายุ" + birthdayOfMonth.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(
@@ -303,9 +314,9 @@ class _MedicalrecState extends State<Medicalrec> {
                         keyboardType: TextInputType.multiline,
                         onChanged: _onChanged,
                         maxLines: null,
+                        onSaved: (val) => diagnosis = val,
                       ),
                       TextFormField(
-                        initialValue: "วัน" + birthdayOfday.toString(),
                         autocorrect: true,
                         minLines: 3,
                         decoration: InputDecoration(
@@ -313,6 +324,7 @@ class _MedicalrecState extends State<Medicalrec> {
                         keyboardType: TextInputType.multiline,
                         onChanged: _onChanged,
                         maxLines: null,
+                        onSaved: (val) => reasonOfforward = val,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
@@ -330,86 +342,108 @@ class _MedicalrecState extends State<Medicalrec> {
                     ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: RaisedButton.icon(
-                            icon: Icon(
-                              Icons.assignment_turned_in,
-                              color: Colors.blueGrey[700],
-                            ),
-                            color: Colors.blueGrey[300],
-                            label: Text(
-                              "ยืนยัน",
-                              style: TextStyle(
-                                color: Colors.blueGrey[800],
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: () async {
-                              _fbKey.currentState.save();
-                              if (_fbKey.currentState.validate()) {
-                                var values = _fbKey.currentState.value;
-                                print(values);
-                                // var data = <String, dynamic>{};
-                                // data["name"] = name;
-                                //   data["identification number"] =
-                                //       values["identification number"];
-                                //   data["date"] = values["date"];
-                                //   data["gender"] = values["gender"];
-                                //   data["age"] = values["age"];
-                                //   data["postcode"] = values["postcode"];
-                                //   data["country"] = values["country"];
-                                //   data["district"] = values["district"];
-                                //   data["subdistrict"] = values["subdistrict"];
-                                //   data["history"] = values["history"];
-                                //   data["logic"] = values["logic"];
-                                //   data["signature"] = values["signature"];
-                                // await store
-                                //     .colle record")
-                                //     .add(data)
-                                //     .then((value) {
-                                //   print(value.documentID);
-                                // }).catchError((err) {
-                                //   print(err);
-                                // });
-                              } else {
-                                print(_fbKey.currentState.value);
-                                print("validation failed");
-                              }
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Register(
-                                    idnumber: idnumber,
+                load == false
+                    ? Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: RaisedButton.icon(
+                                  icon: Icon(
+                                    Icons.assignment_turned_in,
+                                    color: Colors.blueGrey[700],
                                   ),
-                                ),
-                              );
-                            })),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: RaisedButton.icon(
-                        icon: Icon(
-                          Icons.autorenew,
-                          color: Colors.blueGrey[700],
-                        ),
-                        color: Colors.blueGrey[300],
-                        label: Text(
-                          "ล้างทั้งหมด",
-                          style: TextStyle(
-                            color: Colors.blueGrey[800],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey[300],
+                                  label: Text(
+                                    "ยืนยัน",
+                                    style: TextStyle(
+                                      color: Colors.blueGrey[800],
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    _fbKey.currentState.save();
+
+                                    if (_fbKey.currentState.validate()) {
+                                      setState(() {
+                                        load = true;
+                                      });
+                                      var values = _fbKey.currentState.value;
+                                      var data = <String, dynamic>{};
+                                      data["ชื่อคนไข้"] = name;
+                                      data["รหัสประชาชน"] = idnumber.toString();
+                                      data["วันเดือนปีเกิด"] = birthday;
+                                      data["อายุ"] = age.toString();
+                                      data["อายุ(เดือน)"] =
+                                          birthdayOfMonth.toString();
+                                      data["อายุ(วัน)"] =
+                                          birthdayOfday.toString();
+                                      data["เพศ"] = gender;
+                                      data["ที่อยู่"] = address;
+                                      data["จังหวัด"] = provinces;
+                                      data["อำเภอ"] = amphures;
+                                      data["ตำบล"] = district;
+                                      data["รหัสไปรษณีย์"] = zipcode;
+                                      data["วันเวลาที่เข้ารับการรักษา"] =
+                                          values["dateOfadmitted"];
+                                      data["ประวัติการเข้ารับการรักษา"] =
+                                          medicalrecords;
+                                      data["การวินิจฉัยเบื้องต้น"] = diagnosis;
+                                      data["เหตุผลในการส่งต่อ"] =
+                                          reasonOfforward;
+                                      await store
+                                          .collection("profliePaitient")
+                                          .add(data)
+                                          .then((value) {
+                                        setState(() {
+                                          load = false;
+                                        });
+                                        print(value.documentID);
+                                      }).catchError((err) {
+                                        print(err);
+                                      });
+                                    } else {
+                                      print(_fbKey.currentState.value);
+                                      print("validation failed");
+                                    }
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Register(
+                                          idnumber: idnumber,
+                                          name: name,
+                                        ),
+                                      ),
+                                    );
+                                  })),
+                          SizedBox(
+                            width: 20,
                           ),
+                          Expanded(
+                            child: RaisedButton.icon(
+                              icon: Icon(
+                                Icons.autorenew,
+                                color: Colors.blueGrey[700],
+                              ),
+                              color: Colors.blueGrey[300],
+                              label: Text(
+                                "ล้างทั้งหมด",
+                                style: TextStyle(
+                                  color: Colors.blueGrey[800],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () => _clear(),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                         ),
-                        onPressed: () => _clear(),
                       ),
-                    ),
-                  ],
-                ),
                 SizedBox(
                   height: 60,
                 ),

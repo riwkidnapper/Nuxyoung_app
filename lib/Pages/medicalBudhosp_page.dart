@@ -4,8 +4,9 @@ import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
 
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/profile.dart';
+import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
-import 'package:nuxyoung/Pages/doctor_page/video.dart';
+// import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
@@ -108,11 +109,21 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 accountEmail: Text(
                   userEmail,
                 ),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.blue.shade800,
-                  child: Text(
-                    "M",
-                    style: TextStyle(fontSize: 40.0),
+                currentAccountPicture: Container(
+                  width: 140.0,
+                  height: 140.0,
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: AssetImage("assets/images/profiledoc.png"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: new BorderRadius.all(
+                      new Radius.circular(100.0),
+                    ),
+                    border: new Border.all(
+                      color: Colors.blueGrey[600],
+                      width: 2.0,
+                    ),
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -120,33 +131,47 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.content_paste),
+                leading: Icon(
+                  Icons.content_paste,
+                  color: Colors.blueGrey,
+                ),
                 title: Text('กรอกประวัติผู้ป่วย'),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profilerecord()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Profilerecord(),
+                    ),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.healing),
+                leading: Icon(
+                  Icons.healing,
+                  color: Colors.blueGrey,
+                ),
                 title: Text('อาการเบื้องต้น'),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ExpansionTileSample()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.videocam),
-                title: Text('วิดีโอ'),
-                onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ChewieDemo()));
+                      MaterialPageRoute(builder: (context) => Symptom()));
                 },
               ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.videocam,
+              //     color: Colors.blueGrey,
+              //   ),
+              //   title: Text('วิดีโอ'),
+              //   onTap: () {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => ChewieDemo()));
+              //   },
+              // ),
               ListTile(
-                leading: Icon(Icons.today),
+                leading: Icon(
+                  Icons.today,
+                  color: Colors.blueGrey,
+                ),
                 title: Text('ตารางแพทย์เวร'),
                 onTap: () {
                   Navigator.push(
@@ -158,13 +183,30 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.add_to_queue),
+                leading: Icon(
+                  Icons.add_to_queue,
+                  color: Colors.blueGrey,
+                ),
                 title: Text('การนัดหมาย'),
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Appointment(),
+                      ));
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.group_add,
+                  color: Colors.blueGrey,
+                ),
+                title: Text('ลงทะเบียนบุคลากร'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MedicalRegister(),
                       ));
                 },
               )
