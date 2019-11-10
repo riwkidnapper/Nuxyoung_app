@@ -263,7 +263,7 @@ class _ProfilerecordState extends State<Profilerecord> {
                                       _scaffoldKey.currentState.showSnackBar(
                                         new SnackBar(
                                           content: Text(
-                                            'กรุณาระบุจังหวัดแะลระบุอำเภอ',
+                                            'กรุณาระบุจังหวัดและระบุอำเภอ',
                                             style: TextStyle(fontSize: 18),
                                             textAlign: TextAlign.center,
                                           ),

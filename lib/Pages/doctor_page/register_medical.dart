@@ -455,25 +455,25 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                                     Icons.access_time,
                                     size: 30.0,
                                   ),
-                                  SizedBox(
-                                    width: 40.0,
-                                  ),
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        "เลือกเวลาที่ออกตรวจ",
-                                        style: TextStyle(fontSize: 18.0),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 50.0, right: 8.0),
+                                    child: Center(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "เลือกเวลาที่ออกตรวจ",
+                                            style: TextStyle(fontSize: 18.0),
+                                          ),
+                                          Text(
+                                            "เว้นว่างไว้หากต้องการข้ามขั้นตอนนี้",
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                color: Colors.redAccent),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "เว้นว่างไว้หากต้องการข้ามขั้นตอนนี้",
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.redAccent),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 30.0,
+                                    ),
                                   ),
                                   IconButton(
                                     icon: Padding(

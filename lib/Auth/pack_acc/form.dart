@@ -78,6 +78,7 @@ class FormCard extends StatelessWidget {
                         fontSize: ScreenUtil.getInstance().setSp(26))),
                 TextFormField(
                     //keyboardAppearance: Brightness.dark,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         hintText: "อีเมล",
                         hintStyle:

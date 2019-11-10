@@ -6,6 +6,7 @@ import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/profile.dart';
 import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
+import 'package:nuxyoung/Pages/doctor_page/video.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
@@ -156,17 +157,17 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                       MaterialPageRoute(builder: (context) => Symptom()));
                 },
               ),
-              // ListTile(
-              //   leading: Icon(
-              //     Icons.videocam,
-              //     color: Colors.blueGrey,
-              //   ),
-              //   title: Text('วิดีโอ'),
-              //   onTap: () {
-              //     Navigator.push(context,
-              //         MaterialPageRoute(builder: (context) => ChewieDemo()));
-              //   },
-              // ),
+              ListTile(
+                leading: Icon(
+                  Icons.videocam,
+                  color: Colors.blueGrey,
+                ),
+                title: Text('วิดีโอ'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChewieDemo()));
+                },
+              ),
               ListTile(
                 leading: Icon(
                   Icons.today,

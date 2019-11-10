@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 //import 'package:nuxyoung/Auth/login_page.dart';
 
 class DatePicker extends StatelessWidget {
-
   final String title;
   final DateTime currentDate;
   final void Function(DateTime) onSelect;
@@ -22,11 +21,11 @@ class DatePicker extends StatelessWidget {
       height: 50.0,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         border: Border(
           bottom: BorderSide(
-            color: Colors.black,
-            width: 1.0,
+            color: Colors.grey,
+            width: 0.8,
           ),
         ),
       ),
@@ -40,8 +39,11 @@ class DatePicker extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) => _buildBottomPicker(
                   CupertinoDatePicker(
+                    minimumYear: DateTime.now().year + 543,
+                    maximumYear: 2600,
                     mode: CupertinoDatePickerMode.date,
-                    initialDateTime: currentDate ?? DateTime.now(),
+                    initialDateTime:
+                        currentDate ?? DateTime(DateTime.now().year + 543),
                     onDateTimeChanged: onSelect,
                     use24hFormat: true,
                   ),
@@ -49,14 +51,12 @@ class DatePicker extends StatelessWidget {
                   context: context,
                 ),
               ),
-              child: _buildMenu(
-                <Widget>[
-                  Text(
-                    DateFormat.yMMMMd().format(currentDate),
-                    style: const TextStyle(color: CupertinoColors.inactiveGray),
-                  ),
-                ]
-              ),
+              child: _buildMenu(<Widget>[
+                Text(
+                  DateFormat("dd MMMM yyyy", "th_TH").format(currentDate),
+                  style: const TextStyle(color: Colors.black54, fontSize: 18.0),
+                ),
+              ]),
             ),
           ),
         ],
@@ -80,14 +80,14 @@ class TimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:  50.0,
+      height: 50.0,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         border: Border(
           bottom: BorderSide(
-            color: Colors.white,
-            width: 1.0,
+            color: Colors.grey,
+            width: 0.8,
           ),
         ),
       ),
@@ -104,7 +104,6 @@ class TimePicker extends StatelessWidget {
                     mode: CupertinoDatePickerMode.time,
                     initialDateTime: currentTime ?? DateTime.now(),
                     onDateTimeChanged: onSelect,
-                    use24hFormat: true,
                   ),
                   title: title ?? ' ',
                   context: context,
@@ -118,12 +117,9 @@ class TimePicker extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  Text(
-                    DateFormat.Hm().format(currentTime ?? DateTime.now()),
-                    style: TextStyle(
-                      color: CupertinoColors.inactiveGray,
-                    ),
-                  ),
+                  Text(DateFormat.Hm().format(currentTime ?? DateTime.now()),
+                      style: const TextStyle(
+                          color: Colors.black54, fontSize: 18.0)),
                 ],
               ),
             ),
@@ -135,7 +131,6 @@ class TimePicker extends StatelessWidget {
 }
 
 class DateAndTimePicker extends StatelessWidget {
-
   final String title;
   final DateTime currentDateAndTime;
   final void Function(DateTime) onSelect;
@@ -153,11 +148,11 @@ class DateAndTimePicker extends StatelessWidget {
       height: 50.0,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         border: Border(
           bottom: BorderSide(
-            color: Colors.white, 
-            width: 1.0,
+            color: Colors.grey,
+            width: 0.8,
           ),
         ),
       ),
@@ -171,7 +166,7 @@ class DateAndTimePicker extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) => _buildBottomPicker(
                   CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.dateAndTime,
+                    mode: CupertinoDatePickerMode.date,
                     initialDateTime: currentDateAndTime ?? DateTime.now(),
                     onDateTimeChanged: onSelect,
                     use24hFormat: true,
@@ -200,7 +195,6 @@ class DateAndTimePicker extends StatelessWidget {
       ),
     );
   }
-
 }
 
 Widget _buildMenu(List<Widget> children) {
@@ -255,7 +249,7 @@ Widget _buildBottomPicker(Widget picker, {String title, BuildContext context}) {
                       child: Text(
                         'Done',
                         style: TextStyle(
-                          color: CupertinoColors.activeBlue,
+                          color: Colors.blueGrey,
                         ),
                       ),
                     ),
@@ -273,7 +267,7 @@ Widget _buildBottomPicker(Widget picker, {String title, BuildContext context}) {
               fontSize: 22.0,
             ),
             child: GestureDetector(
-              onTap: () { },
+              onTap: () {},
               child: SafeArea(
                 child: picker,
               ),

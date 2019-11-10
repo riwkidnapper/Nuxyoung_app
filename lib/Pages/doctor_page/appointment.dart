@@ -49,8 +49,9 @@ class _AppointmentState extends State<Appointment>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
                   child: Container(
+                    width: double.infinity,
                     color: Colors.grey,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(5.0, 2.0, 220.0, 2.0),

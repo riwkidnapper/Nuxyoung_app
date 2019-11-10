@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
+import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
 
 import 'package:nuxyoung/package/picker.dart';
 
@@ -18,8 +20,11 @@ class Addappoint extends StatefulWidget {
 class _AddappointState extends State<Addappoint> {
   FirebaseUser user;
   final Firestore store = Firestore.instance;
-  DateTime date;
-  DateTime time = DateTime.now();
+  final t = new DateFormat('hh:mm');
+  final d = new DateFormat('dd MMMM yyyy', "th_TH");
+  DateTime dateAppoint;
+  DateTime timeAppoint;
+
   DateTime dateandtime;
   final String doctorName;
   final GlobalKey<FormState> _fbKey = GlobalKey<FormState>();
@@ -28,16 +33,20 @@ class _AddappointState extends State<Addappoint> {
   TextEditingController _hisController;
   TextEditingController _simController;
 
+  String timeAppointment;
+  String dateAppointment;
   _AddappointState(this.doctorName);
   @override
   void initState() {
     super.initState();
-    date = DateTime(
+    dateAppoint = DateTime(
         DateTime.now().year + 543, DateTime.now().month, DateTime.now().day);
     _nameController = TextEditingController();
     _lastController = TextEditingController();
     _hisController = TextEditingController();
     _simController = TextEditingController();
+    timeAppointment = t.format(DateTime.now());
+    dateAppointment = d.format(dateAppoint);
   }
 
   var items = [
@@ -46,9 +55,10 @@ class _AddappointState extends State<Addappoint> {
   ];
 
   void changState() {
-    setState(() {
-      clear = true;
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Appointment()),
+    );
   }
 
   void setstate() {
@@ -108,43 +118,43 @@ class _AddappointState extends State<Addappoint> {
                   height: 30,
                 ),
                 Text(
-                  'เลือกช่วงเวลา',
+                  'ระบุวันที่',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.blueGrey[700],
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                DateAndTimePicker(
-                  currentDateAndTime: date,
-                  onSelect: (DateTime d) {
+                DatePicker(
+                  currentDate: dateAppoint,
+                  onSelect: (DateTime date) {
                     setState(() {
-                      date = d;
+                      dateAppoint = date;
+                      dateAppointment = d.format(date);
+                    });
+                    print(dateAppointment);
+                  },
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'เลือกเวลา',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blueGrey[700],
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                TimePicker(
+                  currentTime: timeAppoint,
+                  onSelect: (DateTime time) {
+                    setState(() {
+                      timeAppoint = time;
+                      timeAppointment = t.format(timeAppoint);
                     });
                   },
                 ),
-
-                // Row(6
-                //   children: <Widget>[
-                //     Expanded(
-                //       child: TextField(
-                //         style: TextStyle(fontSize: 18),
-                //         controller: _controller,
-                //       ),
-                //     ),
-                //     PopupMenuButton<String>(
-                //       icon: const Icon(Icons.arrow_drop_down),
-                //       onSelected: (String value) {
-                //         _controller.text = value;
-                //       },
-                //       itemBuilder: (BuildContext context) {
-                //         return items.map<PopupMenuItem<String>>((String value) {
-                //           return PopupMenuItem(child: Text(value), value: value);
-                //         }).toList();
-                //       },
-                //     ),
-                //   ],
-                // ),
                 SizedBox(
                   height: 30,
                 ),
@@ -163,7 +173,6 @@ class _AddappointState extends State<Addappoint> {
                 SizedBox(
                   height: 30,
                 ),
-
                 Text(
                   'ประวัติการรักษา',
                   style: TextStyle(
@@ -180,7 +189,6 @@ class _AddappointState extends State<Addappoint> {
                 SizedBox(
                   height: 30,
                 ),
-
                 Text(
                   'อาการเบื้องต้น',
                   style: TextStyle(
@@ -197,7 +205,6 @@ class _AddappointState extends State<Addappoint> {
                 SizedBox(
                   height: 30,
                 ),
-
                 Center(
                   child: RaisedButton.icon(
                     icon: Icon(
@@ -219,9 +226,11 @@ class _AddappointState extends State<Addappoint> {
                         var paitientName = _lastController?.value?.text;
                         var his = _hisController?.value?.text;
                         var sim = _simController?.value?.text;
+
                         var data = {
                           "ชื่อแพทย์ผู้รักษา": doctorName,
-                          "วันที่": date,
+                          "วันเดือนปีที่นัดหมาย": dateAppointment,
+                          "เวลาที่นัดหมาย": timeAppointment,
                           "ชื่อคนไข้": paitientName,
                           "ประวัติการเข้ารับการรักษา": his,
                           "อาการเบื้องต้น": sim,
