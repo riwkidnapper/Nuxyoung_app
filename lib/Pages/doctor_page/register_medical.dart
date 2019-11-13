@@ -471,7 +471,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 50.0, right: 8.0),
+                                        left: 29.0, right: 8.0),
                                     child: Center(
                                       child: Column(
                                         children: <Widget>[

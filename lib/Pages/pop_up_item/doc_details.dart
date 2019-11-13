@@ -24,7 +24,7 @@ class _MyPageState extends State<FoodScreen> {
   void initState() {
     super.initState();
 
-    getFileFromAsset("assets/mypdf.pdf").then((f) {
+    getFileFromAsset("assets/doc.pdf").then((f) {
       setState(() {
         assetPDFPath = f.path;
         print(assetPDFPath);
@@ -44,7 +44,7 @@ class _MyPageState extends State<FoodScreen> {
       var data = await rootBundle.load(asset);
       var bytes = data.buffer.asUint8List();
       var dir = await getApplicationDocumentsDirectory();
-      File file = File("${dir.path}/mypdf.pdf");
+      File file = File("${dir.path}/doc.pdf");
 
       File assetFile = await file.writeAsBytes(bytes);
       return assetFile;
@@ -119,12 +119,12 @@ class _MyPageState extends State<FoodScreen> {
                     )),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   RaisedButton(
                     shape: StadiumBorder(),
                     color: Colors.blueGrey[300],
-                    child: Text("เปิดบนอินเทอร์เน็ต"),
+                    child: Text("เปิดอ่าน"),
                     onPressed: () {
                       if (urlPDFPath != null) {
                         Navigator.push(
@@ -136,42 +136,42 @@ class _MyPageState extends State<FoodScreen> {
                     },
                   ),
                   SizedBox(height: 10.0),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                              left: 10.0,
-                            ),
-                            child: new Text(
-                              "บทความของ นพ.ธนาธรณ์ พุฒิกานนท์",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0,
-                                  color: Colors.blueGrey),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.only(
-                              right: 12.0,
-                            ),
-                            child: new Text("",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12.0,
-                                    color: Colors.grey)))
-                      ]),
+                  // new Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Padding(
+                  //           padding: EdgeInsets.only(
+                  //             left: 10.0,
+                  //           ),
+                  //           child: new Text(
+                  //             "บทความของ นพ.ธนาธรณ์ พุฒิกานนท์",
+                  //             style: TextStyle(
+                  //                 fontWeight: FontWeight.w700,
+                  //                 fontSize: 20.0,
+                  //                 color: Colors.blueGrey),
+                  //           )),
+                  //       Padding(
+                  //           padding: EdgeInsets.only(
+                  //             right: 12.0,
+                  //           ),
+                  //           child: new Text("",
+                  //               style: TextStyle(
+                  //                   fontWeight: FontWeight.w700,
+                  //                   fontSize: 12.0,
+                  //                   color: Colors.grey)))
+                  //     ]),
 
                   SizedBox(height: 5.0),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 12.0),
-                        child: Text(
-                          "โรงพยาบาล พุทธชินราช",
-                          style: TextStyle(
-                              color: Colors.grey[600], fontSize: 18.0),
-                        )),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Padding(
+                  //       padding: EdgeInsets.only(left: 12.0),
+                  //       child: Text(
+                  //         "โรงพยาบาล พุทธชินราช",
+                  //         style: TextStyle(
+                  //             color: Colors.grey[600], fontSize: 18.0),
+                  //       )),
+                  // ),
 
                   // Column(
                   //   children: <Widget>[
@@ -190,45 +190,45 @@ class _MyPageState extends State<FoodScreen> {
                   //   ],
                   // ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                        shape: StadiumBorder(),
-                        color: Colors.blueGrey[300],
-                        child: Text("เปิดบนอินเทอร์เน็ต"),
-                        onPressed: () {
-                          if (urlPDFPath != null) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PdfViewPage(path: assetPDFPath)));
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ),
-                      RaisedButton(
-                        shape: StadiumBorder(),
-                        color: Colors.cyan[300],
-                        child: Text("เปิดบนแอพพลิเคชั่น"),
-                        onPressed: () {
-                          if (assetPDFPath != null) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PdfViewPage(path: assetPDFPath)));
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     RaisedButton(
+                  //       shape: StadiumBorder(),
+                  //       color: Colors.blueGrey[300],
+                  //       child: Text("เปิดบนอินเทอร์เน็ต"),
+                  //       onPressed: () {
+                  //         if (urlPDFPath != null) {
+                  //           Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                   builder: (context) =>
+                  //                       PdfViewPage(path: assetPDFPath)));
+                  //         }
+                  //       },
+                  //     ),
+                  //     SizedBox(
+                  //       height: 60,
+                  //     ),
+                      // RaisedButton(
+                      //   shape: StadiumBorder(),
+                      //   color: Colors.cyan[300],
+                      //   child: Text("เปิดบนแอพพลิเคชั่น"),
+                      //   onPressed: () {
+                      //     if (assetPDFPath != null) {
+                      //       Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (context) =>
+                      //                   PdfViewPage(path: assetPDFPath)));
+                      //     }
+                      //   },
+                      // ),
+                  //     SizedBox(
+                  //       height: 60,
+                  //     ),
+                  //   ],
+                  // ),
                   //SizedBox(height: 10),
                   // new Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,7 +350,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Document"),
+        title: Text("บทความ"),
       ),
       body: Stack(
         children: <Widget>[
