@@ -45,6 +45,9 @@ dependencies:
   flutter_swiper: ^1.1.6
   numberpicker: ^1.1.0
   pull_to_refresh: ^1.5.7
+  firebase_messaging: ^5.1.8
+  flutter_typeahead: ^1.7.0
+  rflutter_alert: ^1.0.3
 
 dev_dependencies:
   gradient_app_bar: ^0.1.3

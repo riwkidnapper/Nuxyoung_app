@@ -3,6 +3,7 @@ import 'dart:io';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:nuxyoung/Auth/login_page.dart';
@@ -22,6 +23,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool checkboxValueCity = false;
   final Firestore store = Firestore.instance;
+
   static var _keyValidationForm = GlobalKey<FormState>();
   final FocusNode _passwordEmail = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
@@ -30,6 +32,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   TextEditingController _textEditConEmail = TextEditingController();
   TextEditingController _textEditConPassword = TextEditingController();
   TextEditingController _textEditConConfirmPassword = TextEditingController();
+  String _uploadedFileURL;
   bool isPasswordVisible = false;
   bool load = false;
   bool isConfirmPasswordVisible = false;
@@ -108,11 +111,20 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   }
 
   void onSubmit() async {
+    setState(() {
+      load = true;
+    });
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('Userimage/$_emaildoc');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    await uploadTask.onComplete;
+    firebaseStorageRef.getDownloadURL().then((fileURL) async {
+      setState(() {
+        _uploadedFileURL = fileURL;
+      });
+    });
     _keyValidationForm.currentState.save();
     if (_keyValidationForm.currentState.validate()) {
-      setState(() {
-        load = true;
-      });
       if (rule == 'แพทย์' || rule == 'doctor') {
         rule = 'doctor';
       } else {
@@ -136,6 +148,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["rule"] = rule;
               data["เวลาออกตรวจ"] = selecteddateList;
               data["uid"] = onValue.user.uid;
+              data["photoUser"] = _uploadedFileURL;
             } else {
               data['photoUser'] =
                   "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/no-img.png?alt=media&token=38f8a945-9a15-45e3-aa3b-f907b5036a56";
@@ -144,6 +157,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["name"] = namedoc;
               data["rule"] = rule;
               data["uid"] = onValue.user.uid;
+              data["photoUser"] = _uploadedFileURL;
             }
             if (onValue != null && onValue.user != null)
               await store.collection("users").add(data).then((ref) {

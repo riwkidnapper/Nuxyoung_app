@@ -20,7 +20,7 @@ class _LoginpageState extends State<Loginpage> {
   String _email;
   String _password;
   FirebaseUser currentUser;
-
+  bool load = false;
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -33,28 +33,33 @@ class _LoginpageState extends State<Loginpage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
+        setState(() {
+          load = true;
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                  child: ColorLoader(
+                    colors: colors,
+                  ),
+                );
+              });
+        });
         //final AuthResult authResult =
         await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
+            .signInWithEmailAndPassword(email: _email, password: _password)
+            .then((data) {
+          setState(() {
+            load = false;
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+                ModalRoute.withName('/'));
+          });
+        });
         //final FirebaseUser firebaseUser = authResult.user;
 
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Center(
-                child: ColorLoader(
-                  colors: colors,
-                ),
-              );
-            });
-
         //print('Signed in: ${user.uid},${user.email}');
-        Future.delayed(new Duration(milliseconds: 1500), () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-              ModalRoute.withName('/'));
-        });
       } catch (e) {
         showDialog(
             context: context,

@@ -1,4 +1,4 @@
-const allCountries = [
+const name = [
   "กระบี่",
   "กรุงเทพฯ",
   "กาญจนบุรี",
@@ -77,4 +77,3 @@ const allCountries = [
   "อุทัยธานี",
   "อุบลราชธานี",
 ];
-

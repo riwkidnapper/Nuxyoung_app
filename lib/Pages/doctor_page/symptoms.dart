@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/data.dart';
+import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
+import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
+import 'package:nuxyoung/package/video_player.dart';
+
+final Firestore store = Firestore.instance;
 
 class Symptom extends StatefulWidget {
   @override
@@ -16,18 +21,28 @@ class Symptom extends StatefulWidget {
 
 class _SymptomState extends State<Symptom> {
   PageController ctrl;
-
-  final Firestore store = Firestore.instance;
+  String id;
+  var selectedCurrency, selectedType;
   File newProfilePic;
   File _fileName;
   String _uploadedFileURL;
   File _video;
+  bool load = false;
   bool _hasValidMime = false;
   FileType _pickingType;
-  ValueChanged _onChanged = (val) => (val);
+  VideoPlayerController _videoPlayerController1;
   TextEditingController _symptoms = new TextEditingController();
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final GlobalKey<FormBuilderState> _sevekey = GlobalKey<FormBuilderState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  ChewieController _chewieController;
+
+  @override
+  void initState() {
+    load = false;
+    super.initState();
+  }
+
   void _openFileExplorer() async {
     if (_pickingType != FileType.VIDEO || _hasValidMime) {
       try {
@@ -38,12 +53,22 @@ class _SymptomState extends State<Symptom> {
       if (!mounted) return;
       setState(() {
         _fileName = _video ?? null;
+        _videoPlayerController1 = VideoPlayerController.file(_fileName);
+        _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController1,
+          aspectRatio: 3 / 2,
+          autoPlay: true,
+          looping: false,
+        );
       });
       print(_fileName);
     }
   }
 
   Future uploadFile(String name, String symptom) async {
+    setState(() {
+      load = true;
+    });
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('SymptomsVIDEO/$name');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_fileName);
@@ -64,6 +89,15 @@ class _SymptomState extends State<Symptom> {
             'วิดีโออาการเบื้องต้น': _uploadedFileURL,
             'ลักษณะอาการเบื้องต้น': symptom
           }).then((val) {
+            setState(() {
+              load = false;
+            });
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MedicalBudhosp(),
+              ),
+            );
             print(_uploadedFileURL);
             print('File Uploaded');
           }).catchError((e) {
@@ -82,6 +116,7 @@ class _SymptomState extends State<Symptom> {
   Widget build(BuildContext context) {
     String symptom;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           "อาการเบื้องต้น",
@@ -90,135 +125,204 @@ class _SymptomState extends State<Symptom> {
         backgroundColor: Colors.grey[300],
       ),
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: PageView(
-          scrollDirection: Axis.horizontal,
-          controller: ctrl,
-          children: <Widget>[
-            SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Column(
-                children: <Widget>[
-                  FormBuilder(
-                    key: _fbKey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          FormBuilderTypeAhead(
-                            decoration: InputDecoration(
-                              labelText: 'ชื่อผู้ป่วย',
-                              labelStyle: TextStyle(fontSize: 18.0),
-                              icon: Icon(
-                                Icons.portrait,
-                                size: 30.0,
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: PageView(
+            physics: AlwaysScrollableScrollPhysics(),
+            children: <Widget>[
+              Form(
+                key: _fbKey,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                  child: ListView(
+                    children: <Widget>[
+                      StreamBuilder<QuerySnapshot>(
+                        stream: Firestore.instance
+                            .collection('profliePaitient')
+                            .orderBy('ชื่อคนไข้')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData)
+                            return const Text("Loading.....");
+                          else {
+                            List<DropdownMenuItem> currencyItems = [];
+                            for (int i = 0;
+                                i < snapshot.data.documents.length;
+                                i++) {
+                              DocumentSnapshot snap =
+                                  snapshot.data.documents[i];
+                              currencyItems.add(
+                                DropdownMenuItem(
+                                  child: Text(
+                                    snap['ชื่อคนไข้'],
+                                  ),
+                                  value: "${snap['ชื่อคนไข้']}",
+                                ),
+                              );
+                            }
+                            return Row(
+                              children: <Widget>[
+                                SizedBox(width: 10.0),
+                                Icon(
+                                  Icons.portrait,
+                                  size: 30.0,
+                                ),
+                                SizedBox(width: 20.0),
+                                DropdownButton(
+                                  items: currencyItems,
+                                  onChanged: (currencyValue) {
+                                    setState(() {
+                                      selectedCurrency = currencyValue;
+                                    });
+                                    print(selectedCurrency);
+                                  },
+                                  value: selectedCurrency,
+                                  isExpanded: false,
+                                  hint: new Text(
+                                    "ชื่อผู้ป่วย            ",
+                                    style: TextStyle(fontSize: 18.0),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                        },
+                      ),
+                      FormBuilder(
+                        key: _sevekey,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                maxLines: 8,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.next,
+                                controller: _symptoms,
+                                onSaved: (val) => symptom = val,
+                                decoration: InputDecoration(
+                                  labelText: 'ลักษณะอาการเบื้องต้น',
+                                  labelStyle: TextStyle(fontSize: 18.0),
+                                  icon: Icon(
+                                    Icons.local_hospital,
+                                    size: 30.0,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 50.0),
+                          child: (_fileName != null)
+                              ? Chewie(
+                                  controller: _chewieController,
+                                )
+                              : Text(
+                                  'ไม่มีวิดีโอที่จะแสดง',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey, fontSize: 20.0),
+                                ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 40.0,
+                          child: RaisedButton.icon(
+                            icon: Icon(
+                              Icons.unarchive,
+                              color: Colors.blueGrey[700],
+                            ),
+                            color: Colors.blueGrey[300],
+                            onPressed: () {
+                              _openFileExplorer();
+                            }, //=> _openFileExplorer(),
+                            label: new Text(
+                              "เลือกวิดีโออาการผู้ป่วย",
+                              style: TextStyle(
+                                fontSize: 18.0,
                               ),
                             ),
-                            attribute: 'name',
-                            onChanged: _onChanged,
-                            itemBuilder: (context, country) {
-                              return ListTile(
-                                title: Text(country),
-                              );
-                            },
-                            suggestionsCallback: (query) {
-                              if (query.length != 0) {
-                                var lowercaseQuery = query.toLowerCase();
-                                return allCountries.where((country) {
-                                  return country
-                                      .toLowerCase()
-                                      .contains(lowercaseQuery);
-                                }).toList(growable: false)
-                                  ..sort((a, b) => a
-                                      .toLowerCase()
-                                      .indexOf(lowercaseQuery)
-                                      .compareTo(b
-                                          .toLowerCase()
-                                          .indexOf(lowercaseQuery)));
-                              } else {
-                                return allCountries;
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 40.0,
+                        child: RaisedButton(
+                            onPressed: () async {
+                              _sevekey.currentState.save();
+                              if (_sevekey.currentState.validate()) {
+                                (_fileName != null)
+                                    ? await uploadFile(
+                                        selectedCurrency, symptom)
+                                    : _scaffoldKey.currentState.showSnackBar(
+                                        new SnackBar(
+                                          content: Text(
+                                            'ไม่มีวิดีโอที่จะทำการอัปโหลด',
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          backgroundColor: Colors.blueGrey[600],
+                                        ),
+                                      );
                               }
                             },
-                          ),
-                        ],
-                      ),
-                    ),
+                            child: load == false
+                                ? Text(
+                                    'ยืนยันข้อมูล',
+                                    style: TextStyle(
+                                      fontSize: 22.0,
+                                    ),
+                                  )
+                                : CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.blueGrey),
+                                  )),
+                      )
+                    ],
                   ),
-                  FormBuilder(
-                    key: _sevekey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            maxLines: 8,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.next,
-                            controller: _symptoms,
-                            onSaved: (val) => symptom = val,
-                            decoration: InputDecoration(
-                              labelText: 'ลักษณะอาการเบื้องต้น',
-                              labelStyle: TextStyle(fontSize: 18.0),
-                              icon: Icon(
-                                Icons.local_hospital,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 200.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 40.0,
-                      child: RaisedButton.icon(
-                        icon: Icon(
-                          Icons.unarchive,
-                          color: Colors.blueGrey[700],
-                        ),
-                        color: Colors.blueGrey[300],
-                        onPressed: () {
-                          _openFileExplorer();
-                        }, //=> _openFileExplorer(),
-                        label: new Text(
-                          "เลือกวิดีโออาการผู้ป่วย",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 40.0,
-                    child: RaisedButton(
-                      onPressed: () async {
-                        _sevekey.currentState.save();
-                        await uploadFile('อัครเดช เดทสิทธิ', symptom);
-                      },
-                      child: const Text(
-                        'ยืนยันข้อมูล',
-                        style: TextStyle(
-                          fontSize: 22.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          )),
     );
   }
+
+  searchByName() {
+    StreamBuilder<QuerySnapshot>(
+      stream: store.collection('profliePaitient').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+              children: snapshot.data.documents
+                  .map((doc) => buildItem(doc))
+                  .toList());
+        } else {
+          return SizedBox();
+        }
+      },
+    );
+  }
+}
+
+Text buildItem(DocumentSnapshot doc) {
+  return Text(
+    'name: ${doc.data['ชื่อคนไข้']}',
+    style: TextStyle(fontSize: 24),
+  );
 }
