@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 //import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 //import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
@@ -10,31 +12,87 @@ import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 
 class Pagetwo extends StatefulWidget {
   PagetwoState createState() => PagetwoState();
+  
 }
 
 class PagetwoState extends State<Pagetwo> {
   TextEditingController searchController = new TextEditingController();
   String filter;
-   //List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
-   //RefreshController _refreshController =
-   //RefreshController(initialRefresh: false);
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+   String message;
+  String channelId = "1000";
+  String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
+  String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
+  //bool isSubscribeHotNews = false;
 
-  //  void _onRefresh() async {
-  //   monitor network fetch
-  //    await Future.delayed(Duration(milliseconds: 1000));
-  //   if failed,use refreshFailed()
-  //   _refreshController.refreshCompleted();
-  //  }
+   @override
+  initState() {
+    message = "No message.";
+ 
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('ic_launcher');
+ 
+    var initializationSettingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) {
+      print("onDidReceiveLocalNotification called.");
+    });
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+ 
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (payload) {
+      // when user tap on notification.
+      print("onSelectNotification called.");
+      setState(() {
+        message = payload;
+      });
+    });
+     firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        Map mapNotification = message["notification"];
+        String title = mapNotification["title"];
+        String body = mapNotification["body"];
+        sendNotification(title: title, body: body);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+     firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+     firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
 
-  // void _onLoading() async {
-  //   monitor network fetch
-  //  await Future.delayed(Duration(milliseconds: 1000));
-  //   if failed,use loadFailed(),if no data return,use LoadNodata()
-  //    items.add((items.length + 1).toString());
-  //    if (mounted) setState(() {});
-  //    _refreshController.loadComplete();
-  //  }
+     firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Token : $token");
+    });
 
+    super.initState();
+  }
+  
+  sendNotification({title,body}) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails('10000',
+        'FLUTTER_NOTIFICATION_CHANNEL', 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+        importance: Importance.Max, priority: Priority.High);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+ 
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+ 
+    await flutterLocalNotificationsPlugin.show(112, title,
+            body, platformChannelSpecifics,
+        payload: null);
+  }
+ 
   Widget build(BuildContext context) {
   return Scaffold(
     body: NestedScrollView(
@@ -96,53 +154,60 @@ class PagetwoState extends State<Pagetwo> {
               //     ),
               //   ),
               //   ),
-              Container(
-                    width: 320,
-                    height: 150,
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => Calendar()
-                        )
-                      ),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                      width: 320,
+                      height: 150,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => Calendar()
+                          )
                         ),
-                        color: Colors.pink[100],
-                        elevation: 10,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                          const ListTile(
-                            //leading: Icon(Icons.album, size: 70.0, ),
-                            title: Text('วันนัดหมายของคุณ', style: TextStyle(color: Colors.black,fontSize: 20.0),
-                            textAlign: TextAlign.center),
-                            subtitle: Text('21 พฤศจิกายน 62', style: TextStyle(color: Colors.black,fontSize: 24.0),
-                            textAlign: TextAlign.center),
-                        ),
-                        ],
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: Colors.blue[100],
+                          elevation: 10,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                            const ListTile(
+                              //leading: Icon(Icons.album, size: 70.0, ),
+                              title: Text('วันนัดหมายของคุณ', style: TextStyle(color: Colors.black,fontSize: 20.0),
+                              textAlign: TextAlign.center),
+                              subtitle: Text('16 พฤศจิกายน 2562', style: TextStyle(color: Colors.black,fontSize: 24.0),
+                              textAlign: TextAlign.center),
+                          ),
+                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                   child: RaisedButton.icon(
-                     icon: Icon(
-                       Icons.date_range,
-                       color: Colors.blueGrey[700],
+              ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+                    child: Container(
+                     child: RaisedButton.icon(
+                       icon: Icon(
+                         Icons.date_range,
+                         color: Colors.blueGrey[700],
+                       ),
+                       color: Colors.blueGrey[300],
+                        label: Text(
+                          "เลื่อนเวลานัดหมาย",
+                          style: TextStyle(
+                            color: Colors.blueGrey[800],
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ), onPressed: () async {},
                      ),
-                     color: Colors.blueGrey[300],
-                      label: Text(
-                        "เลื่อนเวลานัดหมาย",
-                        style: TextStyle(
-                          color: Colors.blueGrey[800],
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ), onPressed: () async {},
-                   ),
+                    ),
                   ),
 
                   Container(
@@ -153,13 +218,26 @@ class PagetwoState extends State<Pagetwo> {
                      ),
                      color: Colors.blueGrey[300],
                       label: Text(
-                        "เลื่อนเวลานัดหมาย",
+                        "ยกเลิกนัดหมาย",
                         style: TextStyle(
                           color: Colors.blueGrey[800],
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
-                      ), onPressed: () async {},
+                      ), onPressed: ()  {
+                        //sendNotification();
+                        /*Switch(
+                        value: isSubscribeHotNews,
+                           onChanged: (checked) {
+                         if(checked) {
+                           firebaseMessaging.subscribeToTopic("TOEY");
+                         }else{
+                            firebaseMessaging.unsubscribeFromTopic("TOEY");
+                         }
+                          setState(() => isSubscribeHotNews = checked);
+                       }
+                     );*/   
+                    },
                    ),
                   ),
               // Container(
