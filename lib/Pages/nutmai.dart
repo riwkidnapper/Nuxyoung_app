@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 //import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 //import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
@@ -12,10 +14,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Pagetwo extends StatefulWidget {
   PagetwoState createState() => PagetwoState();
-  
 }
 
 class PagetwoState extends State<Pagetwo> {
+  final Firestore store = Firestore.instance;
   TextEditingController searchController = new TextEditingController();
   String filter;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -26,12 +28,21 @@ class PagetwoState extends State<Pagetwo> {
   String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
   String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
   //bool isSubscribeHotNews = false;
+FirebaseUser currentUser;
 
+    
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
+  }
    @override
   initState() {
     message = "No message.";
- 
-    var initializationSettingsAndroid =
+_loadCurrentUser();    var initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
  
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -49,13 +60,36 @@ class PagetwoState extends State<Pagetwo> {
         message = payload;
       });
     });
-     firebaseMessaging.configure(
+    firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         Map mapNotification = message["notification"];
         String title = mapNotification["title"];
         String body = mapNotification["body"];
         sendNotification(title: title, body: body);
+        
+        await store
+            .collection("users")
+            .where('uid', isEqualTo: currentUser.uid)
+            .getDocuments()
+            .then((docs) {
+          Firestore.instance
+              .document('/users/${docs.documents[0].documentID}')
+              .updateData({
+                'title': title,
+                'body': body
+          }).then((val) {
+            print(title);
+            print(body);
+          }).catchError((title,body) {
+            print(title);
+            print(body);
+          });
+        }).catchError((title,body) {      
+            print(title);
+            print(body);
+        });
+      
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
@@ -88,8 +122,8 @@ class PagetwoState extends State<Pagetwo> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
  
-    await flutterLocalNotificationsPlugin.show(112, title,
-            body, platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.show(112,title,
+        body, platformChannelSpecifics,
         payload: null);
   }
  
@@ -179,7 +213,7 @@ class PagetwoState extends State<Pagetwo> {
                               //leading: Icon(Icons.album, size: 70.0, ),
                               title: Text('วันนัดหมายของคุณ', style: TextStyle(color: Colors.black,fontSize: 20.0),
                               textAlign: TextAlign.center),
-                              subtitle: Text('16 พฤศจิกายน 2562', style: TextStyle(color: Colors.black,fontSize: 24.0),
+                              subtitle: Text('15 พฤศจิกายน 2562', style: TextStyle(color: Colors.black,fontSize: 24.0),
                               textAlign: TextAlign.center),
                           ),
                           ],
@@ -225,7 +259,7 @@ class PagetwoState extends State<Pagetwo> {
                           fontWeight: FontWeight.bold,
                         ),
                       ), onPressed: ()  {
-                        //sendNotification();
+                        sendNotification();
                         /*Switch(
                         value: isSubscribeHotNews,
                            onChanged: (checked) {
