@@ -18,7 +18,7 @@ class Addappoint extends StatefulWidget {
 class _AddappointState extends State<Addappoint> {
   FirebaseUser user;
   final Firestore store = Firestore.instance;
-  final t = new DateFormat('hh:mm');
+  final t = new DateFormat('HH:mm');
   final d = new DateFormat('dd MMMM yyyy', "th_TH");
   DateTime dateAppoint;
   DateTime timeAppoint;
@@ -27,12 +27,13 @@ class _AddappointState extends State<Addappoint> {
   final String doctorName;
   final GlobalKey<FormState> _fbKey = GlobalKey<FormState>();
   TextEditingController _nameController;
-  TextEditingController _lastController;
   TextEditingController _hisController;
   TextEditingController _simController;
-
+  var selectedCurrency, selectedType;
   String timeAppointment;
   String dateAppointment;
+
+  var uid;
   _AddappointState(this.doctorName);
   @override
   void initState() {
@@ -40,11 +41,20 @@ class _AddappointState extends State<Addappoint> {
     dateAppoint = DateTime(
         DateTime.now().year + 543, DateTime.now().month, DateTime.now().day);
     _nameController = TextEditingController();
-    _lastController = TextEditingController();
     _hisController = TextEditingController();
     _simController = TextEditingController();
     timeAppointment = t.format(DateTime.now());
     dateAppointment = d.format(dateAppoint);
+    store
+        .collection("profliePaitient")
+        .where('ชื่อคนไข้', isEqualTo: selectedCurrency)
+        .getDocuments()
+        .then((docs) {
+      setState(() {
+        uid = docs.documents[0]['uid'];
+        print(uid);
+      });
+    });
   }
 
   var items = [
@@ -75,7 +85,7 @@ class _AddappointState extends State<Addappoint> {
         backgroundColor: Colors.grey[300],
       ),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: FormBuilder(
@@ -155,108 +165,220 @@ class _AddappointState extends State<Addappoint> {
                 SizedBox(
                   height: 30,
                 ),
-                Text(
-                  'ชื่อ - นามสกุลคนไข้',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey[700],
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                TextFormField(
-                  controller: _lastController,
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'ประวัติการรักษา',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey[700],
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                TextFormField(
-                  controller: _hisController,
-                  maxLines: 4,
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'อาการเบื้องต้น',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey[700],
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                TextFormField(
-                  controller: _simController,
-                  maxLines: 4,
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: RaisedButton.icon(
-                    icon: Icon(
-                      Icons.assignment_turned_in,
-                      color: Colors.blueGrey[700],
-                    ),
-                    color: Colors.blueGrey[300],
-                    label: Text(
-                      "ยืนยัน",
-                      style: TextStyle(
-                        color: Colors.blueGrey[800],
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () async {
-                      _fbKey?.currentState?.save();
-                      if (_fbKey?.currentState?.validate() ?? true) {
-                        var paitientName = _lastController?.value?.text;
-                        var his = _hisController?.value?.text;
-                        var sim = _simController?.value?.text;
-
-                        var data = {
-                          "ชื่อแพทย์ผู้รักษา": doctorName,
-                          "วันเดือนปีที่นัดหมาย": dateAppointment,
-                          "เวลาที่นัดหมาย": timeAppointment,
-                          "ชื่อคนไข้": paitientName,
-                          "ประวัติการเข้ารับการรักษา": his,
-                          "อาการเบื้องต้น": sim,
-                        };
-                        await store
-                            .collection("appointment")
-                            .add(data)
-                            .then((value) {
-                          print(value.documentID);
-                          Navigator.pop(
-                            context,
-                          );
-                          Navigator.pop(
-                            context,
-                          );
-                          Navigator.pop(
-                            context,
-                          );
-                        }).catchError((err) {
-                          print(err);
-                        });
-                      } else {
-                        setState(() {
-                          print("validation failed");
-                        });
+                StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('profliePaitient')
+                      .orderBy('ชื่อคนไข้')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData)
+                      return const Text("Loading.....");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap['ชื่อคนไข้'],
+                            ),
+                            value: "${snap['ชื่อคนไข้']}",
+                          ),
+                        );
                       }
-                    },
-                  ),
+                      return Row(
+                        children: <Widget>[
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                              });
+                              print(selectedCurrency);
+                            },
+                            value: selectedCurrency,
+                            isExpanded: false,
+                            hint: new Text(
+                              'ชื่อ - นามสกุลคนไข้                                         ',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.blueGrey[700],
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                StreamBuilder(
+                    stream: store
+                        .collection('profliePaitient')
+                        .where('ชื่อคนไข้', isEqualTo: selectedCurrency)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                          ),
+                        );
+                      }
+                      var admissionhistory = snapshot.data?.documents[0]
+                          ['ประวัติการเข้ารับการรักษา'];
+                      var symptoms =
+                          snapshot.data?.documents[0]['ลักษณะอาการเบื้องต้น'];
+                      var diagnosis =
+                          snapshot.data?.documents[0]['การวินิจฉัยเบื้องต้น'];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "ประวัติการเข้ารับการรักษา",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blueGrey[700],
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          selectedCurrency != null
+                              ? Text(
+                                  ' : $admissionhistory',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              : TextFormField(
+                                  controller: _hisController,
+                                  maxLines: 4,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'อาการเบื้องต้น',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blueGrey[700],
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          selectedCurrency != null
+                              ? Text(
+                                  ' : $symptoms',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              : TextFormField(
+                                  controller: _simController,
+                                  maxLines: 4,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'การวินิจฉัยเบื้องต้น',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blueGrey[700],
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          selectedCurrency != null
+                              ? Text(
+                                  ' : $diagnosis',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              : TextFormField(
+                                  controller: _simController,
+                                  maxLines: 4,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Center(
+                            child: RaisedButton.icon(
+                              icon: Icon(
+                                Icons.assignment_turned_in,
+                                color: Colors.blueGrey[700],
+                              ),
+                              color: Colors.blueGrey[300],
+                              label: Text(
+                                "ยืนยัน",
+                                style: TextStyle(
+                                  color: Colors.blueGrey[800],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () async {
+                                _fbKey?.currentState?.save();
+                                if (_fbKey?.currentState?.validate() ?? true) {
+                                  var paitientName = selectedCurrency;
+
+                                  var data = {
+                                    "ชื่อแพทย์ผู้รักษา": doctorName,
+                                    "วันเดือนปีที่นัดหมาย": dateAppointment,
+                                    "เวลาที่นัดหมาย": timeAppointment,
+                                    "ชื่อคนไข้": paitientName,
+                                    "ประวัติการเข้ารับการรักษา":
+                                        admissionhistory,
+                                    "อาการเบื้องต้น": symptoms,
+                                    "การวินิจฉัยเบื้องต้น": diagnosis,
+                                    'uid': uid
+                                  };
+                                  await store
+                                      .collection("appointment")
+                                      .add(data)
+                                      .then((value) {
+                                    print(value.documentID);
+                                    Navigator.pop(
+                                      context,
+                                    );
+                                    Navigator.pop(
+                                      context,
+                                    );
+                                    Navigator.pop(
+                                      context,
+                                    );
+                                  }).catchError((err) {
+                                    print(err);
+                                  });
+                                } else {
+                                  setState(() {
+                                    print("validation failed");
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    })
               ],
             ),
           ),

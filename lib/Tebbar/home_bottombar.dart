@@ -165,17 +165,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         appBar: new GradientAppBar(
-          centerTitle: true,
-          title: new Text(
-            'นัดยัง',
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
-          ),
-          gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])
-        ),
+            centerTitle: true,
+            title: new Text(
+              'นัดยัง',
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+            gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])),
         body: SafeArea(child: FancyTabBar()),
       );
     } else {
@@ -202,17 +201,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         appBar: new GradientAppBar(
-          centerTitle: true,
-          title: new Text(
-            'นัดยัง',
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
-          ),
-          gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])
-        ),
+            centerTitle: true,
+            title: new Text(
+              'นัดยัง',
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+            gradient: LinearGradient(colors: [THEME, Colors.blueGrey[900]])),
         body: SafeArea(child: FancyTabBar()),
       );
     }

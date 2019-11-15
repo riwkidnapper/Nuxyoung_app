@@ -114,15 +114,23 @@ class _MedicalRegisterState extends State<MedicalRegister> {
     setState(() {
       load = true;
     });
-    final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('Userimage/$_emaildoc');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-    await uploadTask.onComplete;
-    firebaseStorageRef.getDownloadURL().then((fileURL) async {
-      setState(() {
-        _uploadedFileURL = fileURL;
+    if (_image != null) {
+      final StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('Userimage/$_emaildoc');
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      await uploadTask.onComplete;
+      firebaseStorageRef.getDownloadURL().then((fileURL) async {
+        setState(() {
+          _uploadedFileURL = fileURL;
+        });
       });
-    });
+    } else {
+      setState(() {
+        _uploadedFileURL =
+            "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/no-img.png?alt=media&token=38f8a945-9a15-45e3-aa3b-f907b5036a56";
+      });
+    }
+
     _keyValidationForm.currentState.save();
     if (_keyValidationForm.currentState.validate()) {
       if (rule == 'แพทย์' || rule == 'doctor') {
@@ -140,8 +148,6 @@ class _MedicalRegisterState extends State<MedicalRegister> {
           )
               .then((onValue) async {
             if (rule == 'doctor') {
-              data['photoUser'] =
-                  "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/no-img.png?alt=media&token=38f8a945-9a15-45e3-aa3b-f907b5036a56";
               data["createAt"] = DateTime.now();
               data["email"] = _emaildoc;
               data["name"] = namedoc;
@@ -150,8 +156,6 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["uid"] = onValue.user.uid;
               data["photoUser"] = _uploadedFileURL;
             } else {
-              data['photoUser'] =
-                  "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/no-img.png?alt=media&token=38f8a945-9a15-45e3-aa3b-f907b5036a56";
               data["createAt"] = DateTime.now();
               data["email"] = _emaildoc;
               data["name"] = namedoc;

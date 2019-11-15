@@ -83,7 +83,7 @@ class _SymptomState extends State<Symptom> {
             .where('ชื่อคนไข้', isEqualTo: name)
             .getDocuments()
             .then((docs) {
-          Firestore.instance
+          store
               .document('/profliePaitient/${docs.documents[0].documentID}')
               .updateData({
             'วิดีโออาการเบื้องต้น': _uploadedFileURL,

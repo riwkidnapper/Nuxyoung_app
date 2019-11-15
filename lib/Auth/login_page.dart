@@ -20,7 +20,7 @@ class _LoginpageState extends State<Loginpage> {
   String _email;
   String _password;
   FirebaseUser currentUser;
-  bool load = false;
+
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -33,33 +33,28 @@ class _LoginpageState extends State<Loginpage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
-        setState(() {
-          load = true;
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Center(
-                  child: ColorLoader(
-                    colors: colors,
-                  ),
-                );
-              });
-        });
         //final AuthResult authResult =
         await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password)
-            .then((data) {
-          setState(() {
-            load = false;
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-                ModalRoute.withName('/'));
-          });
-        });
+            .signInWithEmailAndPassword(email: _email, password: _password);
         //final FirebaseUser firebaseUser = authResult.user;
 
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                child: ColorLoader(
+                  colors: colors,
+                ),
+              );
+            });
+
         //print('Signed in: ${user.uid},${user.email}');
+        Future.delayed(new Duration(milliseconds: 1500), () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              ModalRoute.withName('/'));
+        });
       } catch (e) {
         showDialog(
             context: context,
@@ -162,7 +157,7 @@ class _LoginpageState extends State<Loginpage> {
                       fontSize: ScreenUtil.getInstance().setSp(40),
                       letterSpacing: .6,
                       fontWeight: FontWeight.bold)),
-              Text("****************",
+              Text("**************",
                   style: TextStyle(
                       fontFamily: "",
                       fontSize: ScreenUtil.getInstance().setSp(35),

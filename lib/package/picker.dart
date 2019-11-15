@@ -101,6 +101,7 @@ class TimePicker extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) => _buildBottomPicker(
                   CupertinoDatePicker(
+                    use24hFormat: true,
                     mode: CupertinoDatePickerMode.time,
                     initialDateTime: currentTime ?? DateTime.now(),
                     onDateTimeChanged: onSelect,

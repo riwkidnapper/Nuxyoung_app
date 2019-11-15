@@ -33,7 +33,7 @@ class _AppointmentState extends State<Appointment>
         backgroundColor: Colors.grey[300],
       ),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class _AppointmentState extends State<Appointment>
                         ),
                         ListView.builder(
                           shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
+                          physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index) {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
 
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
@@ -10,7 +11,9 @@ import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
+import 'chat/Tools/custom_heading.dart';
 import 'chat/Tools/screenloadingchat.dart';
+import 'doctor_page/Page/PaitientCard.dart';
 
 class MedicalBudhosp extends StatefulWidget {
   final String userEmail;
@@ -43,7 +46,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               onPressed: () => _scaffoldKey.currentState.openDrawer(),
             ),
             title: Text(
-              'Welcome Doctor',
+              'Medical',
               style: TextStyle(
                 color: Colors.blueGrey[700],
               ),
@@ -84,20 +87,20 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               SizedBox(
                 width: 5.0,
               ),
-              IconButton(
-                icon: Icon(
-                  const IconData(0xe801, fontFamily: 'chat'),
-                  color: Colors.blueGrey,
-                ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    new MaterialPageRoute(
-                      builder: (context) => new Container(),
-                    ),
-                  );
-                },
-              ),
+              // IconButton(
+              //   icon: Icon(
+              //     const IconData(0xe801, fontFamily: 'chat'),
+              //     color: Colors.blueGrey,
+              //   ),
+              //   onPressed: () {
+              //     Navigator.pushReplacement(
+              //       context,
+              //       new MaterialPageRoute(
+              //         builder: (context) => new Container(),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
             gradient:
                 LinearGradient(colors: [Colors.white, Colors.blueGrey[50]])),
@@ -111,7 +114,12 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return new Text("Loading");
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                      ),
+                    );
                   }
                   var doctorname = snapshot.data?.documents[0]['name'];
                   var photoUser = snapshot.data?.documents[0]['photoUser'];
@@ -246,17 +254,69 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
         body: Stack(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFEEEEEE),
-                image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/homewall.png'),
-                  colorFilter: new ColorFilter.mode(
-                      Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEEEEEE),
+                  image: DecorationImage(
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/homewall.png'),
+                    colorFilter: new ColorFilter.mode(
+                        Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
+                  ),
                 ),
-              ),
-            ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      CustomHeading(title: 'รายชื่อผู้ป่วย'),
+                      StreamBuilder(
+                        stream: Firestore.instance
+                            .collection('profliePaitient')
+                            .orderBy('วันเวลาที่เข้ารับการรักษา')
+                            .orderBy('ชื่อคนไข้')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.blueGrey),
+                              ),
+                            );
+                          } else {
+                            if (snapshot.data.documents.length == 0) {
+                              return null;
+                            } else {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data.documents.length,
+                                itemBuilder: (context, index) {
+                                  final documents =
+                                      snapshot.data?.documents[index];
+                                  Timestamp t =
+                                      documents['วันเวลาที่เข้ารับการรักษา'];
+                                  var times = t.toDate();
+                                  final f =
+                                      new DateFormat('dd MMMM yyyy', "th_TH");
+
+                                  String timetoheal = f.format(times);
+                                  return PaitientCard(
+                                    paitientName: documents['ชื่อคนไข้'],
+                                    symptoms: documents['ลักษณะอาการเบื้องต้น'],
+                                    timetoheal: timetoheal,
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ))
           ],
         ));
   }

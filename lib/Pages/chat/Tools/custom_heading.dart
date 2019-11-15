@@ -17,8 +17,8 @@ class CustomHeading extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
+                    color: Colors.grey[700],
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -28,7 +28,7 @@ class CustomHeading extends StatelessWidget {
           Positioned(
             bottom: 0,
             left: 15,
-            width: 30,
+            width: 80,
             height: 4,
             child: Container(
               decoration: BoxDecoration(
@@ -38,8 +38,8 @@ class CustomHeading extends StatelessWidget {
                   end: Alignment.bottomLeft,
                   stops: [0.1, 1],
                   colors: [
-                    Color(0xFF8C68EC),
-                    Color(0xFF3E8DF3),
+                    Colors.blueGrey,
+                    Colors.blueGrey[200],
                   ],
                 ),
               ),

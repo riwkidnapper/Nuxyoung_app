@@ -74,31 +74,48 @@ class _RegisterState extends State<Register> {
             data["uid"] = onValue.user.uid;
 
             if (onValue != null && onValue.user != null)
-              await store.collection("users").add(data).then((ref) {
-                setState(() {
-                  load = false;
-                });
-                if (ref != null && ref.documentID.isNotEmpty) {
-                  FirebaseAuth.instance.signOut();
-                  _scaffoldKey.currentState.showSnackBar(SnackBar(
-                    backgroundColor: Colors.lightGreenAccent[700],
-                    content: Text(
-                      'Success',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ));
-                  Future.delayed(new Duration(milliseconds: 1000), () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Loginpage(),
-                      ),
-                    );
+              await store.collection("users").add(data).then((ref) async {
+                await store
+                    .collection("profliePaitient")
+                    .where('ชื่อคนไข้', isEqualTo: name)
+                    .getDocuments()
+                    .then((docs) {
+                  Firestore.instance
+                      .document(
+                          '/profliePaitient/${docs.documents[0].documentID}')
+                      .updateData({
+                    'uid': onValue.user.uid,
+                  }).then((val) {
+                    setState(() {
+                      load = false;
+                    });
+                    if (ref != null && ref.documentID.isNotEmpty) {
+                      FirebaseAuth.instance.signOut();
+                      _scaffoldKey.currentState.showSnackBar(SnackBar(
+                        backgroundColor: Colors.lightGreenAccent[700],
+                        content: Text(
+                          'Success',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ));
+                      Future.delayed(new Duration(milliseconds: 1000), () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Loginpage(),
+                          ),
+                        );
+                      });
+                    }
+                  }).catchError((e) {
+                    print(e);
                   });
-                }
+                }).catchError((e) {
+                  print(e);
+                });
               }).catchError((err) {
                 print(err);
               });
