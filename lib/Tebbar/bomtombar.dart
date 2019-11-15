@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyoung/Pages/aleart.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:nuxyoung/Pages/homepage.dart';
 import 'package:nuxyoung/Pages/nutmai.dart';
@@ -287,7 +288,7 @@ Widget callPage() {
   } else if (currentSelected == 1) {
     return Pagetwo();
   } else if (currentSelected == 3) {
-    return Pagetwo();
+    return Aleart();
   } else if (currentSelected == 4) {
     return ME();
   } else {
