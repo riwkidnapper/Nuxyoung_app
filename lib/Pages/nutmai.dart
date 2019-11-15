@@ -1,11 +1,10 @@
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 
 //import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
@@ -17,6 +16,7 @@ class Pagetwo extends StatefulWidget {
 }
 
 class PagetwoState extends State<Pagetwo> {
+  final Firestore store = Firestore.instance;
   TextEditingController searchController = new TextEditingController();
   String filter;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -33,8 +33,18 @@ class PagetwoState extends State<Pagetwo> {
   var name;
 
   //bool isSubscribeHotNews = false;
+FirebaseUser currentUser;
 
-  @override
+    
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
+  }
+   @override
   initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       setState(() {
@@ -43,8 +53,7 @@ class PagetwoState extends State<Pagetwo> {
     });
   
     message = "No message.";
-
-    var initializationSettingsAndroid =
+_loadCurrentUser();    var initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
 
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -69,6 +78,29 @@ class PagetwoState extends State<Pagetwo> {
         String title = mapNotification["title"];
         String body = mapNotification["body"];
         sendNotification(title: title, body: body);
+        
+        await store
+            .collection("users")
+            .where('uid', isEqualTo: currentUser.uid)
+            .getDocuments()
+            .then((docs) {
+          Firestore.instance
+              .document('/users/${docs.documents[0].documentID}')
+              .updateData({
+                'title': title,
+                'body': body
+          }).then((val) {
+            print(title);
+            print(body);
+          }).catchError((title,body) {
+            print(title);
+            print(body);
+          });
+        }).catchError((title,body) {      
+            print(title);
+            print(body);
+        });
+      
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
@@ -100,9 +132,9 @@ class PagetwoState extends State<Pagetwo> {
 
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.show(112, "คุณมีการแจ้งเตือนใหม่",
-        "การนัดหมายวันที่ 15 พฤศจิกายน", platformChannelSpecifics,
+ 
+    await flutterLocalNotificationsPlugin.show(112,title,
+        body, platformChannelSpecifics,
         payload: null);
   }
 
