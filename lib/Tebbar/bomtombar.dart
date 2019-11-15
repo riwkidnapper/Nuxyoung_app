@@ -77,10 +77,10 @@ class _FancyTabBarState extends State<FancyTabBar>
             ),
           ),
           Container(
-            height: 80, //100
+            height: 80,
             margin: (currentSelected == 2) && (nextIcon == Icons.home)
                 ? EdgeInsets.only(top: 0)
-                : EdgeInsets.only(top: 0), //535
+                : EdgeInsets.only(top: 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,16 +91,114 @@ class _FancyTabBarState extends State<FancyTabBar>
                   title: "บุคคลากร",
                   callbackFunction: () {
                     setState(() {
-                      nextIcon = Icons.local_hospital;
-                      currentSelected = 2;
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                          builder: (context) => new MedicalBudhosp(
-                            userEmail: currentUser.email,
+                      if (currentUser?.uid != null) {
+                        nextIcon = Icons.local_hospital;
+
+                        currentSelected = 2;
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new MedicalBudhosp(
+                              uid: currentUser.uid,
+                              userEmail: currentUser.email,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        nextIcon = Icons.home;
+                        currentSelected = 2;
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SimpleDialog(
+                                contentPadding: EdgeInsets.only(
+                                    left: 0.0,
+                                    right: 0.0,
+                                    top: 0.0,
+                                    bottom: 0.0),
+                                children: <Widget>[
+                                  Container(
+                                    color: Colors.white,
+                                    margin: EdgeInsets.all(0.0),
+                                    padding: EdgeInsets.only(
+                                        bottom: 10.0,
+                                        top: 10.0,
+                                        left: 10.0,
+                                        right: 10.0),
+                                    height: 200.0,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Container(
+                                          child: Icon(
+                                            Icons.error_outline,
+                                            size: 80.0,
+                                            color: Colors.redAccent,
+                                          ),
+                                          margin: EdgeInsets.only(bottom: 10.0),
+                                        ),
+                                        Text(
+                                          'คุณไม่ได้รับสิทธิใช้งานในส่วนนี้',
+                                          style: TextStyle(
+                                              color: Colors.blueGrey[700],
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0, left: 10.0),
+                                          child: Text(
+                                            'เฉพาะแพทย์ พยาบาลและบุคลากรเท่านั้น',
+                                            style: TextStyle(
+                                                color: Colors.blueGrey,
+                                                fontSize: 18.0),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SimpleDialogOption(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Center(
+                                        child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                8.0, 8.0, 8.0, 15.0),
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blueGrey),
+                                              child: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    100.0, 10.0, 100.0, 10.0),
+                                                child: Text(
+                                                  'ยืนยัน',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18.0),
+                                                ),
+                                              ),
+                                            )
+
+                                            // Text(
+                                            //   'ยืนยัน',
+                                            //   style: TextStyle(
+                                            //       color: Colors.white,
+                                            //       backgroundColor:
+                                            //           Color(0xFF607D8B),
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 18.0),
+                                            // ),
+                                            ),
+                                      )),
+                                ],
+                              );
+                            });
+                      }
                     });
                   },
                 ),

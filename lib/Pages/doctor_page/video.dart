@@ -1,4 +1,4 @@
-import 'package:nuxyoung/package/chewie/chewie.dart';
+
 import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
   void initState() {
     super.initState();
     _videoPlayerController1 = VideoPlayerController.network(
-        'https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/profilepics%2F2019-11-10%2020%3A05%3A29.715424?alt=media&token=b2594c65-2990-4b41-a5e2-a2ed85027655');
+        'https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/SymptomsVIDEO%2F%E0%B8%AD%E0%B8%B1%E0%B8%84%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%8A%20%E0%B9%80%E0%B8%94%E0%B8%97%E0%B8%AA%E0%B8%B4%E0%B8%97%E0%B8%98%E0%B8%B4?alt=media&token=d945d742-00a5-4198-b301-f657292c219c');
     _videoPlayerController2 = VideoPlayerController.network(
         'https://www.sample-videos.com/video123/mp4/480/asdasdas.mp4');
     _chewieController = ChewieController(

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
-import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
-
 import 'package:nuxyoung/package/picker.dart';
 
 bool clear = false;
@@ -55,9 +53,8 @@ class _AddappointState extends State<Addappoint> {
   ];
 
   void changState() {
-    Navigator.push(
+    Navigator.pop(
       context,
-      MaterialPageRoute(builder: (context) => Appointment()),
     );
   }
 

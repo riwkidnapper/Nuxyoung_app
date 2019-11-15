@@ -46,6 +46,8 @@ dependencies:
   numberpicker: ^1.1.0
   pull_to_refresh: ^1.5.7
   firebase_messaging: ^5.1.8
+  flutter_typeahead: ^1.7.0
+  rflutter_alert: ^1.0.3
   flutter_local_notifications: ^0.8.4
 
 dev_dependencies:

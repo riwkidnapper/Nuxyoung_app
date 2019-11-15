@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
 
-class FormCard extends StatelessWidget {
+class FormCard extends StatefulWidget {
   final String validation;
   final saveemail;
   final savepwd;
   FormCard({this.saveemail, this.savepwd, this.validation});
 
+  @override
+  _FormCardState createState() => _FormCardState();
+}
+
+class _FormCardState extends State<FormCard> {
+  TextEditingController _textEditConPassword = TextEditingController();
+  final FocusNode _passwordFocus = FocusNode();
+  bool isPasswordVisible = false;
   String emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -35,7 +43,6 @@ class FormCard extends StatelessWidget {
     }
   }
 
-  //save;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,7 +92,7 @@ class FormCard extends StatelessWidget {
                             TextStyle(color: Colors.grey, fontSize: 12.0)),
                     obscureText: false,
                     validator: emailValidator,
-                    onSaved: saveemail),
+                    onSaved: widget.saveemail),
                 SizedBox(
                   height: ScreenUtil.getInstance().setHeight(30),
                 ),
@@ -97,13 +104,28 @@ class FormCard extends StatelessWidget {
                       fontSize: ScreenUtil.getInstance().setSp(26)),
                 ),
                 TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "รหัสผ่าน",
-                        hintStyle:
-                            TextStyle(color: Colors.grey, fontSize: 12.0)),
-                    obscureText: true,
-                    validator: pwdValidator,
-                    onSaved: savepwd),
+                  controller: _textEditConPassword,
+                  focusNode: _passwordFocus,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  validator: pwdValidator,
+                  obscureText: !isPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: 'รหัสผ่าน',
+                    labelStyle: TextStyle(fontSize: 18.0),
+                    suffixIcon: IconButton(
+                      icon: Icon(isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  onSaved: (val) => widget.savepwd,
+                ),
               ],
             ),
             SizedBox(
