@@ -72,14 +72,19 @@ class _ScrollingYearsCalendarState extends State<ScrollingYearsCalendar> {
     final ScrollController _scrollController =
         ScrollController(initialScrollOffset: _initialOffset);
 
-    return ListView.builder(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      controller: _scrollController,
-      itemCount: _itemCount,
-      itemBuilder: (BuildContext context, int index) {
-        final int year = index + widget.firstDate.year;
-        return _getYearView(year);
-      },
-    );
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey[300],
+        ),
+        body: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 16.0),
+          controller: _scrollController,
+          itemCount: _itemCount,
+          itemBuilder: (BuildContext context, int index) {
+            final int year = index + widget.firstDate.year;
+            return _getYearView(year);
+          },
+        ));
   }
 }

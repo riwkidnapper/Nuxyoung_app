@@ -11,25 +11,28 @@ class Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'ประวัติแพทย์ผู้รักษา',
+            'ตารางการปฏิบัติงานของแพทย์',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
             ),
           ),
+          SizedBox(
+            height: 5.0,
+          ),
           Container(
             height: 3.0,
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
-                begin: const FractionalOffset(0.3, 2.0),
+                begin: const FractionalOffset(1.0, 2.0),
                 end: const FractionalOffset(-0.2, 0.2),
                 colors: [
-                  Colors.blueGrey,
-                  Colors.lightBlueAccent[700],
+                  Colors.blueGrey[300],
+                  Colors.blue[200],
                 ],
               ),
             ),
-            width: 100.0,
+            width: 250.0,
           ),
         ],
       ),

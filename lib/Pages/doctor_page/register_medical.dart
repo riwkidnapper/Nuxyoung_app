@@ -41,13 +41,13 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   String _conpassword;
   String namedoc;
   List<String> dateList = [
-    "วันจันทร์, 9.00 น. - 12.00 น.",
-    "วันอังคาร, 9.00 น. - 12.00 น.",
-    "วันพุธ, 9.00 น. - 12.00 น.",
-    "วันพฤหัส, 9.00 น. - 12.00 น.",
-    "วันศุกร์, 9.00 น. - 12.00 น.",
-    "วันเสาร์, 9.00 น. - 12.00 น.",
-    "วันอาทิตย์, 9.00 น. - 12.00 น.",
+    "วันจันทร์: 9.00 น. - 12.00 น.",
+    "วันอังคาร: 9.00 น. - 12.00 น.",
+    "วันพุธ: 9.00 น. - 12.00 น.",
+    "วันพฤหัส: 9.00 น. - 12.00 น.",
+    "วันศุกร์: 9.00 น. - 12.00 น.",
+    "วันเสาร์: 9.00 น. - 12.00 น.",
+    "วันอาทิตย์: 9.00 น. - 12.00 น.",
   ];
 
   String errorMsg = "";
@@ -468,39 +468,35 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                         ? Column(
                             children: <Widget>[
                               Row(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Icon(
                                     Icons.access_time,
                                     size: 30.0,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 29.0, right: 8.0),
-                                    child: Center(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(
-                                            "เลือกเวลาที่ออกตรวจ",
-                                            style: TextStyle(fontSize: 18.0),
-                                          ),
-                                          Text(
-                                            "เว้นว่างไว้หากต้องการข้ามขั้นตอนนี้",
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                color: Colors.redAccent),
-                                          ),
-                                        ],
-                                      ),
+                                  Center(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          "เลือกเวลาที่ออกตรวจ",
+                                          style: TextStyle(fontSize: 18.0),
+                                        ),
+                                        Text(
+                                          "เว้นว่างไว้หากต้องการข้ามขั้นตอนนี้",
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.redAccent),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   IconButton(
-                                    icon: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15.0),
-                                      child: Icon(
-                                        Icons.arrow_drop_down,
-                                        size: 26.0,
-                                      ),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 26.0,
                                     ),
                                     onPressed: () {
                                       _showdateDialog();

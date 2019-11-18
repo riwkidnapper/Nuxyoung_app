@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 TableRow buildTablehead(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.blueGrey[700],
         alignment: Alignment.center,
@@ -16,7 +16,7 @@ TableRow buildTablehead(String listOfNames) {
 
 TableRow buildTableMon(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.amberAccent[100],
         alignment: Alignment.center,
@@ -29,7 +29,7 @@ TableRow buildTableMon(String listOfNames) {
 
 TableRow buildTableTue(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.pink[100],
         alignment: Alignment.center,
@@ -42,7 +42,7 @@ TableRow buildTableTue(String listOfNames) {
 
 TableRow buildTableWed(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.lightGreenAccent[100],
         alignment: Alignment.center,
@@ -55,7 +55,7 @@ TableRow buildTableWed(String listOfNames) {
 
 TableRow buildTableThu(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.orangeAccent[100],
         alignment: Alignment.center,
@@ -68,7 +68,7 @@ TableRow buildTableThu(String listOfNames) {
 
 TableRow buildTableFri(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.lightBlue[100],
         alignment: Alignment.center,
@@ -81,7 +81,7 @@ TableRow buildTableFri(String listOfNames) {
 
 TableRow buildTableSat(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.deepPurpleAccent[100],
         alignment: Alignment.center,
@@ -94,7 +94,7 @@ TableRow buildTableSat(String listOfNames) {
 
 TableRow buildTableSun(String listOfNames) {
   return TableRow(
-    children: listOfNames.split(',').map((name) {
+    children: listOfNames.split(':').map((name) {
       return Container(
         color: Colors.redAccent[100],
         alignment: Alignment.center,

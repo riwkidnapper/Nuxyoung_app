@@ -1,4 +1,6 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Auth/login_page.dart';
 // import 'package:nuxyoung/Account/register_page.dart';
@@ -15,13 +17,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseUser currentUser;
+  
   void initState() {
     super.initState();
     _loadCurrentUser();
+   
   }
 
+
   void _loadCurrentUser() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+    FirebaseAuth?.instance?.currentUser()?.then((FirebaseUser user) {
       setState(() {
         this.currentUser = user;
       });

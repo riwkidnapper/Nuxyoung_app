@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Pages/layout/article.dart';
 import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
@@ -16,6 +19,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  FirebaseUser currentUser;
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
@@ -27,6 +32,41 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
     if (mounted) setState(() {});
     _refreshController.loadComplete();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+
+    firebaseMessaging.getToken().then((String token) async {
+      assert(token != null);
+      await Firestore?.instance
+          ?.collection("users")
+          ?.where('uid', isEqualTo: currentUser.uid)
+          ?.getDocuments()
+          ?.then((docs) {
+        Firestore?.instance
+            ?.document('/users/${docs.documents[0].documentID}')
+            ?.updateData({
+          'token': token,
+        })?.then((onValue) {
+          print("Token : $token");
+        })?.catchError((e) {
+          print(e);
+        });
+      })?.catchError((e) {
+        print(e);
+      });
+    });
+  }
+
+  void _loadCurrentUser() {
+    FirebaseAuth?.instance?.currentUser()?.then((FirebaseUser user) {
+      setState(() {
+        this.currentUser = user;
+      });
+    });
   }
 
   @override

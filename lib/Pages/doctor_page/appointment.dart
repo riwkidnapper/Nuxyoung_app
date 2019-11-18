@@ -49,11 +49,11 @@ class _AppointmentState extends State<Appointment>
                 ),
               ),
               StreamBuilder(
-                stream: Firestore.instance
-                    .collection('users')
-                    .where('rule', isEqualTo: 'doctor')
-                    .orderBy('createAt')
-                    .snapshots(),
+                stream: Firestore?.instance
+                    ?.collection('users')
+                    ?.where('rule', isEqualTo: 'doctor')
+                    ?.orderBy('createAt')
+                    ?.snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {

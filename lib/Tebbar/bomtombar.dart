@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyoung/Auth/login_page.dart';
 import 'package:nuxyoung/Pages/aleart.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:nuxyoung/Pages/homepage.dart';
-import 'package:nuxyoung/Pages/nutmai.dart';
+import 'package:nuxyoung/Pages/UserAppointments.dart';
 import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyoung/Pages/me.dart';
 
@@ -22,17 +23,13 @@ class _FancyTabBarState extends State<FancyTabBar>
   Tween<double> _positionTween;
   Animation<double> _positionAnimation;
 
-//กำหนดIconเริ่มต้น
   IconData nextIcon = Icons.home;
   IconData activeIcon = Icons.home;
-
-  _FancyTabBarState();
 
   @override
   void initState() {
     super.initState();
-    loadCurrentUser();
-//กำหนดเวลา
+    currentSelected = 2;
     _animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
 
@@ -42,14 +39,14 @@ class _FancyTabBarState extends State<FancyTabBar>
       ..addListener(() {
         setState(() {});
       });
+    _loadCurrentUser();
   }
 
   FirebaseUser currentUser;
-
-  void loadCurrentUser() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+  void _loadCurrentUser() {
+    FirebaseAuth?.instance?.currentUser()?.then((FirebaseUser user) {
       setState(() {
-        this.currentUser = user;
+        currentUser = user;
       });
     });
   }
@@ -60,7 +57,7 @@ class _FancyTabBarState extends State<FancyTabBar>
       bottomNavigationBar: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          callPage(),
+          callPage(currentUser),
           ConstrainedBox(
             constraints: new BoxConstraints(
               minHeight: 55,
@@ -98,105 +95,94 @@ class _FancyTabBarState extends State<FancyTabBar>
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
-                            builder: (context) => new MedicalBudhosp(
-                              uid: currentUser.uid,
-                              userEmail: currentUser.email,
-                            ),
+                            builder: (context) =>
+                                new MedicalBudhosp(currentUser: currentUser),
                           ),
                         );
                       } else {
-                        currentSelected = 2;
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SimpleDialog(
-                                contentPadding: EdgeInsets.only(
-                                    left: 0.0,
-                                    right: 0.0,
-                                    top: 0.0,
-                                    bottom: 0.0),
-                                children: <Widget>[
-                                  Container(
-                                    color: Colors.white,
-                                    margin: EdgeInsets.all(0.0),
-                                    padding: EdgeInsets.only(
-                                        bottom: 10.0,
-                                        top: 10.0,
-                                        left: 10.0,
-                                        right: 10.0),
-                                    height: 200.0,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          child: Icon(
-                                            Icons.warning,
-                                            size: 80.0,
-                                            color: Colors.yellow,
-                                          ),
-                                          margin: EdgeInsets.only(bottom: 10.0),
-                                        ),
-                                        Text(
-                                          'โปรดเข้าสู่ระบบ',
-                                          style: TextStyle(
-                                              color: Colors.blueGrey[700],
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10.0, left: 10.0),
-                                          child: Text(
-                                            'เพื่อใช้งานในส่วนนี้',
-                                            style: TextStyle(
-                                                color: Colors.blueGrey,
-                                                fontSize: 18.0),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SimpleDialog(
+                              contentPadding: EdgeInsets.only(
+                                  left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
+                              children: <Widget>[
+                                Container(
+                                  constraints: new BoxConstraints(
+                                    maxHeight: double.infinity,
+                                    minWidth: MediaQuery.of(context).size.width,
                                   ),
-                                  SimpleDialogOption(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Center(
-                                        child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                8.0, 8.0, 8.0, 15.0),
-                                            child: DecoratedBox(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blueGrey),
-                                              child: Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    100.0, 10.0, 100.0, 10.0),
-                                                child: Text(
-                                                  'ยืนยัน',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 18.0),
-                                                ),
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(0.0),
+                                  padding: EdgeInsets.only(
+                                      bottom: 10.0,
+                                      top: 10.0,
+                                      left: 10.0,
+                                      right: 10.0),
+                                  height: 200.0,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Icon(
+                                          Icons.warning,
+                                          size: 80.0,
+                                          color: Colors.yellow,
+                                        ),
+                                        margin: EdgeInsets.only(bottom: 10.0),
+                                      ),
+                                      Text(
+                                        'โปรดเข้าสู่ระบบ',
+                                        style: TextStyle(
+                                            color: Colors.blueGrey[700],
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 20.0,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10.0, left: 10.0),
+                                        child: Text(
+                                          'เพื่อใช้งานในส่วนนี้',
+                                          style: TextStyle(
+                                              color: Colors.blueGrey,
+                                              fontSize: 18.0),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SimpleDialogOption(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(
+                                      child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              8.0, 8.0, 8.0, 15.0),
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueGrey),
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  100.0, 10.0, 100.0, 10.0),
+                                              child: Text(
+                                                'ยืนยัน',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18.0),
                                               ),
-                                            )
-
-                                            // Text(
-                                            //   'ยืนยัน',
-                                            //   style: TextStyle(
-                                            //       color: Colors.white,
-                                            //       backgroundColor:
-                                            //           Color(0xFF607D8B),
-                                            //       fontWeight: FontWeight.bold,
-                                            //       fontSize: 18.0),
-                                            // ),
                                             ),
-                                      )),
-                                ],
-                              );
-                            });
+                                          )),
+                                    )),
+                              ],
+                            );
+                          },
+                        ).then((vulue) {
+                          currentSelected = 2;
+                        });
                         // showDialog(
                         //     context: context,
                         //     builder: (BuildContext context) {
@@ -319,7 +305,18 @@ class _FancyTabBarState extends State<FancyTabBar>
                     callbackFunction: () {
                       setState(() {
                         nextIcon = Icons.notifications;
-                        currentSelected = 3;
+                        if (currentUser != null)
+                          currentSelected = 3;
+                        else {
+                          Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) => new Loginpage(),
+                            ),
+                          ).then((onValue) {
+                            currentSelected = 2;
+                          });
+                        }
                       });
                     }),
                 TabItem(
@@ -329,7 +326,18 @@ class _FancyTabBarState extends State<FancyTabBar>
                     callbackFunction: () {
                       setState(() {
                         nextIcon = Icons.person;
-                        currentSelected = 4;
+                        if (currentUser != null)
+                          currentSelected = 4;
+                        else {
+                          Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) => new Loginpage(),
+                            ),
+                          ).then((onValue) {
+                            currentSelected = 2;
+                          });
+                        }
                       });
                     }),
               ],
@@ -470,11 +478,11 @@ class _FancyTabBarState extends State<FancyTabBar>
   }
 }
 
-Widget callPage() {
+Widget callPage(FirebaseUser currentUser) {
   if (currentSelected == 2) {
     return Home(); //
   } else if (currentSelected == 1) {
-    return Pagetwo();
+    return UserAppointments(currentUser);
   } else if (currentSelected == 3) {
     return Aleart();
   } else if (currentSelected == 4) {

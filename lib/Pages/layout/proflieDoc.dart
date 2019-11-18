@@ -20,7 +20,7 @@ class _DoctorproflieState extends State<Doctorproflie> {
       padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
       child: Container(
         constraints: new BoxConstraints(
-          maxHeight: 350,
+          maxHeight: double.infinity,
           minWidth: MediaQuery.of(context).size.width,
         ),
         child: new DecoratedBox(
@@ -30,32 +30,34 @@ class _DoctorproflieState extends State<Doctorproflie> {
               BoxShadow(
                   color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
             ],
-            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
           ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 230,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    Dialoglogdoc(),
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 230,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      Dialoglogdoc(),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 230,
-                  top: 50.0,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 15.0, top: 8.0, right: 20.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      AddproflieDoc(),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    AddproflieDoc(),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -78,7 +80,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           InkWell(
-              child: avatar(proflieimg = 'assets/images/profiledoc.png',
+              child: avatar(proflieimg = 'assets/images/doc_231.jpg',
                   'นพ.ธนาธรณ์ พุฒิกานนท์'),
               onTap: () async {
                 showDialog(
@@ -95,7 +97,7 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
                   description =
                       "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n"
                           "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
-                  proflieimg = "assets/images/profiledoc.png",
+                  proflieimg = "assets/images/doc_231.jpg",
                 );
                 Navigator.pop(context);
               }),
@@ -156,18 +158,17 @@ avatar(imagename, String name) {
           decoration: new BoxDecoration(
             image: new DecorationImage(
               image: AssetImage(imagename),
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
             borderRadius: new BorderRadius.all(
               new Radius.circular(100.0),
             ),
             border: new Border.all(
-              color: Colors.grey,
-              width: 2.0,
+              color: Colors.grey[350],
+              width: 3.0,
             ),
             boxShadow: [
-              BoxShadow(
-                  color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
+              BoxShadow(color: Colors.grey, offset: Offset(0, 1), blurRadius: 2)
             ],
           ),
         ),

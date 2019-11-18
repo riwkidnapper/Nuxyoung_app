@@ -103,7 +103,7 @@ class CustomDialog extends StatelessWidget {
               decoration: new BoxDecoration(
                 image: new DecorationImage(
                   image: AssetImage(image),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                 ),
                 borderRadius: new BorderRadius.all(
                   new Radius.circular(100.0),
@@ -114,7 +114,7 @@ class CustomDialog extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
+                      color: Colors.grey, offset: Offset(0, 1), blurRadius: 2)
                 ],
               ),
             ),

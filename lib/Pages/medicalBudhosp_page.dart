@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
@@ -16,22 +17,23 @@ import 'chat/Tools/screenloadingchat.dart';
 import 'doctor_page/Page/PaitientCard.dart';
 
 class MedicalBudhosp extends StatefulWidget {
-  final String userEmail;
-  final String uid;
-  const MedicalBudhosp({Key key, this.userEmail, this.uid}) : super(key: key);
+  final FirebaseUser currentUser;
+
+  const MedicalBudhosp({Key key, this.currentUser}) : super(key: key);
+
   @override
-  _MedicalBudhospState createState() => _MedicalBudhospState(userEmail, uid);
+  _MedicalBudhospState createState() => _MedicalBudhospState(currentUser);
 }
 
 class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final String userEmail;
-  final String uid;
+  final FirebaseUser currentUser;
+  String userEmail;
 
   String doctorname;
   String photoUser;
 
-  _MedicalBudhospState(this.userEmail, this.uid);
+  _MedicalBudhospState(this.currentUser);
 
   @override
   Widget build(BuildContext context) {
@@ -87,20 +89,20 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
               SizedBox(
                 width: 5.0,
               ),
-              // IconButton(
-              //   icon: Icon(
-              //     const IconData(0xe801, fontFamily: 'chat'),
-              //     color: Colors.blueGrey,
-              //   ),
-              //   onPressed: () {
-              //     Navigator.pushReplacement(
-              //       context,
-              //       new MaterialPageRoute(
-              //         builder: (context) => new Container(),
-              //       ),
-              //     );
-              //   },
-              // ),
+              IconButton(
+                icon: Icon(
+                  const IconData(0xe801, fontFamily: 'chat'),
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new Container(),
+                    ),
+                  );
+                },
+              ),
             ],
             gradient:
                 LinearGradient(colors: [Colors.white, Colors.blueGrey[50]])),
@@ -108,10 +110,12 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
         drawer: new Drawer(
             elevation: 20.0,
             child: StreamBuilder(
-                stream: Firestore.instance
-                    .collection('users')
-                    .where('uid', isEqualTo: uid)
-                    .snapshots(),
+                stream: currentUser.uid != null
+                    ? Firestore?.instance
+                        ?.collection('users')
+                        ?.where('uid', isEqualTo: currentUser.uid)
+                        ?.snapshots()
+                    : null,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
@@ -123,6 +127,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   }
                   var doctorname = snapshot.data?.documents[0]['name'];
                   var photoUser = snapshot.data?.documents[0]['photoUser'];
+                  userEmail = currentUser.email;
                   return ListView(
                     // Important: Remove any padding from the ListView.
                     padding: EdgeInsets.zero,
@@ -204,9 +209,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CaLenDar(
-                                        title: 'Calendar',
-                                      )));
+                                  builder: (context) => CaLenDar()));
                         },
                       ),
                       ListTile(
@@ -266,15 +269,16 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget>[
                       CustomHeading(title: 'รายชื่อผู้ป่วย'),
                       StreamBuilder(
-                        stream: Firestore.instance
-                            .collection('profliePaitient')
-                            .orderBy('วันเวลาที่เข้ารับการรักษา')
-                            .orderBy('ชื่อคนไข้')
-                            .snapshots(),
+                        stream: Firestore?.instance
+                            ?.collection('profliePaitient')
+                            ?.orderBy('วันเวลาที่เข้ารับการรักษา')
+                            ?.orderBy('ชื่อคนไข้')
+                            ?.snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {

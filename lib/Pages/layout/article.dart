@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nuxyoung/Pages/pop_up_item/doc_details.dart';
 import 'package:nuxyoung/Pages/pop_up_item/editll.dart';
 
-
 class Article extends StatefulWidget {
   @override
   _ArticleState createState() => _ArticleState();
@@ -25,26 +24,29 @@ class _ArticleState extends State<Article> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          SizedBox(
+            height: 5.0,
+          ),
           Container(
             height: 3.0,
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
-                begin: const FractionalOffset(0.3, 2.0),
+                begin: const FractionalOffset(1.0, 2.0),
                 end: const FractionalOffset(-0.2, 0.2),
                 colors: [
-                  Colors.blueGrey,
-                  Colors.lightBlueAccent[700],
+                  Colors.blueGrey[300],
+                  Colors.blue[200],
                 ],
               ),
             ),
-            width: 100.0,
+            width: 250.0,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 20.0, 7.0, 50.0),
             child: Container(
               constraints: new BoxConstraints(
-                maxHeight: 480,
-                minWidth: double.maxFinite,
+                maxHeight: double.infinity,
+          minWidth: MediaQuery.of(context).size.width,
               ),
               child: new DecoratedBox(
                 decoration: BoxDecoration(
@@ -55,7 +57,7 @@ class _ArticleState extends State<Article> {
                         offset: Offset(0, 1),
                         blurRadius: 1)
                   ],
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
@@ -81,9 +83,11 @@ class _ArticleState extends State<Article> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 230, top: 10.0),
+                        padding: const EdgeInsets.only(
+                            bottom: 15.0, top: 8.0, right: 20.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Editll(),
                           ],

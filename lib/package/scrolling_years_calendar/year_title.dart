@@ -10,11 +10,13 @@ class YearTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var y = year + 543;
     return Text(
-      year.toString(),
+      y.toString(),
       style: TextStyle(
         fontSize: screenSize(context) == ScreenSizes.small ? 22.0 : 26.0,
         fontWeight: FontWeight.w600,
+        color: Colors.blueGrey,
       ),
     );
   }

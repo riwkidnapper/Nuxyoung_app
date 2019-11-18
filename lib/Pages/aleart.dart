@@ -8,13 +8,34 @@ class Aleart extends StatefulWidget {
 }
 
 class _AleartState extends State<Aleart> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.white,
+        body: NotifyWidget());
+  }
+}
+
+class NotifyWidget extends StatefulWidget {
+  final List<Notify> notify;
+
+  NotifyWidget({
+    Key key,
+    this.notify,
+  }) : super(key: key);
+
+  @override
+  _NotifyWidgetState createState() => _NotifyWidgetState();
+}
+
+class _NotifyWidgetState extends State<NotifyWidget> {
   FirebaseUser currentUser;
+
+  @override
   void initState() {
     super.initState();
-    _loadCurrentUser();
-  }
-
-  void _loadCurrentUser() {
     FirebaseAuth?.instance?.currentUser()?.then((FirebaseUser user) {
       setState(() {
         currentUser = user;
@@ -24,52 +45,101 @@ class _AleartState extends State<Aleart> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
-        body: NotifyWidget(uid: currentUser?.uid.toString()));
-  }
-}
-
-class NotifyCard extends StatelessWidget {
-  final String title;
-  final String body;
-
-  NotifyCard({
-    Key key,
-    this.title,
-    this.body,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      shape: OutlineInputBorder(
-        borderSide: BorderSide(width: 1.0),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
-      ),
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(0.0),
-          title: Text(
-            this.title ?? "",
-          ),
-          subtitle: Text(
-            this.body ?? "",
-          ),
-        ),
-      ),
-    );
+    return SingleChildScrollView(
+        child: StreamBuilder<QuerySnapshot>(
+            stream: currentUser?.uid != null
+                ? Firestore.instance
+                    ?.collection('appointment')
+                    ?.where('uid', isEqualTo: currentUser?.uid)
+                    ?.snapshots()
+                : null,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 8.0),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),
+                  ),
+                );
+              } else {
+                if (snapshot.data.documents.length == 0) {
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 250.0, top: 10.0, left: 10.0),
+                        child: Text(
+                          "การแจ้งเตือน",
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 180.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: new ExactAssetImage(
+                                        'assets/images/bell.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                width: 120,
+                                height: 120,
+                              ),
+                              Text(
+                                'ยังไม่มีการแจ้งเตือน',
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 22.0,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              Text(
+                                'การแจ้งเตือนจะปรากฏที่นี่เมื่อคุณได้รับ',
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 250.0, top: 10.0, left: 10.0, bottom: 10.0),
+                        child: Text(
+                          "การแจ้งเตือน",
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                      ),
+                      NotifyCard(
+                        title: snapshot.data.documents[0]
+                                ['วันเดือนปีที่นัดหมาย'] ??
+                            "",
+                        body:
+                            snapshot.data.documents[0]['เวลาที่นัดหมาย'] ?? "",
+                      ),
+                    ],
+                  );
+                }
+              }
+            }));
   }
 }
 
@@ -115,67 +185,43 @@ class Notify {
       title.hashCode ^ body.hashCode ^ date.hashCode);
 }
 
-class NotifyWidget extends StatefulWidget {
-  final List<Notify> notify;
+class NotifyCard extends StatelessWidget {
+  final String title;
+  final String body;
 
-  NotifyWidget({Key key, this.notify, @required this.uid}) : super(key: key);
-  final uid;
-
-  @override
-  _NotifyWidgetState createState() => _NotifyWidgetState(uid);
-}
-
-class _NotifyWidgetState extends State<NotifyWidget> {
-  final uid;
-
-  _NotifyWidgetState(this.uid);
+  NotifyCard({
+    Key key,
+    this.title,
+    this.body,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: StreamBuilder<QuerySnapshot>(
-            stream: uid != null
-                ? Firestore.instance
-                    ?.collection('appointment')
-                    
-                    ?.snapshots()
-                : null,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('กำลังโหดล');
-              } else {
-                if (snapshot.data.documents.length == 0) {
-                  return Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top:250.0),
-                          child: Text(
-                            'Hasn\'t notifications.',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Column(
-                    children: <Widget>[
-                      NotifyCard(
-                        title: snapshot.data.documents[0]
-                                ['วันเดือนปีที่นัดหมาย'] ??
-                            "",
-                        body:
-                            snapshot.data.documents[0]['เวลาที่นัดหมาย'] ?? "",
-                      ),
-                    ],
-                  );
-                }
-              }
-            }));
+    return Card(
+      elevation: 2.0,
+      shape: OutlineInputBorder(
+        borderSide: BorderSide(width: 1.0),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 4.0,
+      ),
+      child: Container(
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          right: 16.0,
+        ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(0.0),
+          title: Text(
+            this.title ?? "",
+          ),
+          subtitle: Text(
+            this.body ?? "",
+          ),
+        ),
+      ),
+    );
   }
 }

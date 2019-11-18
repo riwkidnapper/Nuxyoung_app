@@ -166,10 +166,10 @@ class _AddappointState extends State<Addappoint> {
                   height: 30,
                 ),
                 StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance
-                      .collection('profliePaitient')
-                      .orderBy('ชื่อคนไข้')
-                      .snapshots(),
+                  stream: Firestore?.instance
+                      ?.collection('profliePaitient')
+                      ?.orderBy('ชื่อคนไข้')
+                      ?.snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData)
@@ -182,6 +182,7 @@ class _AddappointState extends State<Addappoint> {
                           DropdownMenuItem(
                             child: Text(
                               snap['ชื่อคนไข้'],
+                              style: TextStyle(fontSize: 18.0),
                             ),
                             value: "${snap['ชื่อคนไข้']}",
                           ),
@@ -202,7 +203,7 @@ class _AddappointState extends State<Addappoint> {
                             hint: new Text(
                               'ชื่อ - นามสกุลคนไข้                                         ',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18.0,
                                 color: Colors.blueGrey[700],
                                 fontWeight: FontWeight.w700,
                               ),
@@ -242,7 +243,7 @@ class _AddappointState extends State<Addappoint> {
                           Text(
                             "ประวัติการเข้ารับการรักษา",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 18.0,
                               color: Colors.blueGrey[700],
                               fontWeight: FontWeight.w700,
                             ),

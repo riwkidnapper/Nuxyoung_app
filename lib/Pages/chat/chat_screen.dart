@@ -99,17 +99,20 @@ class _ChatScreenState extends State<ChatScreen> {
                 title: 'Direct Messages',
               ),
               StreamBuilder(
-                stream: Firestore.instance
-                    .collection('users')
-                    .orderBy('createAt')
-                    .snapshots(),
+                stream: Firestore?.instance
+                    ?.collection('users')
+                    ?.orderBy('createAt')
+                    ?.snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0,300.0,0.0,8.0),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),
                       ),
                     );
                   } else {
