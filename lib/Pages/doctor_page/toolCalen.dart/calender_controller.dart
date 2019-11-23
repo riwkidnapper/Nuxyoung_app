@@ -384,13 +384,13 @@ class CalendarController {
   }
 
   DateTime _firstDayOfMonth(DateTime month) {
-    return DateTime.utc(month.year, month.month, 1, 12);
+    return DateTime(month.year, month.month, 1);
   }
 
   DateTime _lastDayOfMonth(DateTime month) {
     final date = month.month < 12
-        ? DateTime.utc(month.year, month.month + 1, 1, 12)
-        : DateTime.utc(month.year + 1, 1, 1, 12);
+        ? DateTime(month.year, month.month + 1, 1)
+        : DateTime(month.year + 1, 1, 1);
     return date.subtract(const Duration(days: 1));
   }
 
@@ -428,7 +428,7 @@ class CalendarController {
   }
 
   DateTime _normalizeDate(DateTime value) {
-    return DateTime.utc(value.year, value.month, value.day, 12);
+    return DateTime(value.year, value.month, value.day);
   }
 
   DateTime _getEventKey(DateTime day) {

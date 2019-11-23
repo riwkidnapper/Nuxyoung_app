@@ -20,7 +20,9 @@ class _AddappointState extends State<Addappoint> {
   final Firestore store = Firestore.instance;
   final t = new DateFormat('HH:mm');
   final d = new DateFormat('dd MMMM yyyy', "th_TH");
+  final od = new DateFormat('yyyy-MM-dd');
   DateTime dateAppoint;
+  DateTime dateAppoint2;
   DateTime timeAppoint;
 
   DateTime dateandtime;
@@ -32,6 +34,7 @@ class _AddappointState extends State<Addappoint> {
   var selectedCurrency, selectedType;
   String timeAppointment;
   String dateAppointment;
+  String datead;
 
   var uid;
   _AddappointState(this.doctorName);
@@ -40,11 +43,14 @@ class _AddappointState extends State<Addappoint> {
     super.initState();
     dateAppoint = DateTime(
         DateTime.now().year + 543, DateTime.now().month, DateTime.now().day);
+    dateAppoint2 =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     _nameController = TextEditingController();
     _hisController = TextEditingController();
     _simController = TextEditingController();
     timeAppointment = t.format(DateTime.now());
     dateAppointment = d.format(dateAppoint);
+    datead = od.format(dateAppoint2);
     store
         .collection("profliePaitient")
         .where('ชื่อคนไข้', isEqualTo: selectedCurrency)
@@ -135,11 +141,14 @@ class _AddappointState extends State<Addappoint> {
                 DatePicker(
                   currentDate: dateAppoint,
                   onSelect: (DateTime date) {
+                    var selectday =
+                        DateTime(date.year - 543, date.month, date.day);
                     setState(() {
                       dateAppoint = date;
                       dateAppointment = d.format(date);
+                      datead = od.format(selectday);
                     });
-                    print(dateAppointment);
+                    print(datead);
                   },
                 ),
                 SizedBox(
@@ -340,10 +349,9 @@ class _AddappointState extends State<Addappoint> {
                                 _fbKey?.currentState?.save();
                                 if (_fbKey?.currentState?.validate() ?? true) {
                                   var paitientName = selectedCurrency;
-
                                   var data = {
                                     "ชื่อแพทย์ผู้รักษา": doctorName,
-                                    "วันเดือนปีที่นัดหมาย": dateAppointment,
+                                    "วันเดือนปีที่นัดหมาย": datead,
                                     "เวลาที่นัดหมาย": timeAppointment,
                                     "ชื่อคนไข้": paitientName,
                                     "ประวัติการเข้ารับการรักษา":

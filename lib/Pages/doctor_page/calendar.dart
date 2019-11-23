@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/event.dart';
 import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/table_calendar.dart';
 
 // Example holidays
@@ -32,57 +34,38 @@ class CaLenDar extends StatefulWidget {
   _CaLenDarState createState() => _CaLenDarState();
 }
 
-class _CaLenDarState extends State<CaLenDar> with TickerProviderStateMixin {
-  Map<DateTime, List> _events;
-  List _selectedEvents;
-  AnimationController _animationController;
+class _CaLenDarState extends State<CaLenDar> {
   CalendarController _calendarController;
+  Map<DateTime, List> _events;
+  List _onDayEvents;
+  DateTime _selectedDay;
+  DateTime _now;
 
   @override
   void initState() {
     super.initState();
-    final _selectedDay = DateTime.now();
-
-    _events = {
-      _selectedDay.subtract(Duration(days: 1)): ['Event A3', 'Event B3'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 3)): [
-        'Event A12',
-        'Event B12',
-        'Event C12',
-        'Event D12'
-      ],
-    };
-
-    _selectedEvents = _events[_selectedDay] ?? [];
-
+    _now = DateTime.now();
     _calendarController = CalendarController();
-
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-
-    _animationController.forward();
+    _selectedDay = DateTime(_now?.year, _now?.month, _now?.day);
+    _events = <DateTime, List>{};
+    _onDayEvents = [];
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
     _calendarController.dispose();
     super.dispose();
   }
 
-  void _onDaySelected(DateTime day, List events) {
-    print('CALLBACK: _onDaySelected');
-    setState(() {
-      _selectedEvents = events;
-    });
-  }
-
   void _onVisibleDaysChanged(
       DateTime first, DateTime last, CalendarFormat format) {
-    print('CALLBACK: _onVisibleDaysChanged');
+    // _calendarController.setSelectedDay(_selectedDay, runCallback: true);
+  }
+
+  void _onDaySelected(DateTime date, List event) {
+    _selectedDay = date;
+    _calendarController?.setCalendarFormat(CalendarFormat.month);
+    setState(() {});
   }
 
   @override
@@ -95,61 +78,89 @@ class _CaLenDarState extends State<CaLenDar> with TickerProviderStateMixin {
         ),
         backgroundColor: Colors.grey[300],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          _buildTableCalendar(),
-          const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList()),
-        ],
-      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection("appointment").snapshots(),
+          builder: (_, snapshot) {
+            if (!snapshot.hasData) {
+              return _buildTableCalendar(context);
+            }
+            _buildData(data: snapshot.data);
+            return _buildTableCalendar(context);
+          }),
     );
   }
 
-  Widget _buildTableCalendar() {
-    return TableCalendar(
-      locale: 'th_TH',
-      calendarController: _calendarController,
-      events: _events,
-      formatAnimation: FormatAnimation.slide,
-      startingDayOfWeek: StartingDayOfWeek.sunday,
-      availableCalendarFormats: const {
-        CalendarFormat.month: 'month',
-        CalendarFormat.week: 'week',
-      },
-      calendarStyle: CalendarStyle(
-          selectedColor: Colors.redAccent[100],
-          todayColor: Colors.blueGrey[400],
-          markersColor: Colors.blueGrey[900],
-          outsideDaysVisible: true),
-      headerStyle: HeaderStyle(
-        formatButtonVisible: false,
-        centerHeaderTitle: true,
-        formatButtonTextStyle:
-            TextStyle().copyWith(color: Colors.white, fontSize: 18.0),
-        formatButtonDecoration: BoxDecoration(
-          color: Colors.deepOrange[400],
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-      ),
-      builders: CalendarBuilders(
-        markersBuilder: (context, date, events, holidays) {
-          final children = <Widget>[];
+  void _buildData({
+    QuerySnapshot data,
+  }) async {
+    _events?.clear();
+    _onDayEvents?.clear();
+    _events = <DateTime, List>{};
+    if (data?.documents?.isNotEmpty ?? false) {
+      data?.documents?.forEach((doc) {
+        if (doc?.exists ?? false) {
+          var dataTemp = doc.data;
+          dataTemp["id"] = doc.documentID;
+          final Event e = Event.fromMap(dataTemp);
+          final DateTime _date =
+              DateTime(e.date.year, e.date.month, e.date.day);
+          if (_events[_date] == null) _events[_date] = [];
+          _events[_date].add(e);
+        }
+      });
+    }
+    _onDayEvents = _events[_selectedDay] ?? [];
+  }
 
-          if (events.isNotEmpty) {
-            children.add(
-              Container(
-                height: 30.0,
-                child: _buildEventsMarker(date, events),
+  Widget _buildTableCalendar(BuildContext context) {
+    return Column(children: <Widget>[
+      Container(
+          padding: EdgeInsets.only(bottom: 8.0),
+          child: TableCalendar(
+            locale: 'th_TH',
+            calendarController: _calendarController,
+            events: _events,
+            formatAnimation: FormatAnimation.slide,
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'month',
+              CalendarFormat.week: 'week',
+            },
+            calendarStyle: CalendarStyle(
+                selectedColor: Colors.redAccent[100],
+                todayColor: Colors.blueGrey[400],
+                markersColor: Colors.blueGrey[900],
+                outsideDaysVisible: true),
+            headerStyle: HeaderStyle(
+              formatButtonVisible: false,
+              centerHeaderTitle: true,
+              formatButtonTextStyle:
+                  TextStyle().copyWith(color: Colors.white, fontSize: 18.0),
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.deepOrange[400],
+                borderRadius: BorderRadius.circular(16.0),
               ),
-            );
-          }
-          return children;
-        },
-      ),
-      onDaySelected: _onDaySelected,
-      onVisibleDaysChanged: _onVisibleDaysChanged,
-    );
+            ),
+            builders: CalendarBuilders(
+              markersBuilder: (context, date, events, holidays) {
+                final children = <Widget>[];
+
+                if (events.isNotEmpty) {
+                  children.add(
+                    Container(
+                      height: 30.0,
+                      child: _buildEventsMarker(date, events),
+                    ),
+                  );
+                }
+                return children;
+              },
+            ),
+            onDaySelected: _onDaySelected,
+            onVisibleDaysChanged: _onVisibleDaysChanged,
+          )),
+      EventView(events: _onDayEvents ?? [], onClick: (Event data) {}),
+    ]);
   }
 
   Widget _buildEventsMarker(DateTime date, List events) {
@@ -172,34 +183,6 @@ class _CaLenDarState extends State<CaLenDar> with TickerProviderStateMixin {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildEventList() {
-    return ListView(
-      children: _selectedEvents
-          .map((event) => Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                    ),
-                    child: Divider(
-                      color: Colors.black26,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 4.0),
-                    child: ListTile(
-                      title: Text(event.toString()),
-                      onTap: () => print('$event tapped!'),
-                    ),
-                  )
-                ],
-              ))
-          .toList(),
     );
   }
 }
