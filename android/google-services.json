@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "528753372285-3rfl96mh0d56sp2c5q369mt7olhf5bcf.apps.googleusercontent.com",
+              "client_id": "528753372285-mfiogq6gpvkkngeahfo1i7athsrvhmvo.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "toey.toey.05"
+                "bundle_id": "com.rino.nuxyoung"
               }
             }
           ]

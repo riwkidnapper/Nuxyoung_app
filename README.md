@@ -1,6 +1,6 @@
 # nuxyoung
 
-A new Flutter application.
+Appointment system for child with disability
 
 ## Getting Started
 

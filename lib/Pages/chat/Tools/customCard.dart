@@ -1,6 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Pages/chat/realtimeChat.dart';
@@ -108,22 +108,23 @@ class _CustomcardState extends State<Customcard> {
                 children: <Widget>[
                   Material(
                     child: (photoUser != "")
-                        ? CachedNetworkImage(
-                            placeholder: (context, url) => Container(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1.0,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.blueGrey),
-                              ),
-                              width: 50.0,
-                              height: 50.0,
-                              padding: EdgeInsets.all(15.0),
-                            ),
-                            imageUrl: (photoUser),
-                            width: 50.0,
-                            height: 50.0,
-                            fit: BoxFit.cover,
-                          )
+                        ? Container()
+                        // ? CachedNetworkImage(
+                        //     placeholder: (context, url) => Container(
+                        //       child: CircularProgressIndicator(
+                        //         strokeWidth: 1.0,
+                        //         valueColor: AlwaysStoppedAnimation<Color>(
+                        //             Colors.blueGrey),
+                        //       ),
+                        //       width: 50.0,
+                        //       height: 50.0,
+                        //       padding: EdgeInsets.all(15.0),
+                        //     ),
+                        //     imageUrl: (photoUser),
+                        //     width: 50.0,
+                        //     height: 50.0,
+                        //     fit: BoxFit.cover,
+                        //   )
                         : Icon(
                             Icons.account_circle,
                             size: 58.0,
