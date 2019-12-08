@@ -1205,8 +1205,7 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Widget picker = _buildPicker();
-    final Widget actions = ButtonTheme.bar(
-      child: ButtonBar(
+    final Widget actions =  ButtonBar(
         children: <Widget>[
           FlatButton(
             child: Text(
@@ -1223,8 +1222,7 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
             onPressed: _handleOk,
           ),
         ],
-      ),
-    );
+      );
 
     final Dialog dialog = Dialog(
       child: OrientationBuilder(

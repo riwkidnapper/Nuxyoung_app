@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
 import 'package:nuxyoung/package/video_player.dart';
 
@@ -105,11 +107,192 @@ class _ListPaitientState extends State<ListPaitient> {
 
   @override
   Widget build(BuildContext context) {
+    Timestamp bd = birthday;
+    var birthdays = bd.toDate();
+    final hbd = new DateFormat('dd MMMM yyyy', "th_TH");
+    String dateOfBirthbay = hbd.format(birthdays);
+    final date = DateTime(
+        DateTime.now().year + 543, DateTime.now().month, DateTime.now().day);
+    num nowYear = date.year;
+    num birthdayOfyear = birthdays.year;
+    num age = nowYear - birthdayOfyear;
+    num nowMonth = date.month;
+    num birthdaymoth = birthdays.month;
+    num birthdayOfMonth;
+    num nowDay = date.day;
+    num birthdaydate = birthdays.day;
+    num birthdayOfday;
+    if (date.compareTo(birthdays) >= 0) {
+      if (nowYear > birthdayOfyear) {
+        if (nowMonth > birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
+          if (birthdaydate > nowDay) {
+            birthdayOfMonth--;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
+                } else {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (28 - birthdaydate) + nowDay;
+              }
+            }
+          } else if (birthdaydate == nowDay) {
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
+          }
+        }
+        if (nowMonth == birthdaymoth) {
+          if (birthdaydate > nowDay) {
+            age--;
+            birthdayOfMonth = nowMonth;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
+                } else {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (28 - birthdaydate) + nowDay;
+              }
+            }
+          } else if (birthdaydate == nowDay) {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
+          }
+        } else {
+          birthdayOfMonth = nowMonth;
+          if (birthdaydate > nowDay) {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfMonth--;
+            if (birthdaymoth == 1 ||
+                birthdaymoth == 3 ||
+                birthdaymoth == 5 ||
+                birthdaymoth == 7 ||
+                birthdaymoth == 8 ||
+                birthdaymoth == 10 ||
+                birthdaymoth == 12) {
+              birthdayOfday = (31 - birthdaydate) + nowDay;
+            } else if (birthdaymoth == 4 ||
+                birthdaymoth == 6 ||
+                birthdaymoth == 9 ||
+                birthdaymoth == 11) {
+              birthdayOfday = (30 - birthdaydate) + nowDay;
+            } else {
+              if ((birthdayOfyear - 543) % 4 == 0) {
+                if (birthdayOfyear % 100 == 0) {
+                  if (birthdayOfyear % 400 == 0) {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  } else {
+                    birthdayOfday = (28 - birthdaydate) + nowDay;
+                  }
+                } else {
+                  birthdayOfday = (29 - birthdaydate) + nowDay;
+                }
+              } else {
+                birthdayOfday = (28 - birthdaydate) + nowDay;
+              }
+            }
+          } else if (birthdaydate == nowDay) {
+            age--;
+            birthdayOfMonth = nowMonth;
+            birthdayOfday = birthdaydate - nowDay;
+          } else {
+            birthdayOfMonth = nowMonth - birthdaymoth;
+            birthdayOfday = nowDay - birthdaydate;
+          }
+        }
+      } else {
+        if (nowMonth > birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
+          if (nowDay >= birthdaydate) {
+            birthdayOfday = nowDay - birthdaydate;
+          } else {
+            if (birthdaydate > nowDay) {
+              birthdayOfMonth--;
+              if (birthdaymoth == 1 ||
+                  birthdaymoth == 3 ||
+                  birthdaymoth == 5 ||
+                  birthdaymoth == 7 ||
+                  birthdaymoth == 8 ||
+                  birthdaymoth == 10 ||
+                  birthdaymoth == 12) {
+                birthdayOfday = (31 - birthdaydate) + nowDay;
+              } else if (birthdaymoth == 4 ||
+                  birthdaymoth == 6 ||
+                  birthdaymoth == 9 ||
+                  birthdaymoth == 11) {
+                birthdayOfday = (30 - birthdaydate) + nowDay;
+              } else {
+                if ((birthdayOfyear - 543) % 4 == 0) {
+                  if (birthdayOfyear % 100 == 0) {
+                    if (birthdayOfyear % 400 == 0) {
+                      birthdayOfday = (29 - birthdaydate) + nowDay;
+                    } else {
+                      birthdayOfday = (28 - birthdaydate) + nowDay;
+                    }
+                  } else {
+                    birthdayOfday = (29 - birthdaydate) + nowDay;
+                  }
+                } else {
+                  birthdayOfday = (28 - birthdaydate) + nowDay;
+                }
+              }
+            }
+          }
+        } else if (nowMonth == birthdaymoth) {
+          birthdayOfMonth = nowMonth - birthdaymoth;
+          birthdayOfday = nowDay - birthdaydate;
+        }
+      }
+    }
     //timelist = times.split("., ").join("\n\n");
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "รายละเอียดของ $paitientName",
+          "ประวัติของ $paitientName",
           style: TextStyle(
             color: Colors.blueGrey[800],
             fontSize: 18.0,
@@ -117,100 +300,126 @@ class _ListPaitientState extends State<ListPaitient> {
         ),
         backgroundColor: Colors.grey[300],
       ),
-      body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.all(11.0),
-                  padding: EdgeInsets.all(15.0),
-                  height: 700,
-                  width: 500,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black38,
-                          offset: Offset(0, 1),
-                          blurRadius: 1)
-                    ],
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: ListView(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: Chewie(
-                              controller: _chewieController,
-                            ),
-                          ),SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            paitientName,
-                            style: TextStyle(fontSize: 18.0),
-                          ),SizedBox(
-                            height: 10,
-                          ),
-                          Text(idnumber, style: TextStyle(fontSize: 18.0),),SizedBox(
-                            height: 10,
-                          ),
-                         SizedBox(
-                            height: 10,
-                          ),
-                          Text(gender, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(address, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(district, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(amphures, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(provinces, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(zipcode, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(symptoms, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(treatment, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(timetoheal.toString()),SizedBox(
-                            height: 10,
-                          ),
-                          Text(diagnosis, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                          Text(reason, style: TextStyle(fontSize: 18.0)),SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      )
-                    ],
+      body: Container(
+        margin: EdgeInsets.all(11.0),
+        padding: EdgeInsets.all(15.0),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
+          ],
+          border: Border.all(
+            color: Colors.grey,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Chewie(
+                    controller: _chewieController,
                   ),
                 ),
-              )
-            ]),
+                SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  "ชื่อผู้ป่วย :: " + paitientName,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "รหัสประชาชน :: " + idnumber,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "วัน เดือน ปี เกิด :: " + dateOfBirthbay,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "อายุ :: " +
+                      age.toString() +
+                      " ปี " +
+                      birthdayOfMonth.toString() +
+                      " เดือน " +
+                      birthdayOfday.toString() +
+                      " วัน",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("เพศ :: " + gender, style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("ที่อยู่ :: " + address + " ตำบล :: " + district,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("อำเภอ :: " + amphures, style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("จังหวัด :: " + reason, style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("รหัสไปรษณีย์ :: " + zipcode,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("วันที่เข้ารับการรักษา :: " + timetoheal.toString(),
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("เหตุผลในการส่งต่อ :: " + provinces,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("ลักษณะอาการเบื้องต้น :: " + symptoms,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("ประวัติการเข้ารับการรักษา :: " + treatment,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("การวินิจฉัยเบื้องต้น :: " + diagnosis,
+                    style: TextStyle(fontSize: 18.0)),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

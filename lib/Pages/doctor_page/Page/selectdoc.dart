@@ -30,9 +30,6 @@ class _SelectdocState extends State<Selectdoc> {
     timelist = times.split(', ').join(']\n[').toString();
     t = timelist.split('\n').join('\n\n');
     //print(timelist);
-    if (t == '[วันจันทร์: 9.00 น. - 12.00 น.]') {
-      print('test');
-    }
     return Container(
       margin: EdgeInsets.all(11.0),
       padding: EdgeInsets.all(15.0),

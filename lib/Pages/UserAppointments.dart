@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +33,7 @@ class UserAppointmentsState extends State<UserAppointments> {
   String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
   String dateOfAddpoint;
   String timeOfAddpoint;
+
   final currentUser;
   var name;
 
@@ -240,275 +242,303 @@ class UserAppointmentsState extends State<UserAppointments> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(),
-                  child: StreamBuilder(
-                    stream: currentUser?.uid != null
-                        ? Firestore?.instance
-                            ?.collection("appointment")
-                            ?.orderBy('วันเดือนปีที่นัดหมาย')
-                            ?.orderBy('เวลาที่นัดหมาย')
-                            ?.where('uid', isEqualTo: currentUser?.uid)
-                            ?.snapshots()
-                        : null,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Card(
-                              child: InkWell(
-                                splashColor: Colors.blue.withAlpha(30),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new ExactAssetImage(
-                                          'assets/images/p2.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: new BackdropFilter(
-                                      filter: new ImageFilter.blur(
-                                          sigmaX: 600.0, sigmaY: 1000.0)),
-                                  width: 400,
-                                  height: 200,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 100),
-                              child: Container(
-                                width: 320,
-                                height: 180,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    color: Colors.blue[100],
-                                    elevation: 10,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        ListTile(
-                                          title: Text(
-                                              'ไม่มีข้อมูลใด ๆ ในขณะนี้',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 24.0),
-                                              textAlign: TextAlign.center),
-                                          subtitle: Text(
-                                              'โปรดเข้าสู่ระบบเพื่อดำเนินการต่อไป',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20.0),
-                                              textAlign: TextAlign.center),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        if (snapshot.data.documents.length == 0 ||
-                            currentUser?.uid == null) {
-                          return Column(
+        body: ListView(
+      physics: const BouncingScrollPhysics(),
+      children: <Widget>[
+        StreamBuilder(
+          stream: currentUser?.uid != null
+              ? Firestore?.instance
+                  ?.collection("appointment")
+                  ?.orderBy('วันเดือนปีที่นัดหมาย')
+                  ?.orderBy('เวลาที่นัดหมาย')
+                  ?.where('uid', isEqualTo: currentUser?.uid)
+                  ?.snapshots()
+              : null,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Card(
+                    child: InkWell(
+                      splashColor: Colors.blue.withAlpha(30),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: new DecorationImage(
+                            image: new ExactAssetImage('assets/images/p2.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: new BackdropFilter(
+                            filter: new ImageFilter.blur(
+                                sigmaX: 600.0, sigmaY: 1000.0)),
+                        width: 400,
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: Container(
+                      width: 320,
+                      height: 180,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: Colors.blue[100],
+                          elevation: 10,
+                          child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Card(
-                                child: InkWell(
-                                  splashColor: Colors.blue.withAlpha(30),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      image: new DecorationImage(
-                                        image: new ExactAssetImage(
-                                            'assets/images/p2.jpg'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: new BackdropFilter(
-                                        filter: new ImageFilter.blur(
-                                            sigmaX: 600.0, sigmaY: 1000.0)),
-                                    width: 400,
-                                    height: 200,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 100),
-                                child: Container(
-                                  width: 320,
-                                  height: 180,
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      color: Colors.blue[100],
-                                      elevation: 10,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          ListTile(
-                                            subtitle: Text(
-                                                'ไม่มีการนัดหมายใด ๆ',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 24.0),
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              ListTile(
+                                title: Text('ไม่มีข้อมูลใด ๆ ในขณะนี้',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 24.0),
+                                    textAlign: TextAlign.center),
+                                subtitle: Text(
+                                    'โปรดเข้าสู่ระบบเพื่อดำเนินการต่อไป',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 20.0),
+                                    textAlign: TextAlign.center),
                               ),
                             ],
-                          );
-                        } else {
-                          dateOfAddpoint = snapshot?.data?.documents[0]
-                                  ['วันเดือนปีที่นัดหมาย'] ??
-                              null;
-                          timeOfAddpoint = snapshot?.data?.documents[0]
-                                  ['เวลาที่นัดหมาย'] ??
-                              null;
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Card(
-                                child: InkWell(
-                                  splashColor: Colors.blue.withAlpha(30),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      image: new DecorationImage(
-                                        image: new ExactAssetImage(
-                                            'assets/images/p2.jpg'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: new BackdropFilter(
-                                        filter: new ImageFilter.blur(
-                                            sigmaX: 600.0, sigmaY: 1000.0)),
-                                    width: 400,
-                                    height: 200,
-                                  ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              if (snapshot.data.documents.length == 0 ||
+                  currentUser?.uid == null) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Card(
+                      child: InkWell(
+                        splashColor: Colors.blue.withAlpha(30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: new DecorationImage(
+                              image:
+                                  new ExactAssetImage('assets/images/p2.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: new BackdropFilter(
+                              filter: new ImageFilter.blur(
+                                  sigmaX: 600.0, sigmaY: 1000.0)),
+                          width: 400,
+                          height: 200,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Container(
+                        width: 320,
+                        height: 180,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.blue[100],
+                            elevation: 10,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                ListTile(
+                                  subtitle: Text('ไม่มีการนัดหมายใด ๆ',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 24.0),
+                                      textAlign: TextAlign.center),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: Container(
-                                  width: 320,
-                                  height: 180,
-                                  child: GestureDetector(
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) => Calendar())),
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      color: Colors.blue[100],
-                                      elevation: 10,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                dateOfAddpoint = snapshot?.data?.documents[0]
+                        ['วันเดือนปีที่นัดหมาย'] ??
+                    null;
+                var date = DateTime(
+                    DateTime.parse(dateOfAddpoint).year + 543,
+                    DateTime.parse(dateOfAddpoint).month,
+                    DateTime.parse(dateOfAddpoint).day);
+                var dateAppoint =
+                    DateFormat("dd MMMM\nyyyy", "th_TH").format(date);
+                timeOfAddpoint =
+                    snapshot?.data?.documents[0]['เวลาที่นัดหมาย'] ?? null;
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Card(
+                      child: InkWell(
+                        splashColor: Colors.blue.withAlpha(30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: new DecorationImage(
+                              image:
+                                  new ExactAssetImage('assets/images/p2.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: new BackdropFilter(
+                              filter: new ImageFilter.blur(
+                                  sigmaX: 600.0, sigmaY: 1000.0)),
+                          width: 400,
+                          height: 200,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Container(
+                        width: 320,
+                        height: 180,
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(builder: (_) => Calendar())),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.blue[100],
+                            elevation: 10,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.album,
+                                      color: Colors.blueGrey[600],
+                                      size: 50.0,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 30),
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          ListTile(
-                                            //leading: Icon(Icons.album, size: 70.0, ),
-                                            title: Text('วันนัดหมายของคุณ',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20.0),
-                                                textAlign: TextAlign.center),
-                                            subtitle: Text(dateOfAddpoint ?? '',
+                                          Text('วันนัดหมายของคุณ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18.0),
+                                              textAlign: TextAlign.end),
+                                          Container(
+                                            height: 10,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(dateAppoint ?? '',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 24.0),
+                                                  textAlign: TextAlign.center),
+                                              Text(
+                                                'เวลา : $timeOfAddpoint',
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 24.0),
-                                                textAlign: TextAlign.center),
-                                          ),
-                                          Text(
-                                            'เวลา : $timeOfAddpoint',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 24.0),
-                                          ),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       ),
-                                    ),
-                                  ),
+                                    )
+                                  ],
                                 ),
+
+                                // ListTile(
+                                //   leading: Icon(
+                                //     Icons.album,
+                                //     size: 50.0,
+                                //   ),
+                                //   title: Text('วันนัดหมายของคุณ',
+                                //       style: TextStyle(
+                                //           color: Colors.black, fontSize: 20.0),
+                                //       textAlign: TextAlign.center),
+                                //   subtitle: Text(dateAppoint ?? '',
+                                //       style: TextStyle(
+                                //           color: Colors.black, fontSize: 24.0),
+                                //       textAlign: TextAlign.center),
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(50, 30, 50, 10),
+                      child: Container(
+                        child: RaisedButton.icon(
+                          icon: Icon(
+                            Icons.date_range,
+                            color: Colors.blueGrey[700],
+                          ),
+                          color: Colors.blueGrey[300],
+                          label: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              "เลื่อนเวลานัดหมาย",
+                              style: TextStyle(
+                                color: Colors.blueGrey[800],
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(50, 30, 50, 10),
-                                child: Container(
-                                  child: RaisedButton.icon(
-                                    icon: Icon(
-                                      Icons.date_range,
-                                      color: Colors.blueGrey[700],
-                                    ),
-                                    color: Colors.blueGrey[300],
-                                    label: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(
-                                        "เลื่อนเวลานัดหมาย",
-                                        style: TextStyle(
-                                          color: Colors.blueGrey[800],
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () async {},
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20.0,
-                              ),
-                              Container(
-                                child: RaisedButton.icon(
-                                  icon: Icon(
-                                    Icons.assignment_turned_in,
-                                    color: Colors.blueGrey[700],
-                                  ),
-                                  color: Colors.blueGrey[300],
-                                  label: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      "ยกเลิกนัดหมาย",
-                                      style: TextStyle(
-                                        color: Colors.blueGrey[800],
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    deleteAddpoint();
-                                    //sendNotification();
-                                    /*Switch(
+                            ),
+                          ),
+                          onPressed: () async {},
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      child: RaisedButton.icon(
+                        icon: Icon(
+                          Icons.assignment_turned_in,
+                          color: Colors.blueGrey[700],
+                        ),
+                        color: Colors.blueGrey[300],
+                        label: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            "ยกเลิกนัดหมาย",
+                            style: TextStyle(
+                              color: Colors.blueGrey[800],
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          deleteAddpoint();
+                          //sendNotification();
+                          /*Switch(
                         value: isSubscribeHotNews,
                            onChanged: (checked) {
                          if(checked) {
@@ -519,21 +549,19 @@ class UserAppointmentsState extends State<UserAppointments> {
                           setState(() => isSubscribeHotNews = checked);
                        }
                      );*/
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }
+          },
+        ),
+        Container(
+          height: Theme.of(context).textTheme.display1.fontSize * 1.0 + 70,
+        )
+      ],
+    ));
   }
 }

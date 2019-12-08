@@ -276,8 +276,9 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                       StreamBuilder(
                         stream: Firestore?.instance
                             ?.collection('profliePaitient')
-                            ?.orderBy('วันเวลาที่เข้ารับการรักษา')
-                            ?.orderBy('ชื่อคนไข้')
+                            ?.orderBy('วันเวลาที่เข้ารับการรักษา',
+                                descending: true)
+                            ?.orderBy('ชื่อคนไข้', descending: true)
                             ?.snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -304,7 +305,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                                       documents['วันเวลาที่เข้ารับการรักษา'];
                                   var times = t.toDate();
                                   final f =
-                                      new DateFormat('dd MMMM yyyy', "th_TH");
+                                      new DateFormat('dd MMMM yyyy',"th_TH");
 
                                   String timetoheal = f.format(times);
                                   return PaitientCard(

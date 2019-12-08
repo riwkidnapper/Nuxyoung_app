@@ -19,7 +19,7 @@ class _AddappointState extends State<Addappoint> {
   FirebaseUser user;
   final Firestore store = Firestore.instance;
   final t = new DateFormat('HH:mm');
-  final d = new DateFormat('dd MMMM yyyy', "th_TH");
+  final d = new DateFormat('dd MMMM yyyy',"th_TH");
   final od = new DateFormat('yyyy-MM-dd');
   DateTime dateAppoint;
   DateTime dateAppoint2;
@@ -58,7 +58,7 @@ class _AddappointState extends State<Addappoint> {
         .then((docs) {
       setState(() {
         uid = docs.documents[0]['uid'];
-        print(uid);
+        //print(uid);
       });
     });
   }
