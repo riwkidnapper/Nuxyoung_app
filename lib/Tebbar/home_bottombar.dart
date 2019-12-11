@@ -1,28 +1,50 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Auth/login_page.dart';
 // import 'package:nuxyoung/Account/register_page.dart';
 
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 import 'package:nuxyoung/Tebbar/bomtombar.dart';
-
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:rxdart/subjects.dart';
+
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
+    BehaviorSubject<ReceivedNotification>();
+
+final BehaviorSubject<String> selectNotificationSubject =
+    BehaviorSubject<String>();
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
+class ReceivedNotification {
+  final int id;
+  final String title;
+  final String body;
+  final String payload;
+
+  ReceivedNotification(
+      {@required this.id,
+      @required this.title,
+      @required this.body,
+      @required this.payload});
+}
+
 class _HomePageState extends State<HomePage> {
+  String message;
+  final Firestore store = Firestore.instance;
   FirebaseUser currentUser;
   
   void initState() {
     super.initState();
-    _loadCurrentUser();
    
+
+    _loadCurrentUser();
   }
+
 
 
   void _loadCurrentUser() {

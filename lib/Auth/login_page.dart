@@ -56,21 +56,25 @@ class _LoginpageState extends State<Loginpage> {
               ModalRoute.withName('/'));
         });
       } catch (e) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: Color(0xFFFFFFFF),
-                content: SingleChildScrollView(
-                    child: Center(
-                        child: Column(
-                  children: <Widget>[
-                    Text('❗️มีบางอย่างผิดพลาด.'),
-                    Text('\tโปรดลองใหม่อีกครั้ง'),
-                  ],
-                ))),
-              );
-            });
+        print(e.message);
+        if (e.message ==
+            'Too many unsuccessful login attempts. Please try again later.') {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Color(0xFFFFFFFF),
+                  content: SingleChildScrollView(
+                      child: Center(
+                          child: Column(
+                    children: <Widget>[
+                      Text('❗️มีบางอย่างผิดพลาด.'),
+                      Text('\tโปรดลองใหม่อีกครั้ง'),
+                    ],
+                  ))),
+                );
+              });
+        }
       }
     }
   }

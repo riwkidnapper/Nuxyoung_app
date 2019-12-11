@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 
@@ -24,13 +24,13 @@ class UserAppointmentsState extends State<UserAppointments> {
   final Firestore store = Firestore.instance;
   TextEditingController searchController = new TextEditingController();
   String filter;
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  String message;
-  String channelId = "1000";
-  String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
-  String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+  // FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  // String message;
+  // String channelId = "1000";
+  // String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
+  // String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
   String dateOfAddpoint;
   String timeOfAddpoint;
 
@@ -43,94 +43,94 @@ class UserAppointmentsState extends State<UserAppointments> {
 
   @override
   initState() {
-    message = "No message.";
+  //   message = "No message.";
 
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+  //   var initializationSettingsAndroid =
+  //       AndroidInitializationSettings('ic_launcher');
 
-    var initializationSettingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: (id, title, body, payload) {
-      print("onDidReceiveLocalNotification called.");
-    });
-    var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+  //   var initializationSettingsIOS = IOSInitializationSettings(
+  //       onDidReceiveLocalNotification: (id, title, body, payload) {
+  //     print("onDidReceiveLocalNotification called.");
+  //   });
+  //   var initializationSettings = InitializationSettings(
+  //       initializationSettingsAndroid, initializationSettingsIOS);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (payload) {
-      // when user tap on notification.
-      print("onSelectNotification called.");
-      setState(() {
-        message = payload;
-      });
-    });
-    firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        Map mapNotification = message["notification"];
-        String title = mapNotification["title"];
-        String body = mapNotification["body"];
-        sendNotification(title: title, body: body);
+  //   flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  //       onSelectNotification: (payload) {
+  //     // when user tap on notification.
+  //     print("onSelectNotification called.");
+  //     setState(() {
+  //       message = payload;
+  //     });
+  //   });
+  //   firebaseMessaging.configure(
+  //     onMessage: (Map<String, dynamic> message) async {
+  //       print("onMessage: $message");
+  //       Map mapNotification = message["notification"];
+  //       String title = mapNotification["title"];
+  //       String body = mapNotification["body"];
+  //       sendNotification(title: title, body: body);
 
-        await store
-            ?.collection("users")
-            ?.where('uid', isEqualTo: currentUser?.uid)
-            ?.getDocuments()
-            ?.then((docs) {
-          Firestore?.instance
-              ?.document('/users/${docs.documents[0].documentID}')
-              ?.updateData({'title': title, 'body': body})?.then((val) {
-            print(title);
-            print(body);
-          })?.catchError((title, body) {
-            print(title);
-            print(body);
-          });
-        })?.catchError((title, body) {
-          print(title);
-          print(body);
-        });
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
-    );
-    firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
+  //       await store
+  //           ?.collection("users")
+  //           ?.where('uid', isEqualTo: currentUser?.uid)
+  //           ?.getDocuments()
+  //           ?.then((docs) {
+  //         Firestore?.instance
+  //             ?.document('/users/${docs.documents[0].documentID}')
+  //             ?.updateData({'title': title, 'body': body})?.then((val) {
+  //           print(title);
+  //           print(body);
+  //         })?.catchError((title, body) {
+  //           print(title);
+  //           print(body);
+  //         });
+  //       })?.catchError((title, body) {
+  //         print(title);
+  //         print(body);
+  //       });
+  //     },
+  //     onLaunch: (Map<String, dynamic> message) async {
+  //       print("onLaunch: $message");
+  //     },
+  //     onResume: (Map<String, dynamic> message) async {
+  //       print("onResume: $message");
+  //     },
+  //   );
+  //   firebaseMessaging.requestNotificationPermissions(
+  //       const IosNotificationSettings(sound: true, badge: true, alert: true));
+  //   firebaseMessaging.onIosSettingsRegistered
+  //       .listen((IosNotificationSettings settings) {
+  //     print("Settings registered: $settings");
+  //   });
 
-    // firebaseMessaging.getToken().then((String token) {
-    //   assert(token != null);
-    //   store?.collection("notified")?.add({
-    //     'token': token,
-    //   })?.then((documentReference) {
-    //     print(documentReference.documentID);
-    //     print("Token : $token");
-    //   })?.catchError((e) {
-    //     print(e);
-    //   });
-    // });
+  //   // firebaseMessaging.getToken().then((String token) {
+  //   //   assert(token != null);
+  //   //   store?.collection("notified")?.add({
+  //   //     'token': token,
+  //   //   })?.then((documentReference) {
+  //   //     print(documentReference.documentID);
+  //   //     print("Token : $token");
+  //   //   })?.catchError((e) {
+  //   //     print(e);
+  //   //   });
+  //   // });
 
-    super.initState();
+     super.initState();
   }
 
-  sendNotification({title, body}) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails('10000',
-        'FLUTTER_NOTIFICATION_CHANNEL', 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
-        importance: Importance.Max, priority: Priority.High);
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  // sendNotification({title, body}) async {
+  //   var androidPlatformChannelSpecifics = AndroidNotificationDetails('10000',
+  //       'FLUTTER_NOTIFICATION_CHANNEL', 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+  //       importance: Importance.Max, priority: Priority.High);
+  //   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
 
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  //   var platformChannelSpecifics = NotificationDetails(
+  //       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin
-        .show(112, title, body, platformChannelSpecifics, payload: null);
-  }
+  //   await flutterLocalNotificationsPlugin
+  //       .show(112, title, body, platformChannelSpecifics, payload: null);
+  // }
 
   void deleteAddpoint() async {
     {
@@ -234,7 +234,7 @@ class UserAppointmentsState extends State<UserAppointments> {
                 ?.delete()
                 ?.whenComplete(() {});
           });
-          sendNotification();
+          //sendNotification();
           break;
       }
     }

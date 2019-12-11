@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 var msgData;
 
 exports.offerTrigger = functions.firestore
-  .document("offers/{offerId}")
+  .document("notifications/{notificationId}")
   .onCreate((snapshot, context) => {
     msgData = snapshot.data();
 
@@ -25,14 +25,14 @@ exports.offerTrigger = functions.firestore
 
           var payload = {
             notification: {
-              title: msgData.businessName,
-              body: msgData.offerValue,
+              title: msgData.title,
+              body: msgData.body,
               sound: "default",
               click_action: "FLUTTER_NOTIFICATION_CLICK"
             },
             data: {
-              sendername: msgData.businessName,
-              message: msgData.offerValue
+              sendername: msgData.title,
+              message: msgData.body
             }
           };
 

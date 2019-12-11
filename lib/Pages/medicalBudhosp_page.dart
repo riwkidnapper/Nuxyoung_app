@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:nuxyoung/Auth/login_page.dart';
 import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
 
 import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/profile.dart';
 import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
+import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
@@ -34,6 +36,103 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
   String photoUser;
 
   _MedicalBudhospState(this.currentUser);
+  void _logOut() async {
+    {
+      switch (await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return SimpleDialog(
+              contentPadding:
+                  EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
+              children: <Widget>[
+                Container(
+                  color: THEME,
+                  margin: EdgeInsets.all(0.0),
+                  padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                  height: 120.0,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(
+                          Icons.exit_to_app,
+                          size: 30.0,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.only(bottom: 10.0),
+                      ),
+                      Text(
+                        'ออกจากระบบ',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'คุณต้องการออกจากระบบใช่ไหม ?',
+                        style: TextStyle(color: Colors.white70, fontSize: 14.0),
+                      ),
+                    ],
+                  ),
+                ),
+                SimpleDialogOption(
+                  onPressed: () {
+                    Navigator.pop(context, 0);
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(
+                          Icons.cancel,
+                          color: THEME,
+                        ),
+                        margin: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        'CANCEL',
+                        style: TextStyle(
+                            color: THEME, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+                SimpleDialogOption(
+                  onPressed: () {
+                    Navigator.pop(context, 1);
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(
+                          Icons.check_circle,
+                          color: THEME,
+                        ),
+                        margin: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        'YES',
+                        style: TextStyle(
+                            color: THEME, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          })) {
+        case 0:
+          break;
+        case 1:
+          FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Loginpage(),
+            ),
+          );
+          break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +160,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   color: Colors.blueGrey,
                 ),
                 onPressed: () {
-                  Navigator.pop(
-                    context,
-                    new MaterialPageRoute(
-                      builder: (context) => new HomePage(),
-                    ),
-                  );
+                  _logOut();
                 },
               ),
               SizedBox(
@@ -278,7 +372,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                             ?.collection('profliePaitient')
                             ?.orderBy('วันเวลาที่เข้ารับการรักษา',
                                 descending: true)
-                            ?.orderBy('ชื่อคนไข้', descending: true)
+                            ?.orderBy('ชื่อคนไข้', descending: false)
                             ?.snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -305,7 +399,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                                       documents['วันเวลาที่เข้ารับการรักษา'];
                                   var times = t.toDate();
                                   final f =
-                                      new DateFormat('dd MMMM yyyy',"th_TH");
+                                      new DateFormat('dd MMMM yyyy', "th_TH");
 
                                   String timetoheal = f.format(times);
                                   return PaitientCard(

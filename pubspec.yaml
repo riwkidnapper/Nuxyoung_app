@@ -29,12 +29,13 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_thailand_provinces: ^1.0.1
   firebase_auth: ^0.15.1
-  firebase_core:
+  firebase_core: ^0.4.2+1
   path_provider:
   http:
   cloud_firestore: ^0.12.11
   shared_preferences: ^0.5.4+8
   video_player: ^0.10.4+1
+  rxdart: ^0.22.6
   # chewie: ^0.9.8+1
   file_picker: ^1.4.3+1
   firebase_database: ^3.1.0
