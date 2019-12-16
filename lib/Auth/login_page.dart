@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyoung/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
@@ -33,10 +35,9 @@ class _LoginpageState extends State<Loginpage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
-        //final AuthResult authResult =
-        await FirebaseAuth.instance
+        final AuthResult authResult = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
-        //final FirebaseUser firebaseUser = authResult.user;
+        final FirebaseUser firebaseUser = authResult.user;
 
         showDialog(
             context: context,
@@ -50,10 +51,31 @@ class _LoginpageState extends State<Loginpage> {
 
         //print('Signed in: ${user.uid},${user.email}');
         Future.delayed(new Duration(milliseconds: 1500), () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-              ModalRoute.withName('/'));
+          if (firebaseUser != null) {
+            Firestore.instance
+                ?.collection("users")
+                ?.where('uid', isEqualTo: firebaseUser?.uid)
+                ?.where('email', isEqualTo: firebaseUser?.email)
+                ?.getDocuments()
+                ?.then((QuerySnapshot snapshot) {
+              if (snapshot.documents[0]['rule'] == 'user') {
+                Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                        ModalRoute.withName('/'))
+                    .catchError((err) => print(err));
+              } else {
+                Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MedicalBudhosp(
+                                  currentUser: firebaseUser,
+                                )),
+                        ModalRoute.withName('/medical'))
+                    .catchError((err) => print(err));
+              }
+            });
+          }
         });
       } catch (e) {
         print(e.message);

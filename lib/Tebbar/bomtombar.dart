@@ -5,7 +5,6 @@ import 'package:nuxyoung/Pages/aleart.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 import 'package:nuxyoung/Pages/homepage.dart';
 import 'package:nuxyoung/Pages/UserAppointments.dart';
-import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyoung/Pages/me.dart';
 
 import 'Teb_iteam.dart';
@@ -87,17 +86,91 @@ class _FancyTabBarState extends State<FancyTabBar>
                 TabItem(
                   selected: currentSelected == 0,
                   iconData: Icons.local_hospital,
-                  title: "บุคคลากร",
+                  title: "บุคลากร",
                   callbackFunction: () {
                     setState(() {
                       currentSelected = 2;
                       if (currentUser?.uid != null) {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) =>
-                                new MedicalBudhosp(currentUser: currentUser),
-                          ),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SimpleDialog(
+                              contentPadding: EdgeInsets.only(
+                                  left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
+                              children: <Widget>[
+                                Container(
+                                  constraints: new BoxConstraints(
+                                    maxHeight: double.infinity,
+                                    minWidth: MediaQuery.of(context).size.width,
+                                  ),
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(0.0),
+                                  padding: EdgeInsets.only(
+                                      bottom: 10.0,
+                                      top: 10.0,
+                                      left: 10.0,
+                                      right: 10.0),
+                                  height: 200.0,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Icon(
+                                          Icons.error,
+                                          size: 80.0,
+                                          color: Colors.redAccent[200],
+                                        ),
+                                        margin: EdgeInsets.only(bottom: 10.0),
+                                      ),
+                                      Text(
+                                        'คุณไม่ได้รับสิทธิใช้งานในส่วนนี้',
+                                        style: TextStyle(
+                                            color: Colors.blueGrey[700],
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 20.0,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10.0, left: 10.0),
+                                        child: Text(
+                                          'บุคลากรหรือแพทย์เท่านั้น',
+                                          style: TextStyle(
+                                              color: Colors.blueGrey,
+                                              fontSize: 18.0),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SimpleDialogOption(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(
+                                      child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              8.0, 8.0, 8.0, 15.0),
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueGrey),
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  50.0, 10.0, 50.0, 10.0),
+                                              child: Text(
+                                                'ยืนยัน',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18.0),
+                                              ),
+                                            ),
+                                          )),
+                                    )),
+                              ],
+                            );
+                          },
                         );
                       } else {
                         showDialog(
@@ -126,7 +199,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                                         child: Icon(
                                           Icons.warning,
                                           size: 80.0,
-                                          color: Colors.yellow,
+                                          color: Colors.amberAccent[100],
                                         ),
                                         margin: EdgeInsets.only(bottom: 10.0),
                                       ),
@@ -166,7 +239,7 @@ class _FancyTabBarState extends State<FancyTabBar>
                                                 color: Colors.blueGrey),
                                             child: Padding(
                                               padding: EdgeInsets.fromLTRB(
-                                                  100.0, 10.0, 100.0, 10.0),
+                                                  50.0, 10.0, 50.0, 10.0),
                                               child: Text(
                                                 'ยืนยัน',
                                                 style: TextStyle(
@@ -183,97 +256,6 @@ class _FancyTabBarState extends State<FancyTabBar>
                         ).then((vulue) {
                           currentSelected = 2;
                         });
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (BuildContext context) {
-                        //       return SimpleDialog(
-                        //         contentPadding: EdgeInsets.only(
-                        //             left: 0.0,
-                        //             right: 0.0,
-                        //             top: 0.0,
-                        //             bottom: 0.0),
-                        //         children: <Widget>[
-                        //           Container(
-                        //             color: Colors.white,
-                        //             margin: EdgeInsets.all(0.0),
-                        //             padding: EdgeInsets.only(
-                        //                 bottom: 10.0,
-                        //                 top: 10.0,
-                        //                 left: 10.0,
-                        //                 right: 10.0),
-                        //             height: 200.0,
-                        //             child: Column(
-                        //               children: <Widget>[
-                        //                 Container(
-                        //                   child: Icon(
-                        //                     Icons.error_outline,
-                        //                     size: 80.0,
-                        //                     color: Colors.redAccent,
-                        //                   ),
-                        //                   margin: EdgeInsets.only(bottom: 10.0),
-                        //                 ),
-                        //                 Text(
-                        //                   'คุณไม่ได้รับสิทธิใช้งานในส่วนนี้',
-                        //                   style: TextStyle(
-                        //                       color: Colors.blueGrey[700],
-                        //                       fontSize: 20.0,
-                        //                       fontWeight: FontWeight.bold),
-                        //                 ),
-                        //                 SizedBox(
-                        //                   height: 20.0,
-                        //                 ),
-                        //                 Padding(
-                        //                   padding: const EdgeInsets.only(
-                        //                       right: 10.0, left: 10.0),
-                        //                   child: Text(
-                        //                     'เฉพาะแพทย์ พยาบาลและบุคลากรเท่านั้น',
-                        //                     style: TextStyle(
-                        //                         color: Colors.blueGrey,
-                        //                         fontSize: 18.0),
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //           SimpleDialogOption(
-                        //               onPressed: () {
-                        //                 Navigator.pop(context);
-                        //               },
-                        //               child: Center(
-                        //                 child: Padding(
-                        //                     padding: EdgeInsets.fromLTRB(
-                        //                         8.0, 8.0, 8.0, 15.0),
-                        //                     child: DecoratedBox(
-                        //                       decoration: BoxDecoration(
-                        //                           color: Colors.blueGrey),
-                        //                       child: Padding(
-                        //                         padding: EdgeInsets.fromLTRB(
-                        //                             100.0, 10.0, 100.0, 10.0),
-                        //                         child: Text(
-                        //                           'ยืนยัน',
-                        //                           style: TextStyle(
-                        //                               color: Colors.white,
-                        //                               fontWeight:
-                        //                                   FontWeight.bold,
-                        //                               fontSize: 18.0),
-                        //                         ),
-                        //                       ),
-                        //                     )
-
-                        //                     // Text(
-                        //                     //   'ยืนยัน',
-                        //                     //   style: TextStyle(
-                        //                     //       color: Colors.white,
-                        //                     //       backgroundColor:
-                        //                     //           Color(0xFF607D8B),
-                        //                     //       fontWeight: FontWeight.bold,
-                        //                     //       fontSize: 18.0),
-                        //                     // ),
-                        //                     ),
-                        //               )),
-                        //         ],
-                        //       );
-                        //     });
                       }
                     });
                   },
@@ -285,7 +267,17 @@ class _FancyTabBarState extends State<FancyTabBar>
                     callbackFunction: () {
                       setState(() {
                         nextIcon = Icons.date_range;
-                        currentSelected = 1;
+                        if (currentUser != null)
+                          currentSelected = 1;
+                        else
+                          Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) => new Loginpage(),
+                            ),
+                          ).then((onValue) {
+                            currentSelected = 2;
+                          });
                       });
                     }),
                 TabItem(

@@ -50,10 +50,11 @@ class _AppointmentState extends State<Appointment>
               ),
               StreamBuilder(
                 stream: Firestore?.instance
-                    ?.collection('users')
-                    ?.where('rule', isEqualTo: 'doctor')
-                    ?.orderBy('createAt')
-                    ?.snapshots(),
+                        ?.collection('users')
+                        ?.where('rule', isEqualTo: 'doctor')
+                        ?.orderBy('createAt')
+                        ?.snapshots() ??
+                    null,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
@@ -89,9 +90,9 @@ class _AppointmentState extends State<Appointment>
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.vertical,
-                          itemCount: snapshot.data.documents.length,
+                          itemCount: snapshot?.data?.documents?.length,
                           itemBuilder: (context, index) {
-                            final documents = snapshot.data.documents[index];
+                            final documents = snapshot?.data?.documents[index];
                             List<String> times =
                                 List.from(documents['เวลาออกตรวจ']);
                             return GestureDetector(

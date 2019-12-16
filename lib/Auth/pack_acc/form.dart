@@ -48,7 +48,7 @@ class _FormCardState extends State<FormCard> {
     return Container(
       //resizeToAvoidBottomInset: false,
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2.2,
+      height: MediaQuery.of(context).size.height / 2.1,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),

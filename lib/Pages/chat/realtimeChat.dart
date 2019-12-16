@@ -343,7 +343,7 @@ class ChatRealState extends State<ChatReal> {
                     },
                   );
                 } else
-                  return Center(child: Text("No data"));
+                  return Center(child: Text("No Message"));
               },
             ),
           ),

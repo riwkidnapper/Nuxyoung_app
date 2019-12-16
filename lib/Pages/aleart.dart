@@ -49,14 +49,14 @@ class _NotifyWidgetState extends State<NotifyWidget> {
         child: StreamBuilder<QuerySnapshot>(
             stream: currentUser?.uid != null
                 ? Firestore.instance
-                    ?.collection('appointment')
+                    ?.collection('s')
                     ?.where('uid', isEqualTo: currentUser?.uid)
                     ?.snapshots()
                 : null,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 8.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 250.0, 0.0, 8.0),
                   child: Center(
                     child: CircularProgressIndicator(
                       valueColor:
@@ -70,16 +70,17 @@ class _NotifyWidgetState extends State<NotifyWidget> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            right: 250.0, top: 10.0, left: 10.0),
+                            right: 200.0, top: 10.0, left: 0.0, bottom: 10.0),
                         child: Text(
                           "การแจ้งเตือน",
                           style: TextStyle(fontSize: 24.0),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 180.0),
+                        padding: const EdgeInsets.only(top: 150.0),
                         child: Center(
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -91,8 +92,8 @@ class _NotifyWidgetState extends State<NotifyWidget> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                width: 120,
-                                height: 120,
+                                width: 110,
+                                height: 110,
                               ),
                               Text(
                                 'ยังไม่มีการแจ้งเตือน',
@@ -122,7 +123,7 @@ class _NotifyWidgetState extends State<NotifyWidget> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            right: 250.0, top: 10.0, left: 10.0, bottom: 10.0),
+                            right: 200.0, top: 10.0, left: 0.0, bottom: 10.0),
                         child: Text(
                           "การแจ้งเตือน",
                           style: TextStyle(fontSize: 24.0),

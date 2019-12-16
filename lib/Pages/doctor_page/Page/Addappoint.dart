@@ -19,7 +19,7 @@ class _AddappointState extends State<Addappoint> {
   FirebaseUser user;
   final Firestore store = Firestore.instance;
   final t = new DateFormat('HH:mm');
-  final d = new DateFormat('dd MMMM yyyy',"th_TH");
+  final d = new DateFormat('dd MMMM yyyy', "th_TH");
   final od = new DateFormat('yyyy-MM-dd');
   DateTime dateAppoint;
   DateTime dateAppoint2;
@@ -35,8 +35,11 @@ class _AddappointState extends State<Addappoint> {
   String timeAppointment;
   String dateAppointment;
   String datead;
-
   var uid;
+  var admissionhistory;
+  var symptoms;
+  var diagnosis;
+  String cloudUID;
   _AddappointState(this.doctorName);
   @override
   void initState() {
@@ -51,16 +54,6 @@ class _AddappointState extends State<Addappoint> {
     timeAppointment = t.format(DateTime.now());
     dateAppointment = d.format(dateAppoint);
     datead = od.format(dateAppoint2);
-    store
-        .collection("profliePaitient")
-        .where('ชื่อคนไข้', isEqualTo: selectedCurrency)
-        .getDocuments()
-        .then((docs) {
-      setState(() {
-        uid = docs.documents[0]['uid'];
-        //print(uid);
-      });
-    });
   }
 
   var items = [
@@ -148,7 +141,6 @@ class _AddappointState extends State<Addappoint> {
                       dateAppointment = d.format(date);
                       datead = od.format(selectday);
                     });
-                    print(datead);
                   },
                 ),
                 SizedBox(
@@ -175,7 +167,7 @@ class _AddappointState extends State<Addappoint> {
                   height: 30,
                 ),
                 StreamBuilder<QuerySnapshot>(
-                  stream: Firestore?.instance
+                  stream: Firestore.instance
                       ?.collection('profliePaitient')
                       ?.orderBy('ชื่อคนไข้')
                       ?.snapshots(),
@@ -210,7 +202,7 @@ class _AddappointState extends State<Addappoint> {
                             value: selectedCurrency,
                             isExpanded: false,
                             hint: new Text(
-                              'ชื่อ - นามสกุลคนไข้                                         ',
+                              'ชื่อ - นามสกุลคนไข้\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.blueGrey[700],
@@ -240,12 +232,14 @@ class _AddappointState extends State<Addappoint> {
                           ),
                         );
                       }
-                      var admissionhistory = snapshot.data?.documents[0]
+                      admissionhistory = snapshot?.data?.documents[0]
                           ['ประวัติการเข้ารับการรักษา'];
-                      var symptoms =
-                          snapshot.data?.documents[0]['ลักษณะอาการเบื้องต้น'];
-                      var diagnosis =
-                          snapshot.data?.documents[0]['การวินิจฉัยเบื้องต้น'];
+                      symptoms =
+                          snapshot?.data?.documents[0]['ลักษณะอาการเบื้องต้น'];
+                      diagnosis =
+                          snapshot?.data?.documents[0]['การวินิจฉัยเบื้องต้น'];
+                      uid = snapshot?.data?.documents[0]['uid'];
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -289,11 +283,18 @@ class _AddappointState extends State<Addappoint> {
                           ),
                           selectedCurrency != null
                               ? Text(
-                                  ' : $symptoms',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  symptoms != null
+                                      ? ' : $symptoms'
+                                      : ' ⚠ ยังไม่ได้ระบุอาการเบื้องต้น !',
+                                  style: symptoms != null
+                                      ? TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w500,
+                                        )
+                                      : TextStyle(
+                                          fontSize: 18.0,
+                                          color: Colors.blueGrey,
+                                        ),
                                 )
                               : TextFormField(
                                   controller: _simController,
@@ -330,64 +331,64 @@ class _AddappointState extends State<Addappoint> {
                           SizedBox(
                             height: 30,
                           ),
-                          Center(
-                            child: RaisedButton.icon(
-                              icon: Icon(
-                                Icons.assignment_turned_in,
-                                color: Colors.blueGrey[700],
-                              ),
-                              color: Colors.blueGrey[300],
-                              label: Text(
-                                "ยืนยัน",
-                                style: TextStyle(
-                                  color: Colors.blueGrey[800],
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () async {
-                                _fbKey?.currentState?.save();
-                                if (_fbKey?.currentState?.validate() ?? true) {
-                                  var paitientName = selectedCurrency;
-                                  var data = {
-                                    "ชื่อแพทย์ผู้รักษา": doctorName,
-                                    "วันเดือนปีที่นัดหมาย": datead,
-                                    "เวลาที่นัดหมาย": timeAppointment,
-                                    "ชื่อคนไข้": paitientName,
-                                    "ประวัติการเข้ารับการรักษา":
-                                        admissionhistory,
-                                    "อาการเบื้องต้น": symptoms,
-                                    "การวินิจฉัยเบื้องต้น": diagnosis,
-                                    'uid': uid
-                                  };
-                                  await store
-                                      .collection("appointment")
-                                      .add(data)
-                                      .then((value) {
-                                    print(value.documentID);
-                                    Navigator.pop(
-                                      context,
-                                    );
-                                    Navigator.pop(
-                                      context,
-                                    );
-                                    Navigator.pop(
-                                      context,
-                                    );
-                                  }).catchError((err) {
-                                    print(err);
-                                  });
-                                } else {
-                                  setState(() {
-                                    print("validation failed");
-                                  });
-                                }
-                              },
-                            ),
-                          ),
                         ],
                       );
-                    })
+                    }),
+                Center(
+                  child: RaisedButton.icon(
+                    icon: Icon(
+                      Icons.assignment_turned_in,
+                      color: Colors.blueGrey[700],
+                    ),
+                    color: Colors.blueGrey[300],
+                    label: Text(
+                      "ยืนยัน",
+                      style: TextStyle(
+                        color: Colors.blueGrey[800],
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      _fbKey?.currentState?.save();
+                      if (_fbKey?.currentState?.validate() ?? true) {
+                        var paitientName = selectedCurrency;
+
+                        var datas = {
+                          "ชื่อแพทย์ผู้รักษา": doctorName,
+                          "วันเดือนปีที่นัดหมาย": datead,
+                          "เวลาที่นัดหมาย": timeAppointment,
+                          "ชื่อคนไข้": paitientName,
+                          "ประวัติการเวลารับการรักษา": admissionhistory,
+                          "อาการเบื้องต้น": symptoms,
+                          "การวินิจฉัยเบื้องต้น": diagnosis,
+                          'uid': uid
+                        };
+                        await store
+                            .collection("appointment")
+                            .add(datas)
+                            .then((value) {
+                          print(value.documentID);
+                          Navigator.pop(
+                            context,
+                          );
+                          Navigator.pop(
+                            context,
+                          );
+                          Navigator.pop(
+                            context,
+                          );
+                        }).catchError((err) {
+                          print(err);
+                        });
+                      } else {
+                        setState(() {
+                          print("validation failed");
+                        });
+                      }
+                    },
+                  ),
+                )
               ],
             ),
           ),

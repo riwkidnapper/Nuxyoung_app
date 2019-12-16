@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
@@ -43,80 +42,80 @@ class UserAppointmentsState extends State<UserAppointments> {
 
   @override
   initState() {
-  //   message = "No message.";
+    //   message = "No message.";
 
-  //   var initializationSettingsAndroid =
-  //       AndroidInitializationSettings('ic_launcher');
+    //   var initializationSettingsAndroid =
+    //       AndroidInitializationSettings('ic_launcher');
 
-  //   var initializationSettingsIOS = IOSInitializationSettings(
-  //       onDidReceiveLocalNotification: (id, title, body, payload) {
-  //     print("onDidReceiveLocalNotification called.");
-  //   });
-  //   var initializationSettings = InitializationSettings(
-  //       initializationSettingsAndroid, initializationSettingsIOS);
+    //   var initializationSettingsIOS = IOSInitializationSettings(
+    //       onDidReceiveLocalNotification: (id, title, body, payload) {
+    //     print("onDidReceiveLocalNotification called.");
+    //   });
+    //   var initializationSettings = InitializationSettings(
+    //       initializationSettingsAndroid, initializationSettingsIOS);
 
-  //   flutterLocalNotificationsPlugin.initialize(initializationSettings,
-  //       onSelectNotification: (payload) {
-  //     // when user tap on notification.
-  //     print("onSelectNotification called.");
-  //     setState(() {
-  //       message = payload;
-  //     });
-  //   });
-  //   firebaseMessaging.configure(
-  //     onMessage: (Map<String, dynamic> message) async {
-  //       print("onMessage: $message");
-  //       Map mapNotification = message["notification"];
-  //       String title = mapNotification["title"];
-  //       String body = mapNotification["body"];
-  //       sendNotification(title: title, body: body);
+    //   flutterLocalNotificationsPlugin.initialize(initializationSettings,
+    //       onSelectNotification: (payload) {
+    //     // when user tap on notification.
+    //     print("onSelectNotification called.");
+    //     setState(() {
+    //       message = payload;
+    //     });
+    //   });
+    //   firebaseMessaging.configure(
+    //     onMessage: (Map<String, dynamic> message) async {
+    //       print("onMessage: $message");
+    //       Map mapNotification = message["notification"];
+    //       String title = mapNotification["title"];
+    //       String body = mapNotification["body"];
+    //       sendNotification(title: title, body: body);
 
-  //       await store
-  //           ?.collection("users")
-  //           ?.where('uid', isEqualTo: currentUser?.uid)
-  //           ?.getDocuments()
-  //           ?.then((docs) {
-  //         Firestore?.instance
-  //             ?.document('/users/${docs.documents[0].documentID}')
-  //             ?.updateData({'title': title, 'body': body})?.then((val) {
-  //           print(title);
-  //           print(body);
-  //         })?.catchError((title, body) {
-  //           print(title);
-  //           print(body);
-  //         });
-  //       })?.catchError((title, body) {
-  //         print(title);
-  //         print(body);
-  //       });
-  //     },
-  //     onLaunch: (Map<String, dynamic> message) async {
-  //       print("onLaunch: $message");
-  //     },
-  //     onResume: (Map<String, dynamic> message) async {
-  //       print("onResume: $message");
-  //     },
-  //   );
-  //   firebaseMessaging.requestNotificationPermissions(
-  //       const IosNotificationSettings(sound: true, badge: true, alert: true));
-  //   firebaseMessaging.onIosSettingsRegistered
-  //       .listen((IosNotificationSettings settings) {
-  //     print("Settings registered: $settings");
-  //   });
+    //       await store
+    //           ?.collection("users")
+    //           ?.where('uid', isEqualTo: currentUser?.uid)
+    //           ?.getDocuments()
+    //           ?.then((docs) {
+    //         Firestore?.instance
+    //             ?.document('/users/${docs.documents[0].documentID}')
+    //             ?.updateData({'title': title, 'body': body})?.then((val) {
+    //           print(title);
+    //           print(body);
+    //         })?.catchError((title, body) {
+    //           print(title);
+    //           print(body);
+    //         });
+    //       })?.catchError((title, body) {
+    //         print(title);
+    //         print(body);
+    //       });
+    //     },
+    //     onLaunch: (Map<String, dynamic> message) async {
+    //       print("onLaunch: $message");
+    //     },
+    //     onResume: (Map<String, dynamic> message) async {
+    //       print("onResume: $message");
+    //     },
+    //   );
+    //   firebaseMessaging.requestNotificationPermissions(
+    //       const IosNotificationSettings(sound: true, badge: true, alert: true));
+    //   firebaseMessaging.onIosSettingsRegistered
+    //       .listen((IosNotificationSettings settings) {
+    //     print("Settings registered: $settings");
+    //   });
 
-  //   // firebaseMessaging.getToken().then((String token) {
-  //   //   assert(token != null);
-  //   //   store?.collection("notified")?.add({
-  //   //     'token': token,
-  //   //   })?.then((documentReference) {
-  //   //     print(documentReference.documentID);
-  //   //     print("Token : $token");
-  //   //   })?.catchError((e) {
-  //   //     print(e);
-  //   //   });
-  //   // });
+    //   // firebaseMessaging.getToken().then((String token) {
+    //   //   assert(token != null);
+    //   //   store?.collection("notified")?.add({
+    //   //     'token': token,
+    //   //   })?.then((documentReference) {
+    //   //     print(documentReference.documentID);
+    //   //     print("Token : $token");
+    //   //   })?.catchError((e) {
+    //   //     print(e);
+    //   //   });
+    //   // });
 
-     super.initState();
+    super.initState();
   }
 
   // sendNotification({title, body}) async {
@@ -245,7 +244,7 @@ class UserAppointmentsState extends State<UserAppointments> {
         body: ListView(
       physics: const BouncingScrollPhysics(),
       children: <Widget>[
-        StreamBuilder(
+        StreamBuilder<QuerySnapshot>(
           stream: currentUser?.uid != null
               ? Firestore?.instance
                   ?.collection("appointment")
@@ -273,16 +272,16 @@ class UserAppointmentsState extends State<UserAppointments> {
                         child: new BackdropFilter(
                             filter: new ImageFilter.blur(
                                 sigmaX: 600.0, sigmaY: 1000.0)),
-                        width: 400,
-                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 4.0,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 100),
                     child: Container(
-                      width: 320,
-                      height: 180,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      height: MediaQuery.of(context).size.height / 3.0,
                       child: GestureDetector(
                         onTap: () {},
                         child: Card(
@@ -296,12 +295,11 @@ class UserAppointmentsState extends State<UserAppointments> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               ListTile(
-                                title: Text('ไม่มีข้อมูลใด ๆ ในขณะนี้',
+                                title: Text('กำลังโหลด',
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 24.0),
                                     textAlign: TextAlign.center),
-                                subtitle: Text(
-                                    'โปรดเข้าสู่ระบบเพื่อดำเนินการต่อไป',
+                                subtitle: Text('โปรดรอสักครู่',
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 20.0),
                                     textAlign: TextAlign.center),
@@ -335,16 +333,16 @@ class UserAppointmentsState extends State<UserAppointments> {
                           child: new BackdropFilter(
                               filter: new ImageFilter.blur(
                                   sigmaX: 600.0, sigmaY: 1000.0)),
-                          width: 400,
-                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 4.0,
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 100),
                       child: Container(
-                        width: 320,
-                        height: 180,
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        height: MediaQuery.of(context).size.height / 3.0,
                         child: GestureDetector(
                           onTap: () {},
                           child: Card(
@@ -383,6 +381,8 @@ class UserAppointmentsState extends State<UserAppointments> {
                     DateFormat("dd MMMM\nyyyy", "th_TH").format(date);
                 timeOfAddpoint =
                     snapshot?.data?.documents[0]['เวลาที่นัดหมาย'] ?? null;
+                var doctorName =
+                    snapshot?.data?.documents[0]['ชื่อแพทย์ผู้รักษา'] ?? null;
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -401,19 +401,18 @@ class UserAppointmentsState extends State<UserAppointments> {
                           child: new BackdropFilter(
                               filter: new ImageFilter.blur(
                                   sigmaX: 600.0, sigmaY: 1000.0)),
-                          width: 400,
-                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 4.0,
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
                       child: Container(
-                        width: 320,
-                        height: 180,
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        height: MediaQuery.of(context).size.height / 3.0,
                         child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(builder: (_) => Calendar())),
+                          onTap: () {},
                           child: Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -463,12 +462,21 @@ class UserAppointmentsState extends State<UserAppointments> {
                                                     fontSize: 24.0),
                                               ),
                                             ],
-                                          )
+                                          ),
+                                          Container(
+                                            height: 10,
+                                          ),
                                         ],
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
+                                Text(
+                                  "ผู้นัด :: " + doctorName,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 20.0),
+                                  textAlign: TextAlign.end,
+                                )
 
                                 // ListTile(
                                 //   leading: Icon(
@@ -491,8 +499,9 @@ class UserAppointmentsState extends State<UserAppointments> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 30, 50, 10),
-                      child: Container(
+                      padding: const EdgeInsets.fromLTRB(40, 40, 40, 5),
+                      child: ButtonTheme(
+                        minWidth: MediaQuery.of(context).size.width,
                         child: RaisedButton.icon(
                           icon: Icon(
                             Icons.date_range,
@@ -517,39 +526,43 @@ class UserAppointmentsState extends State<UserAppointments> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Container(
-                      child: RaisedButton.icon(
-                        icon: Icon(
-                          Icons.assignment_turned_in,
-                          color: Colors.blueGrey[700],
-                        ),
-                        color: Colors.blueGrey[300],
-                        label: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "ยกเลิกนัดหมาย",
-                            style: TextStyle(
-                              color: Colors.blueGrey[800],
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      child: ButtonTheme(
+                        minWidth: MediaQuery.of(context).size.width,
+                        child: RaisedButton.icon(
+                          icon: Icon(
+                            Icons.do_not_disturb_alt,
+                            color: Colors.blueGrey[700],
+                          ),
+                          color: Colors.blueGrey[300],
+                          label: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              "ยกเลิกนัดหมาย",
+                              style: TextStyle(
+                                color: Colors.blueGrey[800],
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        onPressed: () {
-                          deleteAddpoint();
-                          //sendNotification();
-                          /*Switch(
-                        value: isSubscribeHotNews,
-                           onChanged: (checked) {
-                         if(checked) {
-                           firebaseMessaging.subscribeToTopic("TOEY");
-                         }else{
-                            firebaseMessaging.unsubscribeFromTopic("TOEY");
+                          onPressed: () {
+                            deleteAddpoint();
+                            //sendNotification();
+                            /*Switch(
+                          value: isSubscribeHotNews,
+                             onChanged: (checked) {
+                           if(checked) {
+                             firebaseMessaging.subscribeToTopic("TOEY");
+                           }else{
+                              firebaseMessaging.unsubscribeFromTopic("TOEY");
+                           }
+                            setState(() => isSubscribeHotNews = checked);
                          }
-                          setState(() => isSubscribeHotNews = checked);
-                       }
-                     );*/
-                        },
+                       );*/
+                          },
+                        ),
                       ),
                     ),
                   ],

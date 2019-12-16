@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_thailand_provinces/flutter_thailand_provinces.dart';
+import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
 import 'package:nuxyoung/Pages/welcome_page.dart';
 import 'package:nuxyoung/Auth/login_page.dart';
 import 'package:nuxyoung/Tebbar/home_bottombar.dart';
@@ -84,7 +85,8 @@ class MyApp extends StatelessWidget {
       ],
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => HomePage(),
-        '/login': (BuildContext context) => Loginpage()
+        '/login': (BuildContext context) => Loginpage(),
+        '/medical': (BuildContext context) => MedicalBudhosp()
       },
       title: 'Nux Young',
       home: Welcome(),

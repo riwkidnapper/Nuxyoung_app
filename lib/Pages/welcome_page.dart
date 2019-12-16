@@ -29,7 +29,6 @@ navigationPage(context) {
                     ?.where('email', isEqualTo: user?.email)
                     ?.getDocuments()
                     ?.then((QuerySnapshot snapshot) {
-                  print(snapshot.documents[0]['rule']);
                   if (snapshot.documents[0]['rule'] == 'user') {
                     Navigator.pushReplacement(
                       context,
@@ -37,13 +36,14 @@ navigationPage(context) {
                         builder: (context) => HomePage(),
                       ),
                     ).catchError((err) => print(err));
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MedicalBudhosp(currentUser: user),
+                      ),
+                    ).catchError((err) => print(err));
                   }
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MedicalBudhosp(currentUser: user),
-                    ),
-                  ).catchError((err) => print(err));
                 })
               }
             else

@@ -89,18 +89,17 @@ class _PaitientCardState extends State<PaitientCard> {
                   if (snapshot.data.documents.length == 0) {
                     return null;
                   } else {
-                    final documents =
-                                      snapshot.data?.documents[0];
+                    final documents = snapshot.data?.documents[0];
                     return InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ListPaitient(
+                            builder: (context) => ListPaitient(
                               treatment: documents['ประวัติการเข้ารับการรักษา'],
                               reason: documents['เหตุผลในการส่งต่อ'],
-                              symptoms:symptoms ,
-                              timetoheal:timetoheal ,
+                              symptoms: symptoms,
+                              timetoheal: timetoheal,
                               video: documents['วิดีโออาการเบื้องต้น'],
                               zipcode: documents['รหัสไปรษณีย์'],
                               address: documents['ที่อยู่'],
@@ -109,10 +108,12 @@ class _PaitientCardState extends State<PaitientCard> {
                               diagnosis: documents['การวินิจฉัยเบื้องต้น'],
                               district: documents['ตำบล'],
                               gender: documents['เพศ'],
-                              idnumber:  documents['รหัสประชาชน'],
+                              idnumber: documents['รหัสประชาชน'],
                               provinces: documents['จังหวัด'],
                               paitientName: paitientName,
-                                  )),
+                              uid: documents['uid'],
+                            ),
+                          ),
                         );
                       },
                       child: Row(
@@ -135,7 +136,9 @@ class _PaitientCardState extends State<PaitientCard> {
                                   padding: EdgeInsets.only(top: 5),
                                 ),
                                 Text(
-                                  'อาการเบื้องต้น : $symptoms',
+                                  symptoms != null
+                                      ? 'อาการเบื้องต้น : $symptoms'
+                                      : '',
                                   style: TextStyle(
                                     color: Colors.blueGrey,
                                     fontSize: 18,

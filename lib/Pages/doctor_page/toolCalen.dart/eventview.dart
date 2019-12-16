@@ -22,29 +22,7 @@ class EventView extends StatelessWidget {
                       ))
                   .toList(),
             )
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'No Event',
-                    style: TextStyle(
-                      fontSize: 28.0,
-                      color: CupertinoColors.darkBackgroundGray,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'No event for this day.',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: CupertinoColors.darkBackgroundGray,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          : Container(),
     );
   }
 }

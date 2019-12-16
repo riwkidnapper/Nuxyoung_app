@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +13,6 @@ import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
-import 'package:nuxyoung/Tebbar/home_bottombar.dart';
 
 import 'chat/Tools/custom_heading.dart';
 import 'chat/Tools/screenloadingchat.dart';
@@ -31,7 +31,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final FirebaseUser currentUser;
   String userEmail;
-
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   String doctorname;
   String photoUser;
 
@@ -135,6 +135,30 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    firebaseMessaging.getToken().then((String token) async {
+      assert(token != null);
+      await Firestore?.instance
+          ?.collection("users")
+          ?.where('uid', isEqualTo: currentUser.uid)
+          ?.getDocuments()
+          ?.then((docs) {
+        Firestore?.instance
+            ?.document('/users/${docs.documents[0].documentID}')
+            ?.updateData({
+          'token': token,
+        })?.then((onValue) {
+          print("Token : $token");
+        })?.catchError((e) {
+          print(e);
+        });
+      })?.catchError((e) {
+        print(e);
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
@@ -156,18 +180,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
             actions: <Widget>[
               IconButton(
                 icon: Icon(
-                  const IconData(0xe800, fontFamily: 'chat'),
-                  color: Colors.blueGrey,
-                ),
-                onPressed: () {
-                  _logOut();
-                },
-              ),
-              SizedBox(
-                width: 5.0,
-              ),
-              IconButton(
-                icon: Icon(
                   const IconData(0xe811, fontFamily: 'chat'),
                   color: Colors.blueGrey,
                 ),
@@ -179,9 +191,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                     ),
                   );
                 },
-              ),
-              SizedBox(
-                width: 5.0,
               ),
               IconButton(
                 icon: Icon(
@@ -196,6 +205,9 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                     ),
                   );
                 },
+              ),
+              SizedBox(
+                width: 20.0,
               ),
             ],
             gradient:
@@ -282,17 +294,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                                   builder: (context) => Symptom()));
                         },
                       ),
-                      // ListTile(
-                      //   leading: Icon(
-                      //     Icons.videocam,
-                      //     color: Colors.blueGrey,
-                      //   ),
-                      //   title: Text('วิดีโอ'),
-                      //   onTap: () {
-                      //     Navigator.push(context,
-                      //         MaterialPageRoute(builder: (context) => ChewieDemo()));
-                      //   },
-                      // ),
                       ListTile(
                         leading: Icon(
                           Icons.today,
@@ -333,6 +334,16 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                                 builder: (context) => MedicalRegister(),
                               ));
                         },
+                      ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.exit_to_app,
+                          color: Colors.blueGrey,
+                        ),
+                        title: Text('ออกจากระบบ'),
+                        onTap: () {
+                          _logOut();
+                        },
                       )
                     ],
                   );
@@ -369,11 +380,12 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                       CustomHeading(title: 'รายชื่อผู้ป่วย'),
                       StreamBuilder(
                         stream: Firestore?.instance
-                            ?.collection('profliePaitient')
-                            ?.orderBy('วันเวลาที่เข้ารับการรักษา',
-                                descending: true)
-                            ?.orderBy('ชื่อคนไข้', descending: false)
-                            ?.snapshots(),
+                                ?.collection('profliePaitient')
+                                ?.orderBy('วันเวลาที่เข้ารับการรักษา',
+                                    descending: true)
+                                ?.orderBy('ชื่อคนไข้', descending: false)
+                                ?.snapshots() ??
+                            null,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
@@ -385,7 +397,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                             );
                           } else {
                             if (snapshot.data.documents.length == 0) {
-                              return null;
+                              return Container();
                             } else {
                               return ListView.builder(
                                 shrinkWrap: true,
