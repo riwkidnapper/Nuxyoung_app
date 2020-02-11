@@ -26,12 +26,11 @@ class Calendar extends StatelessWidget {
 }
 
 class CaLenDar extends StatefulWidget {
-  CaLenDar({
-    Key key,
-  }) : super(key: key);
+  final doctorname;
+  CaLenDar({Key key, this.doctorname}) : super(key: key);
 
   @override
-  _CaLenDarState createState() => _CaLenDarState();
+  _CaLenDarState createState() => _CaLenDarState(this.doctorname);
 }
 
 class _CaLenDarState extends State<CaLenDar> {
@@ -40,7 +39,8 @@ class _CaLenDarState extends State<CaLenDar> {
   List _onDayEvents;
   DateTime _selectedDay;
   DateTime _now;
-
+  final doctorname;
+  _CaLenDarState(this.doctorname);
   @override
   void initState() {
     super.initState();
@@ -79,7 +79,12 @@ class _CaLenDarState extends State<CaLenDar> {
         backgroundColor: Colors.grey[300],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance.collection("appointment").snapshots(),
+          stream: doctorname != null
+              ? Firestore.instance
+                  ?.collection("appointment")
+                  ?.where('ชื่อแพทย์ผู้รักษา', isEqualTo: doctorname)
+                  ?.snapshots()
+              : null,
           builder: (_, snapshot) {
             if (!snapshot.hasData) {
               return _buildTableCalendar(context);
@@ -159,7 +164,11 @@ class _CaLenDarState extends State<CaLenDar> {
             onDaySelected: _onDaySelected,
             onVisibleDaysChanged: _onVisibleDaysChanged,
           )),
-      EventView(events: _onDayEvents ?? [], onClick: (Event data) {}),
+      EventView(
+          events: _onDayEvents ?? [],
+          onClick: (Event data) {
+            // ใส่rountingprint("object");
+          }),
     ]);
   }
 

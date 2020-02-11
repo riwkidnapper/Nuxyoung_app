@@ -155,6 +155,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["เวลาออกตรวจ"] = selecteddateList;
               data["uid"] = onValue.user.uid;
               data["photoUser"] = _uploadedFileURL;
+              data["devtoken"]= 10000001.toString();
             } else {
               data["createAt"] = DateTime.now();
               data["email"] = _emaildoc;
@@ -162,6 +163,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["rule"] = rule;
               data["uid"] = onValue.user.uid;
               data["photoUser"] = _uploadedFileURL;
+              data["devtoken"]= 10000002.toString();
             }
             if (onValue != null && onValue.user != null)
               await store.collection("users").add(data).then((ref) {

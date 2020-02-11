@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/pop_up_item/adddoc.dart';
+// import 'package:nuxyoung/Pages/pop_up_item/adddoc.dart';
 import 'package:nuxyoung/Pages/pop_up_item/color_loader.dart';
 import 'package:nuxyoung/Pages/pop_up_item/customdialog.dart';
 
@@ -45,17 +45,17 @@ class _DoctorproflieState extends State<Doctorproflie> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 15.0, top: 8.0, right: 20.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      AddproflieDoc(),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //       bottom: 15.0, top: 8.0, right: 20.0),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.end,
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: <Widget>[
+                //       AddproflieDoc(),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -80,8 +80,10 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           InkWell(
-              child: avatar(proflieimg = 'assets/images/doc_231.jpg',
-                  'นพ.ธนาธรณ์ พุฒิกานนท์'),
+              child: avatar(
+                  proflieimg =
+                      'https://i2-prod.mirror.co.uk/interactives/article12645227.ece/ALTERNATES/s615/doctor.jpg',
+                  'นพ.สุขวุฒิ ยุทธศาสตร์'),
               onTap: () async {
                 showDialog(
                     context: context,
@@ -93,11 +95,11 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
                       );
                     });
                 await loginAction(
-                  title = 'นพ.ธนาธรณ์ พุฒิกานนท์',
-                  description =
-                      "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n"
-                          "Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.'",
-                  proflieimg = "assets/images/doc_231.jpg",
+                  title = 'นพ.สุขวุฒิ ยุทธศาสตร์',
+                  description = "วันเวลาออกตรวจ\n\n"
+                      "วันพุธ: 9.00 น. - 12.00 น.\nวันศุกร์: 9.00 น. - 12.00 น.'",
+                  proflieimg =
+                      "https://i2-prod.mirror.co.uk/interactives/article12645227.ece/ALTERNATES/s615/doctor.jpg",
                 );
                 Navigator.pop(context);
               }),
@@ -105,8 +107,10 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
             width: 30.0,
           ),
           InkWell(
-              child: avatar(proflieimg = "assets/images/555.jpg",
-                  'นพ.นิธิพัฒน์ บุษบารติ'),
+              child: avatar(
+                  proflieimg =
+                      "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/Userimage%2Fnull?alt=media&token=30fb05b1-780d-4c9f-b667-4e6165ec4a44",
+                  'นพ.ตนุพล วิรุฬหการุญ'),
               onTap: () async {
                 showDialog(
                     context: context,
@@ -118,9 +122,11 @@ class _DialoglogdocState extends State<Dialoglogdoc> {
                       );
                     });
                 await loginAction(
-                  title = "นพ.นิธิพัฒน์ บุษบารติ",
-                  description = "test",
-                  proflieimg = "assets/images/555.jpg",
+                  title = "นพ.ตนุพล วิรุฬหการุญ",
+                  description = "วันเวลาออกตรวจ\n\n"
+                      "วันจันทร์: 9.00 น. - 12.00 น.\nวันอังคาร: 9.00 น. - 12.00 น.\nวันพุธ: 9.00 น. - 12.00 น.\nวันพฤหัสบดี: 9.00 น. - 12.00 น.\nวันศุกร์: 9.00 น. - 12.00 น.\nวันเสาร์: 9.00 น. - 12.00 น.\nวันอาทิตย์: 9.00 น. - 12.00 น.",
+                  proflieimg =
+                      "https://firebasestorage.googleapis.com/v0/b/nuxyoungapp.appspot.com/o/Userimage%2Fnull?alt=media&token=30fb05b1-780d-4c9f-b667-4e6165ec4a44",
                 );
                 Navigator.pop(context);
               }),
@@ -157,7 +163,7 @@ avatar(imagename, String name) {
           height: 140.0,
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: AssetImage(imagename),
+              image: NetworkImage(imagename),
               fit: BoxFit.fitHeight,
             ),
             borderRadius: new BorderRadius.all(

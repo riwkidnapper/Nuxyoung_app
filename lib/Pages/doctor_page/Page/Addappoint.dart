@@ -368,16 +368,23 @@ class _AddappointState extends State<Addappoint> {
                             .collection("appointment")
                             .add(datas)
                             .then((value) {
-                          print(value.documentID);
-                          Navigator.pop(
-                            context,
-                          );
-                          Navigator.pop(
-                            context,
-                          );
-                          Navigator.pop(
-                            context,
-                          );
+                          Firestore.instance.collection("notifications").add({
+                            "uid": "IL1UgTTtYFXmshy1NbBQw7GvfXz2",
+                            "title": "การนัดหมาย",
+                            "body":
+                                "มีการนัดตรวจวันพฤหัสบดีที่ 20 ธันวาคม 2562 เวลา 10.30 นาฬิกา \nโดย นพ:ตนุพล วิรุฬหการุญ"
+                          }).then((value) {
+                            print(value.documentID);
+                            Navigator.pop(
+                              context,
+                            );
+                            Navigator.pop(
+                              context,
+                            );
+                            Navigator.pop(
+                              context,
+                            );
+                          });
                         }).catchError((err) {
                           print(err);
                         });

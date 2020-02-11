@@ -11,6 +11,7 @@ import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
 import 'package:nuxyoung/Pages/doctor_page/profile.dart';
 import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
 import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
+import 'package:nuxyoung/Pages/pop_up_item/notify.dart';
 import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
 
@@ -32,7 +33,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
   final FirebaseUser currentUser;
   String userEmail;
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  String doctorname;
   String photoUser;
 
   _MedicalBudhospState(this.currentUser);
@@ -147,7 +147,7 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
         Firestore?.instance
             ?.document('/users/${docs.documents[0].documentID}')
             ?.updateData({
-          'token': token,
+          'devtoken': token,
         })?.then((onValue) {
           print("Token : $token");
         })?.catchError((e) {
@@ -198,10 +198,10 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                   color: Colors.blueGrey,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     new MaterialPageRoute(
-                      builder: (context) => new Container(),
+                      builder: (context) => new Notify(),
                     ),
                   );
                 },
@@ -304,7 +304,9 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CaLenDar()));
+                                  builder: (context) => CaLenDar(
+                                        doctorname: doctorname,
+                                      )));
                         },
                       ),
                       ListTile(
@@ -348,86 +350,77 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                     ],
                   );
                 })),
-        // body: ListView.builder(
-        //   itemBuilder: (context, position){
-        //     return Card(
-        //       child: Padding(
-        //         padding: const EdgeInsets.all(40.0),
-        //         child: Text(position.toString(),style: TextStyle(fontSize: 22.0),
-        //         ),
-        //       ),);
-        //   },
-        // ),
-        /****************************************************************************** */
         body: Stack(
           children: <Widget>[
             Container(
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEEEEEE),
-                  image: DecorationImage(
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/homewall.png'),
-                    colorFilter: new ColorFilter.mode(
-                        Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
-                  ),
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xFFEEEEEE),
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/homewall.png'),
+                  colorFilter: new ColorFilter.mode(
+                      Colors.grey[50].withOpacity(0.3), BlendMode.dstATop),
                 ),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: <Widget>[
-                      CustomHeading(title: 'รายชื่อผู้ป่วย'),
-                      StreamBuilder(
-                        stream: Firestore?.instance
-                                ?.collection('profliePaitient')
-                                ?.orderBy('วันเวลาที่เข้ารับการรักษา',
-                                    descending: true)
-                                ?.orderBy('ชื่อคนไข้', descending: false)
-                                ?.snapshots() ??
-                            null,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.blueGrey),
-                              ),
-                            );
+              ),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
+                    CustomHeading(title: 'รายชื่อผู้ป่วย'),
+                    StreamBuilder(
+                      stream: Firestore?.instance
+                              ?.collection('profliePaitient')
+                              ?.orderBy('วันเวลาที่เข้ารับการรักษา',
+                                  descending: true)
+                              ?.orderBy('ชื่อคนไข้', descending: false)
+                              ?.snapshots() ??
+                          null,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.blueGrey),
+                            ),
+                          );
+                        } else {
+                          if (snapshot.data.documents.length == 0) {
+                            return Container();
                           } else {
-                            if (snapshot.data.documents.length == 0) {
-                              return Container();
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: ClampingScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemCount: snapshot.data.documents.length,
-                                itemBuilder: (context, index) {
-                                  final documents =
-                                      snapshot.data?.documents[index];
-                                  Timestamp t =
-                                      documents['วันเวลาที่เข้ารับการรักษา'];
-                                  var times = t.toDate();
-                                  final f =
-                                      new DateFormat('dd MMMM yyyy', "th_TH");
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (context, index) {
+                                final documents =
+                                    snapshot.data?.documents[index];
+                                Timestamp t =
+                                    documents['วันเวลาที่เข้ารับการรักษา'];
+                                var times = t.toDate();
+                                final f =
+                                    new DateFormat('dd MMMM yyyy', "th_TH");
 
-                                  String timetoheal = f.format(times);
-                                  return PaitientCard(
-                                    paitientName: documents['ชื่อคนไข้'],
-                                    symptoms: documents['ลักษณะอาการเบื้องต้น'],
-                                    timetoheal: timetoheal,
-                                  );
-                                },
-                              );
-                            }
+                                String timetoheal = f.format(times);
+                                return PaitientCard(
+                                  paitientName: documents['ชื่อคนไข้'],
+                                  symptoms: documents['ลักษณะอาการเบื้องต้น'],
+                                  timetoheal: timetoheal,
+                                );
+                              },
+                            );
                           }
-                        },
-                      ),
-                    ],
-                  ),
-                ))
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
           ],
         ));
   }

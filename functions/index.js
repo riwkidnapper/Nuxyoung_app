@@ -12,7 +12,7 @@ exports.offerTrigger = functions.firestore
 
     admin
       .firestore()
-      .collection("pushtokens")
+      .collection("users")
       .get()
       .then(snapshots => {
         var tokens = [];

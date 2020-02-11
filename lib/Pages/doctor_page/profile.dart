@@ -85,8 +85,9 @@ class _ProfilerecordState extends State<Profilerecord> {
                           autocorrect: true,
                           // readonly: true,
                           onChanged: _onChanged,
-                          // validator: (value) =>
-                          //     value.isEmpty ? 'ชื่อ-นามสกุลไม่ควรเว้นว่าง' : null,
+                          validator: (value) => value.isEmpty
+                              ? 'ชื่อ-นามสกุลไม่ควรเว้นว่าง'
+                              : null,
                           onSaved: (val) => name = val,
                         ),
                         TextFormField(

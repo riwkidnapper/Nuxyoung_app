@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
             data["name"] = name;
             data["rule"] = 'user';
             data["uid"] = onValue.user.uid;
-
+            data["devtoken"]= 10000000.toString();
             if (onValue != null && onValue.user != null)
               await store.collection("users").add(data).then((ref) async {
                 await store

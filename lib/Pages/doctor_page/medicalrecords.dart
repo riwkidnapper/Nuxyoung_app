@@ -129,6 +129,8 @@ class _MedicalrecState extends State<Medicalrec> {
                         onChanged: _onChanged,
                         maxLines: null,
                         onSaved: (val) => medicalrecords = val,
+                        validator: (value) =>
+                            value.isEmpty ? 'ไม่ควรเว้นว่างในส่วนนี้' : null,
                       ),
                       TextFormField(
                         autocorrect: true,
@@ -139,6 +141,8 @@ class _MedicalrecState extends State<Medicalrec> {
                         onChanged: _onChanged,
                         maxLines: null,
                         onSaved: (val) => diagnosis = val,
+                        validator: (value) =>
+                            value.isEmpty ? 'ไม่ควรเว้นว่างในส่วนนี้' : null,
                       ),
                       TextFormField(
                         autocorrect: true,
@@ -186,7 +190,6 @@ class _MedicalrecState extends State<Medicalrec> {
                                   ),
                                   onPressed: () async {
                                     _fbKey.currentState.save();
-
                                     if (_fbKey.currentState.validate()) {
                                       setState(() {
                                         load = true;
@@ -216,23 +219,27 @@ class _MedicalrecState extends State<Medicalrec> {
                                         setState(() {
                                           load = false;
                                         });
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Register(
+                                              idnumber: idnumber,
+                                              name: name,
+                                            ),
+                                          ),
+                                        );
                                         print(value.documentID);
                                       }).catchError((err) {
                                         print(err);
                                       });
                                     } else {
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content:
+                                                  Text('Processing Data')));
                                       print(_fbKey.currentState.value);
                                       print("validation failed");
                                     }
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Register(
-                                          idnumber: idnumber,
-                                          name: name,
-                                        ),
-                                      ),
-                                    );
                                   })),
                           SizedBox(
                             width: 20,

@@ -49,7 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         Firestore?.instance
             ?.document('/users/${docs.documents[0].documentID}')
             ?.updateData({
-          'token': token,
+          'devtoken': token,
         })?.then((onValue) {
           print("Token : $token");
         })?.catchError((e) {

@@ -307,9 +307,16 @@ class _ListPaitientState extends State<ListPaitient> {
               ?.then((docs) {
             Firestore.instance
                 ?.document('/appointment/${docs.documents[0].documentID}')
-                ?.delete();
-            setState(() {
-              load = false;
+                ?.delete()
+                ?.then((onValue) {
+              setState(() {
+                load = false;
+              });
+              Firestore.instance.collection("notifications").add({
+                "uid": "IL1UgTTtYFXmshy1NbBQw7GvfXz2",
+                "title": "การยกเลิกการนัดหมาย",
+                "body": "แพทย์ได้ทำการทำการยกเลิกการนัดหมายแล้ว"
+              });
             });
           });
           //sendNotification();
@@ -521,9 +528,9 @@ class _ListPaitientState extends State<ListPaitient> {
                       if (snapshot.data.documents.length == 0) {
                         return Container();
                       } else {
-                        var data = snapshot.data.documents[0];
-                        var dateOfApppoint =
-                            snapshot.data.documents[0]['วันเดือนปีที่นัดหมาย'];
+                        var data = snapshot?.data?.documents[0];
+                        var dateOfApppoint = snapshot?.data?.documents[0]
+                            ['วันเดือนปีที่นัดหมาย'];
                         var dateApp = DateTime(
                             DateTime.parse(dateOfApppoint).year + 543,
                             DateTime.parse(dateOfApppoint).month,
@@ -531,7 +538,7 @@ class _ListPaitientState extends State<ListPaitient> {
                         var dateAppoint =
                             DateFormat("dd MMMM yyyy", "th_TH").format(dateApp);
                         var timeOfAddpoint =
-                            snapshot.data.documents[0]['เวลาที่นัดหมาย'];
+                            snapshot?.data?.documents[0]['เวลาที่นัดหมาย'];
                         if (load == true) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -601,7 +608,16 @@ class _ListPaitientState extends State<ListPaitient> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    postpone();
+                                    postpone().then((onValue) {
+                                      Firestore.instance
+                                          .collection("notifications")
+                                          .add({
+                                        "uid": "IL1UgTTtYFXmshy1NbBQw7GvfXz2",
+                                        "title": "การเลื่อนนัดหมาย",
+                                        "body":
+                                            "แพทย์ได้ทำการเลื่อนเวลานัดหมายใหม่เป็น\tวันพฤหัสบดีที่ 20 ธันวาคม 2562 เวลา 11.00 นาฬิกา"
+                                      });
+                                    });
                                   },
                                 ),
                               ),

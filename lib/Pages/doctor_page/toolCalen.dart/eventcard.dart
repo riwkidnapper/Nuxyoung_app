@@ -12,7 +12,7 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String time = DateFormat('kk:mm').format(event.date);
+    String time = DateFormat('hh:mm').format(event.date);
     return GestureDetector(
       onTap: this.onClick != null ? () => this.onClick(event) : () {},
       child: Column(
@@ -33,9 +33,11 @@ class EventCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   event?.name?.toString() ?? "",
+                  style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  "เวลา :: " + time +" น. "?? "",
+                  "เวลา :: " + time + " น. " ?? "",
+                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),

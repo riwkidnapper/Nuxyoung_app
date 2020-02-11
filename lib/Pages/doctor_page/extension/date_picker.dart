@@ -156,9 +156,9 @@ class _DatePickerHeader extends StatelessWidget {
         yearColor = mode == DatePickerMode.year ? Colors.white : Colors.white70;
         break;
     }
-    final TextStyle dayStyle = headerTextTheme.display1
+    final TextStyle dayStyle = headerTextTheme.headline4 
         .copyWith(color: dayColor, fontFamily: fontFamily);
-    final TextStyle yearStyle = headerTextTheme.subhead
+    final TextStyle yearStyle = headerTextTheme.subtitle1
         .copyWith(color: yearColor, fontFamily: fontFamily);
 
     Color backgroundColor;
@@ -537,7 +537,7 @@ class DayPicker extends StatelessWidget {
 
         BoxDecoration decoration;
         TextStyle itemStyle =
-            themeData.textTheme.body1.copyWith(fontFamily: fontFamily);
+            themeData.textTheme.bodyText2.copyWith(fontFamily: fontFamily);
 
         final bool isSelectedDay = selectedDate.year == year &&
             selectedDate.month == month &&
@@ -545,19 +545,19 @@ class DayPicker extends StatelessWidget {
         if (isSelectedDay) {
           // The selected day gets a circle background highlight, and a contrasting text color.
           itemStyle =
-              themeData.accentTextTheme.body2.copyWith(fontFamily: fontFamily);
+              themeData.accentTextTheme.bodyText1.copyWith(fontFamily: fontFamily);
           decoration = BoxDecoration(
             color: themeData.accentColor,
             shape: BoxShape.circle,
           );
         } else if (disabled) {
-          itemStyle = themeData.textTheme.body1
+          itemStyle = themeData.textTheme.bodyText2
               .copyWith(color: themeData.disabledColor, fontFamily: fontFamily);
         } else if (currentDate.year == year &&
             currentDate.month == month &&
             currentDate.day == day) {
           // The current day gets a different text color.
-          itemStyle = themeData.textTheme.body2
+          itemStyle = themeData.textTheme.bodyText1
               .copyWith(color: themeData.accentColor, fontFamily: fontFamily);
         }
 
@@ -616,7 +616,7 @@ class DayPicker extends StatelessWidget {
               child: ExcludeSemantics(
                 child: Text(
                   monthYearHeader,
-                  style: themeData.textTheme.subhead
+                  style: themeData.textTheme.subtitle1
                       .copyWith(fontFamily: fontFamily),
                 ),
               ),
@@ -1018,7 +1018,7 @@ class _YearPickerState extends State<YearPicker> {
     assert(debugCheckHasMaterial(context));
     final ThemeData themeData = Theme.of(context);
     final TextStyle style =
-        themeData.textTheme.body1.copyWith(fontFamily: widget.fontFamily);
+        themeData.textTheme.bodyText2.copyWith(fontFamily: widget.fontFamily);
     return ListView.builder(
       dragStartBehavior: widget.dragStartBehavior,
       controller: scrollController,
@@ -1028,7 +1028,7 @@ class _YearPickerState extends State<YearPicker> {
         final int year = widget.firstDate.year + index;
         final bool isSelected = year == widget.selectedDate.year;
         final TextStyle itemStyle = isSelected
-            ? themeData.textTheme.headline.copyWith(
+            ? themeData.textTheme.headline5.copyWith(
                 color: themeData.accentColor, fontFamily: widget.fontFamily)
             : style;
         return InkWell(
@@ -1128,6 +1128,8 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
         HapticFeedback.vibrate();
         break;
       case TargetPlatform.iOS:
+        break;
+      case TargetPlatform.macOS:
         break;
     }
   }

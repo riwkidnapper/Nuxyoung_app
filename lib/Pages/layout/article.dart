@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nuxyoung/Pages/pop_up_item/doc_details.dart';
-import 'package:nuxyoung/Pages/pop_up_item/editll.dart';
+// import 'package:nuxyoung/Pages/pop_up_item/editll.dart';
 
 class Article extends StatefulWidget {
   @override
@@ -46,7 +46,7 @@ class _ArticleState extends State<Article> {
             child: Container(
               constraints: new BoxConstraints(
                 maxHeight: double.infinity,
-          minWidth: MediaQuery.of(context).size.width,
+                minWidth: MediaQuery.of(context).size.width,
               ),
               child: new DecoratedBox(
                 decoration: BoxDecoration(
@@ -60,7 +60,8 @@ class _ArticleState extends State<Article> {
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+                  padding: const EdgeInsets.only(
+                      top: 30, left: 15, right: 15, bottom: 30.0),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -71,28 +72,37 @@ class _ArticleState extends State<Article> {
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
                             _disabilityCard(
-                                context, "a.jpg", "บทความ เรื่อง", "Marnoj"),
+                                context,
+                                "https://www.honestdocs.co/system/blog_articles/main_hero_images/000/006/943/large/Slide15.JPG",
+                                "บทความ เรื่อง",
+                                "ภาวะพัฒนาการช้าในเด็ก \n(Developmental Delay)"),
                             SizedBox(width: 15.0),
                             _disabilityCard(
-                                context, "a.jpg", "บทความ เรื่อง", "Riw riw"),
+                                context,
+                                "https://www.phyathai.com/photo/article_7087280672.jpg",
+                                "บทความ เรื่อง",
+                                "ลูกมีพัฒนาการช้าหรือไม่? \nพ่อแม่สังเกตได้จากสัญญาณเหล่านี้"),
                             SizedBox(width: 15.0),
                             _disabilityCard(
-                                context, "a.jpg", "บทความ เรื่อง", "SKWCRD"),
+                                context,
+                                "http://www.phyathai-sriracha.com/pytsweb/images/children/baby_talk.jpg",
+                                "บทความ เรื่อง",
+                                "เด็กที่มีความบกพร่องทางพัฒนาการ"),
                             SizedBox(width: 15.0),
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 15.0, top: 8.0, right: 20.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Editll(),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(
+                      //       bottom: 15.0, top: 8.0, right: 20.0),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.end,
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     children: <Widget>[
+                      //       Editll(),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -130,8 +140,7 @@ Widget _disabilityCard(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     image: DecorationImage(
-                        image: AssetImage('assets/images/' + imageName),
-                        fit: BoxFit.cover)),
+                        image: NetworkImage(imageName), fit: BoxFit.cover)),
                 /*child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),*/
                 child: Container(
@@ -152,9 +161,10 @@ Widget _disabilityCard(
                         title,
                         textAlign: TextAlign.left,
                         style: TextStyle(
+                            backgroundColor: Colors.blueGrey[200],
                             //fontFamily: 'Timesroman',
                             fontSize: 25.0,
-                            color: Colors.teal,
+                            color: Colors.blueGrey[600],
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -164,9 +174,10 @@ Widget _disabilityCard(
                           subTitle,
                           textAlign: TextAlign.left,
                           style: TextStyle(
+                              backgroundColor: Colors.black38,
                               //fontFamily: 'Timesroman',
                               fontSize: 15.0,
-                              color: Colors.blueGrey[400],
+                              color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ))
                   ],

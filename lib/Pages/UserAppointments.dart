@@ -519,7 +519,14 @@ class UserAppointmentsState extends State<UserAppointments> {
                               ),
                             ),
                           ),
-                          onPressed: () async {},
+                          onPressed: () {
+                            Firestore.instance.collection("notifications").add({
+                              "uid": "IL1UgTTtYFXmshy1NbBQw7GvfXz2",
+                              "title": "การเลื่อนนัดหมาย",
+                              "body":
+                                  "คนไข้:ด.ช.ขยัน ขันแข็ง ต้องการเลื่อนเวลานัดหมาย"
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -572,7 +579,7 @@ class UserAppointmentsState extends State<UserAppointments> {
           },
         ),
         Container(
-          height: Theme.of(context).textTheme.display1.fontSize * 1.0 + 70,
+          height: Theme.of(context).textTheme.headline4.fontSize * 1.0 + 70,
         )
       ],
     ));

@@ -71,7 +71,7 @@ class CustomDialog extends StatelessWidget {
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 24.0),
+                SizedBox(height: MediaQuery.of(context).size.height / 8.0),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: FlatButton(
@@ -102,7 +102,7 @@ class CustomDialog extends StatelessWidget {
               height: 140.0,
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: AssetImage(image),
+                  image: NetworkImage(image),
                   fit: BoxFit.fitHeight,
                 ),
                 borderRadius: new BorderRadius.all(

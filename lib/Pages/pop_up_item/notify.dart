@@ -1,58 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nuxyoung/Pages/aleart.dart';
 
-class Aleart extends StatefulWidget {
+class Notify extends StatefulWidget {
   @override
-  _AleartState createState() => _AleartState();
+  _NotifyState createState() => _NotifyState();
 }
 
-class _AleartState extends State<Aleart> {
+class _NotifyState extends State<Notify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
-        body: NotifyWidget());
-  }
-}
-
-class NotifyWidget extends StatefulWidget {
-  final List<Notify> notify;
-
-  NotifyWidget({
-    Key key,
-    this.notify,
-  }) : super(key: key);
-
-  @override
-  _NotifyWidgetState createState() => _NotifyWidgetState();
-}
-
-class _NotifyWidgetState extends State<NotifyWidget> {
-  FirebaseUser currentUser;
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAuth?.instance?.currentUser()?.then((FirebaseUser user) {
-      setState(() {
-        currentUser = user;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: currentUser?.uid != null
-            ? Firestore.instance
-                ?.collection('notifications')
-                ?.where('uid', isEqualTo: currentUser?.uid)
-                ?.snapshots()
-            : null,
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text(
+          'การแจ้งเตือน',
+          style: TextStyle(fontSize: 18),
+        ),
+        backgroundColor: Colors.grey,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance
+            ?.collection('notifications')
+            ?.where('uid', isEqualTo: "3jHS0wUYXzgWBVSmnRel1R5MGzi2")
+            ?.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Padding(
@@ -146,89 +117,6 @@ class _NotifyWidgetState extends State<NotifyWidget> {
             }
           }
         },
-      ),
-    );
-  }
-}
-
-class Notify {
-  //final num id;
-  final String title;
-  final String body;
-  final DateTime date;
-
-  Notify({
-    //this.id,
-    this.title,
-    this.body,
-    this.date,
-  });
-
-  factory Notify.fromMap(Map<String, dynamic> map) => Notify(
-        //id: map["id"],
-        title: map["วันเดือนปีที่นัดหมาย"],
-        body: map["เวลาที่นัดหมาย"],
-      );
-
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        //"id": this.id,
-        "title": this.title,
-        "body": this.body,
-        "date": this.date,
-      };
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Notify &&
-          runtimeType == other.runtimeType &&
-          //id == other.id &&
-          title == other.title &&
-          body == other.body &&
-          date == other.date;
-
-  @override
-  int get hashCode => (
-      //id.hashCode ^
-      title.hashCode ^ body.hashCode ^ date.hashCode);
-}
-
-class NotifyCard extends StatelessWidget {
-  final String title;
-  final String body;
-
-  NotifyCard({
-    Key key,
-    this.title,
-    this.body,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      shape: OutlineInputBorder(
-        borderSide: BorderSide(width: 1.0),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
-      ),
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(0.0),
-          title: Text(
-            this.title ?? "",
-          ),
-          subtitle: Text(
-            this.body ?? "",
-          ),
-        ),
       ),
     );
   }
