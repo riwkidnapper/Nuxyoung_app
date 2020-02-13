@@ -1,13 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Auth/login_page.dart';
-import 'package:nuxyoung/Pages/aleart.dart';
-import 'package:vector_math/vector_math.dart' as vector;
-import 'package:nuxyoung/Pages/homepage.dart';
-import 'package:nuxyoung/Pages/UserAppointments.dart';
-import 'package:nuxyoung/Pages/me.dart';
-
-import 'Teb_iteam.dart';
+part of tabbar;
 
 int currentSelected = 2;
 

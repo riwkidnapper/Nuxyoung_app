@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of tool;
 
 class CustomHeading extends StatelessWidget {
   final String title;

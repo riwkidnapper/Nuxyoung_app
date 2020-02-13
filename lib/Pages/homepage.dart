@@ -1,16 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/layout/article.dart';
-import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-// import './pop_up_item/color_loader.dart';
-import 'layout/header.dart';
-
-// import 'dart:math';
-// import 'pop_up_item/color_loader.dart';
-
+part of home;
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();

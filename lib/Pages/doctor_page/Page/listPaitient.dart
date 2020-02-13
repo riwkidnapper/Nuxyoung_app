@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nuxyoung/Pages/doctor_page/extension/date_picker.dart';
-import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
+import 'package:nuxyoung/provider/tabbar.dart';
 import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
 import 'package:nuxyoung/package/video_player.dart';
 

@@ -1,20 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_thailand_provinces/dao/amphure_dao.dart';
-import 'package:flutter_thailand_provinces/dao/district_dao.dart';
-import 'package:flutter_thailand_provinces/dao/province_dao.dart';
-import 'package:flutter_thailand_provinces/provider/amphure_provider.dart';
-import 'package:flutter_thailand_provinces/provider/district_provider.dart';
-import 'package:flutter_thailand_provinces/provider/province_provider.dart';
-import 'extension/ProvinceDialog.dart';
-import 'extension/ZipcodeDialog.dart';
-import 'extension/choose_dialog.dart';
-import 'extension/date.dart';
-import 'extension/districtDialog.dart';
-import 'medicalrecords.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-// import './data.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+part of profile;
 
 class Profilerecord extends StatefulWidget {
   @override

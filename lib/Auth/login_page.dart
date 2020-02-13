@@ -1,11 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyoung/Pages/pop_up_item/color_loader.dart';
-import 'package:nuxyoung/Tebbar/home_bottombar.dart';
-import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
-import 'package:nuxyoung/Auth/pack_acc/form.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+part of auth;
 
 List<Color> colors = [
   Colors.blueGrey,

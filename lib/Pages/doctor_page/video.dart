@@ -1,10 +1,4 @@
-
-import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/package/video_player.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/services.dart';
+part of doctorpage;
 
 class ChewieDemo extends StatefulWidget {
   ChewieDemo({this.title = 'Video Test'});

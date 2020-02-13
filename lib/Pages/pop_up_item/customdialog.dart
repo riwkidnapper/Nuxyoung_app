@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of item;
 
 class Consts {
   Consts._();

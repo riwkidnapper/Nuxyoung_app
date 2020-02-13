@@ -1,12 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nuxyoung/Pages/doctor_page/register.dart';
-import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/formsign.dart';
-
-import 'extension/date.dart';
-
+part of medicals;
 class Medicalrec extends StatefulWidget {
   final String name;
   final String idnumber;

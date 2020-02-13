@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/doctor_page/Page/Addappoint.dart';
-import 'package:nuxyoung/Pages/doctor_page/Page/selectdoc.dart';
-
+part of medicals;
 class Appointment extends StatefulWidget {
   Appointment({Key key}) : super(key: key);
 

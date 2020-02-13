@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
+part of item;
 
 class ColorLoader extends StatefulWidget {
   final List<Color> colors;

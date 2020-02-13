@@ -1,23 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:intl/intl.dart';
-import 'package:nuxyoung/Auth/login_page.dart';
-import 'package:nuxyoung/Pages/doctor_page/appointment.dart';
-
-import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
-import 'package:nuxyoung/Pages/doctor_page/profile.dart';
-import 'package:nuxyoung/Pages/doctor_page/register_medical.dart';
-import 'package:nuxyoung/Pages/doctor_page/symptoms.dart';
-import 'package:nuxyoung/Pages/pop_up_item/notify.dart';
-import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
-// import 'package:nuxyoung/Pages/doctor_page/video.dart';
-
-import 'chat/Tools/custom_heading.dart';
-import 'chat/Tools/screenloadingchat.dart';
-import 'doctor_page/Page/PaitientCard.dart';
+part of medical;
 
 class MedicalBudhosp extends StatefulWidget {
   final FirebaseUser currentUser;
@@ -420,7 +401,6 @@ class _MedicalBudhospState extends State<MedicalBudhosp> {
                 ),
               ),
             ),
-            
           ],
         ));
   }

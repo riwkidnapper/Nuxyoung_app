@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'package:nuxyoung/package/screenutil/flutter_screenutil.dart';
+part of auth;
 
 class FormCard extends StatefulWidget {
   final String validation;

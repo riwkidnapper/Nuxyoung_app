@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+part of item;
 class Editll extends StatefulWidget {
   @override
   _EditllState createState() => _EditllState();

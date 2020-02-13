@@ -1,12 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'Tools/customCard.dart';
-import 'Tools/custom_heading.dart';
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+part of chat;
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -107,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0,300.0,0.0,8.0),
+                      padding: const EdgeInsets.fromLTRB(0.0, 300.0, 0.0, 8.0),
                       child: Center(
                         child: CircularProgressIndicator(
                           valueColor:

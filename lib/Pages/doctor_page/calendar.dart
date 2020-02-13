@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/event.dart';
-import 'package:nuxyoung/Pages/doctor_page/toolCalen.dart/table_calendar.dart';
-
+part of medicals;
 // Example holidays
 // final Map<DateTime, List> _holidays = {
 //   DateTime(2020, 1, 1): ['New Year\'s Day'],

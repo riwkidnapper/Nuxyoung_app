@@ -1,0 +1,20 @@
+library profile;
+import 'package:flutter/material.dart';
+import 'package:flutter_thailand_provinces/dao/amphure_dao.dart';
+import 'package:flutter_thailand_provinces/dao/district_dao.dart';
+import 'package:flutter_thailand_provinces/dao/province_dao.dart';
+import 'package:flutter_thailand_provinces/provider/amphure_provider.dart';
+import 'package:flutter_thailand_provinces/provider/district_provider.dart';
+import 'package:flutter_thailand_provinces/provider/province_provider.dart';
+import 'package:nuxyoung/Pages/doctor_page/extension/ProvinceDialog.dart';
+import 'package:nuxyoung/Pages/doctor_page/extension/ZipcodeDialog.dart';
+import 'package:nuxyoung/Pages/doctor_page/extension/choose_dialog.dart';
+import 'package:nuxyoung/Pages/doctor_page/extension/date.dart';
+import 'package:nuxyoung/Pages/doctor_page/extension/districtDialog.dart';
+import 'package:nuxyoung/provider/doctorPage/medical.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+// import './data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+part '../../Pages/doctor_page/profile.dart';

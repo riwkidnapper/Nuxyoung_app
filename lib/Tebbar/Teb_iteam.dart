@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'bomtombar.dart';
+part of tabbar;
 
 class TabItem extends StatefulWidget {
   TabItem({

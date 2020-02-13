@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of tool;
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.grey,

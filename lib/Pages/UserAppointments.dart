@@ -1,14 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
-
-//import 'package:nuxyoung/Pages/doctor_page/calendar.dart';
-//import 'package:nuxyoung/Pages/layout/proflieDoc.dart';
-//import 'package:nuxyoung/pull_to_refresh.dart';
+part of home;
 
 class UserAppointments extends StatefulWidget {
   final currentUser;

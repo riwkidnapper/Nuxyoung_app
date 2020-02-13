@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:nuxyoung/Pages/chat/chat_screen.dart';
-import 'dart:async';
+part of tool;
 
 class LoadingChat extends StatefulWidget {
   @override

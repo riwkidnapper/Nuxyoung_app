@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Pages/pop_up_item/doc_details.dart';
+part of layout;
 // import 'package:nuxyoung/Pages/pop_up_item/editll.dart';
 
 class Article extends StatefulWidget {

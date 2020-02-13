@@ -1,11 +1,4 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:nuxyoung/package/picker.dart';
-import 'package:nuxyoung/package/image_picker.dart';
-import 'package:video_player/video_player.dart';
+part of item;
 
 //import 'package:image_picker/image_picker.dart';
 class AddproflieDoc extends StatefulWidget {

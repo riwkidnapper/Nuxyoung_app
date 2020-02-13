@@ -1,16 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
-import 'package:nuxyoung/package/video_player.dart';
+part of doctorpage;
 
 final Firestore store = Firestore.instance;
 

@@ -1,9 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Auth/login_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nuxyoung/Pages/medicalBudhosp_page.dart';
-import 'package:nuxyoung/Tebbar/home_bottombar.dart';
+part of home;
 
 class Welcome extends StatelessWidget {
   @override

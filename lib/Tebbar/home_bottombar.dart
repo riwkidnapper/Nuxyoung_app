@@ -1,13 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:nuxyoung/Auth/login_page.dart';
-// import 'package:nuxyoung/Account/register_page.dart';
-
-import 'package:nuxyoung/Tebbar/Teb_iteam.dart';
-import 'package:nuxyoung/Tebbar/bomtombar.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:rxdart/subjects.dart';
+part of tabbar;
 
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();

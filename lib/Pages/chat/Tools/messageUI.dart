@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of tool;
 
 class Message extends StatelessWidget {
   final String text;

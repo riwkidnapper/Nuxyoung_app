@@ -1,15 +1,4 @@
-import 'dart:io';
-
-// import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:nuxyoung/Auth/login_page.dart';
-import 'package:nuxyoung/package/image_picker.dart';
-import 'extension/timedialog.dart';
-// import 'package:path/path.dart';
+part of doctorpage;
 
 class MedicalRegister extends StatefulWidget {
   MedicalRegister({Key key}) : super(key: key);
@@ -551,25 +540,3 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   }
 }
 
-String _validateEmail(String value) {
-  Pattern pattern =
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regex = new RegExp(pattern);
-  if (!regex.hasMatch(value)) {
-    return 'Invalid Email';
-  } else {
-    return null;
-  }
-}
-
-String _validatePassword(String value) {
-  return value.length < 8
-      ? 'พาสเวิร์ดควรมียาวมากกว่า 8\n ตัวอักษรและตัวมีตัวอักษรและตัวเลข'
-      : null;
-}
-
-String _validateConfirmPassword(String value) {
-  return value.length < 8
-      ? 'พาสเวิร์ดควรมียาวมากกว่า 8 \nตัวอักษรและตัวมีตัวอักษรและตัวเลข'
-      : null;
-}
