@@ -1,10 +1,10 @@
+import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nuxyoung/Pages/doctor_page/extension/date_picker.dart';
 import 'package:nuxyoung/provider/tabbar.dart';
-import 'package:nuxyoung/package/chewie/src/chewie_player.dart';
-import 'package:nuxyoung/package/video_player.dart';
+import 'package:video_player/video_player.dart';
 
 class ListPaitient extends StatefulWidget {
   final String paitientName;
@@ -84,7 +84,7 @@ class _ListPaitientState extends State<ListPaitient> {
   final reason;
   final uid;
   bool load = true;
-  ChewieController _chewieController;
+   ChewieController _chewieController;
   VideoPlayerController _videoPlayerController1;
   _ListPaitientState(
       this.paitientName,
@@ -110,8 +110,8 @@ class _ListPaitientState extends State<ListPaitient> {
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,
-      aspectRatio: 3 / 2,
-      autoPlay: false,
+      aspectRatio: 3 / 4,
+      autoPlay: true,
       looping: false,
     );
   }

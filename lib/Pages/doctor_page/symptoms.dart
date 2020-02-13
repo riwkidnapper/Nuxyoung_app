@@ -44,7 +44,7 @@ class _SymptomState extends State<Symptom> {
         _videoPlayerController1 = VideoPlayerController.file(_fileName);
         _chewieController = ChewieController(
           videoPlayerController: _videoPlayerController1,
-          aspectRatio: 3 / 2,
+          aspectRatio: 3 / 5,
           autoPlay: true,
           looping: false,
         );

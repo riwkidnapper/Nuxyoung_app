@@ -14,9 +14,6 @@ class _MedicalRegisterState extends State<MedicalRegister> {
   final Firestore store = Firestore.instance;
 
   static var _keyValidationForm = GlobalKey<FormState>();
-  final FocusNode _passwordEmail = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
-  final FocusNode _passwordConfirmFocus = FocusNode();
   TextEditingController _textEditConName = TextEditingController();
   TextEditingController _textEditConEmail = TextEditingController();
   TextEditingController _textEditConPassword = TextEditingController();
@@ -144,7 +141,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["เวลาออกตรวจ"] = selecteddateList;
               data["uid"] = onValue.user.uid;
               data["photoUser"] = _uploadedFileURL;
-              data["devtoken"]= 10000001.toString();
+              data["devtoken"] = 10000001.toString();
             } else {
               data["createAt"] = DateTime.now();
               data["email"] = _emaildoc;
@@ -152,7 +149,7 @@ class _MedicalRegisterState extends State<MedicalRegister> {
               data["rule"] = rule;
               data["uid"] = onValue.user.uid;
               data["photoUser"] = _uploadedFileURL;
-              data["devtoken"]= 10000002.toString();
+              data["devtoken"] = 10000002.toString();
             }
             if (onValue != null && onValue.user != null)
               await store.collection("users").add(data).then((ref) {
@@ -241,6 +238,11 @@ class _MedicalRegisterState extends State<MedicalRegister> {
             }
         }
       }
+    } else {
+      setState(() {
+        load = false;
+        errorMsg = "";
+      });
     }
   }
 
@@ -333,13 +335,11 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                     ),
                     TextFormField(
                       controller: _textEditConEmail,
-                      focusNode: _passwordEmail,
+                     
                       keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
+                    
                       validator: _validateEmail,
-                      onFieldSubmitted: (String value) {
-                        FocusScope.of(context).requestFocus(_passwordFocus);
-                      },
+                      
                       decoration: InputDecoration(
                         labelText: 'Email',
                         labelStyle: TextStyle(fontSize: 18.0),
@@ -352,14 +352,11 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                     ),
                     TextFormField(
                       controller: _textEditConPassword,
-                      focusNode: _passwordFocus,
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
+                     
+                      keyboardType: TextInputType.emailAddress,
+                      
                       validator: _validatePassword,
-                      onFieldSubmitted: (String value) {
-                        FocusScope.of(context)
-                            .requestFocus(_passwordConfirmFocus);
-                      },
+                   
                       obscureText: !isPasswordVisible,
                       decoration: InputDecoration(
                         labelText: 'Password',
@@ -383,9 +380,8 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                     ),
                     TextFormField(
                       controller: _textEditConConfirmPassword,
-                      focusNode: _passwordConfirmFocus,
+                      
                       keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.done,
                       validator: _validateConfirmPassword,
                       obscureText: !isConfirmPasswordVisible,
                       decoration: InputDecoration(
@@ -411,12 +407,10 @@ class _MedicalRegisterState extends State<MedicalRegister> {
                     ),
                     TextFormField(
                       controller: _textEditConName,
+                      
                       keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       validator: _validateUserName,
-                      onFieldSubmitted: (String value) {
-                        FocusScope.of(context).requestFocus(_passwordEmail);
-                      },
                       decoration: InputDecoration(
                           labelText: 'ชื่อ นามสกุล',
                           labelStyle: TextStyle(fontSize: 18.0),
@@ -539,4 +533,3 @@ class _MedicalRegisterState extends State<MedicalRegister> {
     return value.trim().isEmpty ? "ชื่อ นามสกุลไม่ควรเว้นว่าง" : null;
   }
 }
-
