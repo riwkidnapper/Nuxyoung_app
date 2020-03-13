@@ -4,6 +4,8 @@ List<Color> colors = [
   Colors.blueGrey,
   Colors.blueGrey[400],
 ];
+Pattern pattern =
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class _LoginpageState extends State<Loginpage> {
   String _password;
   FirebaseUser currentUser;
 
+  RegExp regex = new RegExp(pattern);
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -26,12 +29,21 @@ class _LoginpageState extends State<Loginpage> {
   }
 
   void validateAndSubmit() async {
+    AuthResult authResult;
+    var firebaseUser;
     if (validateAndSave()) {
       try {
-        final AuthResult authResult = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
-        final FirebaseUser firebaseUser = authResult.user;
+        if (regex.hasMatch(_email)) {
+          authResult = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: _email, password: _password);
+          firebaseUser = authResult.user;
+          print(firebaseUser);
+        } else {
+          firebaseUser = 'authResult.user';
+          print(firebaseUser);
+        }
 
+       // print(firebaseUser.uid);
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -42,34 +54,34 @@ class _LoginpageState extends State<Loginpage> {
               );
             });
 
-        //print('Signed in: ${user.uid},${user.email}');
-        Future.delayed(new Duration(milliseconds: 1500), () {
-          if (firebaseUser != null) {
-            Firestore.instance
-                ?.collection("users")
-                ?.where('uid', isEqualTo: firebaseUser?.uid)
-                ?.where('email', isEqualTo: firebaseUser?.email)
-                ?.getDocuments()
-                ?.then((QuerySnapshot snapshot) {
-              if (snapshot.documents[0]['rule'] == 'user') {
-                Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                        ModalRoute.withName('/'))
-                    .catchError((err) => print(err));
-              } else {
-                Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MedicalBudhosp(
-                                  currentUser: firebaseUser,
-                                )),
-                        ModalRoute.withName('/medical'))
-                    .catchError((err) => print(err));
-              }
-            });
-          }
-        });
+        ////print('Signed in: ${user.uid},${user.email}');
+        // Future.delayed(new Duration(milliseconds: 1500), () {
+        //   if (firebaseUser != null) {
+        //     Firestore.instance
+        //         ?.collection("users")
+        //         ?.where('uid', isEqualTo: firebaseUser?.uid)
+        //         ?.where('email', isEqualTo: firebaseUser?.email)
+        //         ?.getDocuments()
+        //         ?.then((QuerySnapshot snapshot) {
+        //       if (snapshot.documents[0]['rule'] == 'user') {
+        //         Navigator.pushAndRemoveUntil(
+        //                 context,
+        //                 MaterialPageRoute(builder: (context) => HomePage()),
+        //                 ModalRoute.withName('/'))
+        //             .catchError((err) => print(err));
+        //       } else {
+        //         Navigator.pushAndRemoveUntil(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                     builder: (context) => MedicalBudhosp(
+        //                           currentUser: firebaseUser,
+        //                         )),
+        //                 ModalRoute.withName('/medical'))
+        //             .catchError((err) => print(err));
+        //       }
+        //     });
+        //   }
+        // });
       } catch (e) {
         print(e.message);
         if (e.message ==

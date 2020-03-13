@@ -24,7 +24,6 @@ import 'package:flutter/foundation.dart';
 
 // import 'package:path/path.dart';
 
-
 part '../../Pages/doctor_page/symptoms.dart';
 part '../../Pages/doctor_page/register.dart';
 part '../../Pages/doctor_page/register_medical.dart';

@@ -89,7 +89,7 @@ class _FormCardState extends State<FormCard> {
                         hintStyle:
                             TextStyle(color: Colors.grey, fontSize: 12.0)),
                     obscureText: false,
-                    validator: emailValidator,
+                    //validator: emailValidator,
                     onSaved: widget.saveemail),
                 SizedBox(
                   height: ScreenUtil.getInstance().setHeight(30),

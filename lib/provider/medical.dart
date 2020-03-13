@@ -17,5 +17,4 @@ import 'package:nuxyoung/provider/tabbar.dart';
 // import 'package:nuxyoung/Pages/doctor_page/video.dart';
 
 
-
 part '../Pages/medicalBudhosp_page.dart';
